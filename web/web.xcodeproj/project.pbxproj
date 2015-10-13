@@ -6,11 +6,44 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXFileReference section */
+		A302C1B11BCD1D15004344B5 /* grannys_pie_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grannys_pie_logo.png; path = ../hw_1/grannys_pie_logo.png; sourceTree = "<group>"; };
+		A302C1B21BCD1D15004344B5 /* index_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = index_background.png; path = ../hw_1/index_background.png; sourceTree = "<group>"; };
+		A302C1B31BCD1D15004344B5 /* index.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = index.css; path = ../hw_1/index.css; sourceTree = "<group>"; };
+		A302C1B41BCD1D15004344B5 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = index.html; path = ../hw_1/index.html; sourceTree = "<group>"; };
+		A302C1B51BCD1D15004344B5 /* pie.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = pie.css; path = ../hw_1/pie.css; sourceTree = "<group>"; };
+		A302C1B61BCD1D15004344B5 /* pie.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = pie.html; path = ../hw_1/pie.html; sourceTree = "<group>"; };
+		A302C1B71BCD1DA5004344B5 /* tmnt.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = tmnt.html; path = ../hw_2/tmnt.html; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		A302C1A61BCD1C71004344B5 = {
 			isa = PBXGroup;
 			children = (
+				A302C1AD1BCD1CD6004344B5 /* web_hw1 */,
+				A302C1B01BCD1D02004344B5 /* web_hw2 */,
 			);
+			sourceTree = "<group>";
+		};
+		A302C1AD1BCD1CD6004344B5 /* web_hw1 */ = {
+			isa = PBXGroup;
+			children = (
+				A302C1B11BCD1D15004344B5 /* grannys_pie_logo.png */,
+				A302C1B21BCD1D15004344B5 /* index_background.png */,
+				A302C1B31BCD1D15004344B5 /* index.css */,
+				A302C1B41BCD1D15004344B5 /* index.html */,
+				A302C1B51BCD1D15004344B5 /* pie.css */,
+				A302C1B61BCD1D15004344B5 /* pie.html */,
+			);
+			name = web_hw1;
+			sourceTree = "<group>";
+		};
+		A302C1B01BCD1D02004344B5 /* web_hw2 */ = {
+			isa = PBXGroup;
+			children = (
+				A302C1B71BCD1DA5004344B5 /* tmnt.html */,
+			);
+			name = web_hw2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
