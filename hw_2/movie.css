@@ -36,10 +36,20 @@ body {
 #slidebar {
     width: 250px;
     float: right;
+    background-color: #A2B964;
 }
 
-#description dt {
+#description {
+    font-family: Arial, sans-serif;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 8pt;
 }
+
+    #description dt {
+        font-weight: bold;
+        margin-top: 1em;
+    }
 
 #reviewcontent {
     width: 550px;
@@ -65,11 +75,45 @@ body {
             font-weight: lighter;
         }
 
-.review {
+
+.columns {
+    float: left;
+    margin-left: 11px;
+    margin-top: 11px;
     width: 47%;
-    display: table;
+}
+
+.review {
+    width: 100%;
+    margin-bottom: 3em;
 }
 
     .review img {
         float: left;
+        margin-right: 5px;
     }
+
+.reviewbox {
+    font-size: 8pt;
+    font-weight: bold;
+    background-color: #E1D697;
+    border: 2px solid gray;
+    padding: 8px;
+}
+
+.reviewerinfo {
+    font-style: italic;
+}
+
+#footer {
+    clear: both;
+    padding: 5px;
+    background-color: #A2B964;
+    text-align: center;
+}
+
+#validator {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
