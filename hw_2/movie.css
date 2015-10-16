@@ -21,7 +21,7 @@ body {
     width: 100%;
     text-align: center;
     font-family: Tahoma, Verdana, sans-serif;
-    font-size: 14pt;
+    font-size: 12pt;
     font-weight: bold;
 }
 
@@ -53,6 +53,7 @@ body {
 
 #reviewcontent {
     width: 550px;
+    overflow: hidden;
 }
 
 #overallrating {
@@ -79,7 +80,7 @@ body {
 .columns {
     float: left;
     margin-left: 11px;
-    margin-top: 11px;
+    margin-top: 9px;
     width: 47%;
 }
 
@@ -87,6 +88,10 @@ body {
     width: 100%;
     margin-bottom: 3em;
 }
+
+    .review p {
+        line-height: 13px;
+    }
 
     .review img {
         float: left;
@@ -99,11 +104,20 @@ body {
     background-color: #E1D697;
     border: 2px solid gray;
     padding: 8px;
+    overflow: hidden;
 }
 
+    .reviewbox p {
+        margin: 0;
+    }
+
 .reviewerinfo {
-    font-style: italic;
+    overflow: hidden;
 }
+
+    .reviewerinfo .publication {
+        font-style: italic;
+    }
 
 #footer {
     clear: both;
