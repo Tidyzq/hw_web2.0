@@ -10,6 +10,10 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\hw_3\index.css" />
+    <None Include="..\..\hw_3\index.html" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{555A0EC6-81AF-4F38-B15F-72578A4AF4E7}</ProjectGuid>
     <RootNamespace>web_win</RootNamespace>
@@ -63,10 +67,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <None Include="..\..\hw_2\movie.css" />
-    <None Include="..\..\hw_2\tmnt.html" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

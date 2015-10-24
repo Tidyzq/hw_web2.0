@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_2\movie.css">
+    <None Include="..\..\hw_3\index.html">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_2\tmnt.html">
+    <None Include="..\..\hw_3\index.css">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

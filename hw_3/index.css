@@ -1,7 +1,185 @@
-#at-plus-container {
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-	background-color: #000000;
-	background-image: url(assets/images/atplus_white.png);
+* {
+    margin: 0;
+    padding: 0;
+    font-family: arial;
+    font-weight: bold;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.mask {
+    background: url(assets/images/nomask.png) no-repeat;
+}
+
+.history {
+    background: url(assets/images/history.png) no-repeat;
+}
+
+.message {
+    background: url(assets/images/message.png) no-repeat;
+}
+
+.setting {
+    background: url(assets/images/setting.png) no-repeat;
+}
+
+.sign {
+    background: url(assets/images/signin.png) no-repeat;
+}
+
+.button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #676767;
+    background-position: center;
+}
+
+span.unread {
+    display: block;
+    width: 19px;
+    height: 19px;
+    line-height: 19px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 10pt;
+    background-color: red;
+    right: -22px;
+    top: -4px;
+    position: relative;
+    color: white;
+}
+
+div#info-bar {
+    position: absolute;
+    left: -51.5px;
+    top: -51.5px;
+    margin: auto auto;
+    width: 128px;
+    height: 128px;
+    background-color: #7E7E7E;
+    border-radius: 50%;
+    opacity: 1;
+    -webkit-transform: scale(0) translateY(0);
+    -webkit-transition-duration: 0.4s;
+}
+
+.info {
+    text-align: center;
+    margin: auto auto;
+    overflow: hidden;
+}
+
+div#button {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    left: -12.5px;
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: url(assets/images/atplus_white.png) no-repeat #9b9dd8;
+    background-position: center;
+    background-size: 90%;
+    -webkit-transition-duration: 0.4s;
+}
+
+li.page {
+    margin: 10px auto 10px auto;
+    color: white;
+}
+
+li.mine {
+    display: inline-block;
+    color: #15dd94;
+}
+
+li.comment {
+    font-size: 20pt;
+}
+
+.info span {
+    margin-left: 7px;
+    margin-right: 5px;
+}
+
+.info img {
+    vertical-align: -5px;
+}
+
+li.button {
+    position: absolute;
+    left: -3.5px;
+    top: -3.5px;
+    background-size: 50%;
+    opacity: 0;
+    -webkit-transform: scale(0) translateY(0) translateX(0);
+    -webkit-transition-duration: 0.4s;
+}
+
+div#bottom-positioner {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    bottom: 110px;
+    left: 50%;
+}
+
+div#at-plus-container {
+    width: 32px;
+    height: 32px;
+}
+
+.apb {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+}
+
+#button:hover .icon {
+    -webkit-transform: scale(2);
+    background: url(assets/images/atplus_green.png) no-repeat #284098;
+    background-position: center;
+    background-size: 70%;
+}
+
+#button:hover .mask {
+    -webkit-transition-delay: 0.2s;
+    opacity: 1;
+    -webkit-transform: scale(1) translateY(-34px) translateX(-62px);
+}
+
+#button:hover .history {
+    -webkit-transition-delay: 0.3s;
+    opacity: 1;
+    -webkit-transform: scale(1) translateY(3px) translateX(-72px);
+}
+
+#button:hover .message {
+    -webkit-transition-delay: 0.4s;
+    opacity: 1;
+    -webkit-transform: scale(1) translateY(40px) translateX(-58px);
+}
+
+#button:hover .setting {
+    -webkit-transition-delay: 0.5s;
+    opacity: 1;
+    -webkit-transform: scale(1) translateY(61px) translateX(-25px);
+}
+
+#button:hover .sign {
+    -webkit-transition-delay: 0.6s;
+    opacity: 1;
+    -webkit-transform: scale(1) translateY(58px) translateX(18px);
+}
+
+#button:hover #info-bar {
+    -webkit-transition-delay: 0.1s;
+    opacity: 1;
+    -webkit-transform: scale(1) translateY(-96px);
 }
