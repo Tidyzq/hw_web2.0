@@ -15,10 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_3\index.html">
+    <None Include="..\..\hw_5\calculator.css">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_3\index.css">
+    <None Include="..\..\hw_5\calculator.html">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\hw_5\calculator.js">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

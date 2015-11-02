@@ -11,8 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_3\index.css" />
-    <None Include="..\..\hw_3\index.html" />
+    <None Include="..\..\hw_5\calculator.css" />
+    <None Include="..\..\hw_5\calculator.html" />
+    <None Include="..\..\hw_5\calculator.js" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{555A0EC6-81AF-4F38-B15F-72578A4AF4E7}</ProjectGuid>
