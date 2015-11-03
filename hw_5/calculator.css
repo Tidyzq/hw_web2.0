@@ -30,7 +30,7 @@
 
 #result-view {
     height: 120px;
-    font-size: 24pt;
+    font-size: 34pt;
 }
 
 #input {
@@ -46,6 +46,7 @@ div.button {
     line-height: 90px;
     font-size: 24pt;
     border: 1px solid #808080;
+    cursor: pointer;
 }
 
 #operation {
@@ -60,6 +61,14 @@ div.button {
         color: white;
     }
 
+    #operation .button:hover{
+        background-color: #f05b00;
+    }
+
+    #operation .button:active{
+        background-color: #e14c00;
+    }
+
 #handle {
     width: 270px;
     height: 90px;
@@ -70,6 +79,14 @@ div.button {
         background-color: #c0c0c0;
     }
 
+    #handle .button:hover {
+        background-color: #b1b1b1;
+    }
+
+    #handle .button:active {
+        background-color: #a2a2a2;
+    }
+
 #number {
     width: 270px;
     height: 360px;
@@ -78,4 +95,12 @@ div.button {
 
     #number .button {
         background-color: #f0f0f0;
+    }
+
+    #number .button:hover {
+        background-color: #e1e1e1;
+    }
+
+    #number .button:active {
+        background-color: #d2d2d2;
     }

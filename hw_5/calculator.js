@@ -3,53 +3,129 @@ window.onload = function () {
     var expressionView = document.getElementById("expression-view");
     var expressionArr = [];
     var inputNumber = false;
+    var showResult = false;
     var brackets = 0;
     resultView.value = "0";
+
+    document.onselectstart = function () { return false; }
 
     function refreshExpression() {
         expressionView.value = expressionArr.join(" ");
     }
 
+    function clearResult() {
+        resultView.value = "0";
+        showResult = false;
+    }
+
+    function clear() {
+        clearResult();
+        expressionArr = [];
+        expressionView.value = "";
+        brackets = 0;
+        inputNumber = false;
+        showResult = false;
+    }
+
     document.getElementById("zero").onclick = function () {
-        if (parseInt(resultView.value)) {
-            resultView.value += "0";
+        if (!showResult) {
+            if (resultView.value != "0") {
+                resultView.value += "0";
+            }
+        } else {
+            clearResult();
         }
+        inputNumber = true;
     }
 
     document.getElementById("one").onclick = function () {
-        resultView.value += "1";
+        if (resultView.value != "0" && !showResult) {
+            resultView.value += "1";
+        } else {
+            resultView.value = "1";
+        }
+        inputNumber = true;
+        showResult = false;
     }
 
     document.getElementById("two").onclick = function () {
-        resultView.value += "2";
+        if (resultView.value != "0" && !showResult) {
+            resultView.value += "2";
+        } else {
+            resultView.value = "2";
+        }
+        inputNumber = true;
+        showResult = false;
     }
 
     document.getElementById("three").onclick = function () {
-        resultView.value += "3";
+        if (resultView.value != "0" && !showResult) {
+            resultView.value += "3";
+        } else {
+            resultView.value = "3";
+        }
+        inputNumber = true;
+        showResult = false;
     }
 
     document.getElementById("four").onclick = function () {
-        resultView.value += "4";
+        if (resultView.value != "0" && !showResult) {
+            resultView.value += "4";
+        } else {
+            resultView.value = "4";
+        }
+        inputNumber = true;
+        showResult = false;
     }
 
     document.getElementById("five").onclick = function () {
-        resultView.value += "5";
+        if (resultView.value != "0" && !showResult) {
+            resultView.value += "5";
+        } else {
+            resultView.value = "5";
+        }
+        inputNumber = true;
+        showResult = false;
     }
 
     document.getElementById("six").onclick = function () {
-        resultView.value += "6";
+        if (resultView.value != "0" && !showResult) {
+            resultView.value += "6";
+        } else {
+            resultView.value = "6";
+        }
+        inputNumber = true;
+        showResult = false;
     }
 
     document.getElementById("seven").onclick = function () {
-        resultView.value += "7";
+        if (resultView.value != "0" && !showResult) {
+            resultView.value += "7";
+        } else {
+            resultView.value = "7";
+        }
+        inputNumber = true;
+        showResult = false;
     }
 
     document.getElementById("eight").onclick = function () {
-        resultView.value += "8";
+        if (resultView.value != "0" && !showResult) {
+            resultView.value += "8";
+        } else {
+            resultView.value = "8";
+        }
+        inputNumber = true;
+        showResult = false;
     }
 
     document.getElementById("nine").onclick = function () {
-        resultView.value += "9";
+        if (resultView.value != "0" && !showResult) {
+            resultView.value += "9";
+        } else {
+            resultView.value = "9";
+        }
+        inputNumber = true;
+        showResult = false;
     }
 
     document.getElementById("left-bracket").onclick = function () {
@@ -61,17 +137,112 @@ window.onload = function () {
     }
 
     document.getElementById("right-bracket").onclick = function () {
-        if (brackets > 0 && inputNumber) {
+        if (brackets > 0 && (showResult || inputNumber)) {
             expressionArr.push(resultView.value);
             expressionArr.push(")");
-            resultView.value = "0";
+            refreshExpression();
+            clearResult();
             --brackets;
         }
     }
 
     document.getElementById("backspace").onclick = function () {
-        if (resultView.value.length) {
+        if (!showResul && resultView.value.length > 1) {
             resultView.value = resultView.value.substr(0, resultView.value.length - 1);
+        } else {
+            clearResult();
+        }
+    }
+
+    document.getElementById("point").onclick = function () {
+        if (!showResul && resultView.value.indexOf(".", 0) == -1) {
+            resultView.value += ".";
+        }
+    }
+
+    document.getElementById("clear-entry").onclick = function () {
+        clear();
+    }
+
+    document.getElementById("divide").onclick = function () {
+        if (!inputNumber && !showResult) {
+            if (expressionArr.length) {
+                expressionArr.pop();
+                expressionArr.push("/");
+                refreshExpression();
+            }
+        } else {
+            expressionArr.push(resultView.value);
+            clearResult();
+            expressionArr.push("/");
+        }
+        refreshExpression();
+        inputNumber = false;
+    }
+
+    document.getElementById("multy").onclick = function () {
+        if (!inputNumber && !showResult) {
+            if (expressionArr.length) {
+                expressionArr.pop();
+                expressionArr.push("*");
+                refreshExpression();
+            }
+        } else {
+            expressionArr.push(resultView.value);
+            clearResult();
+            expressionArr.push("*");
+        }
+        refreshExpression();
+        inputNumber = false;
+    }
+
+    document.getElementById("add").onclick = function () {
+        if (!inputNumber && !showResult) {
+            if (expressionArr.length) {
+                expressionArr.pop();
+                expressionArr.push("+");
+                refreshExpression();
+            }
+        } else {
+            expressionArr.push(resultView.value);
+            clearResult();
+            expressionArr.push("+");
+        }
+        refreshExpression();
+        inputNumber = false;
+
+    }
+
+    document.getElementById("minus").onclick = function () {
+        if (!inputNumber && !showResult) {
+            if (expressionArr.length) {
+                expressionArr.pop();
+                expressionArr.push("-");
+                refreshExpression();
+            }
+        } else {
+            expressionArr.push(resultView.value);
+            clearResult();
+            expressionArr.push("-");
+        }
+        refreshExpression();
+        inputNumber = false;
+        showResult = false;
+    }
+
+    document.getElementById("equal").onclick = function () {
+        if (!showResult) {
+            if (inputNumber) {
+                expressionArr.push(resultView.value);
+            }
+            while (brackets) {
+                expressionArr.push(")");
+                --brackets;
+            }
+            var result = eval(expressionArr.join(""));
+            clear();
+            resultView.value = result;
+            showResult = true;
         }
     }
 }
