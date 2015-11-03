@@ -41,12 +41,16 @@
 		A3C961AA1BD65AC70099D17B /* signout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = signout.png; sourceTree = "<group>"; };
 		A3C961AB1BD65AC70099D17B /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = index.html; path = ../hw_3/index.html; sourceTree = "<group>"; };
 		A3C961AC1BD661470099D17B /* index.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = index.css; path = ../hw_3/index.css; sourceTree = "<group>"; };
+		A3E49E1F1BE8B93B008C8A5E /* calculator.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = calculator.css; path = ../hw_5/calculator.css; sourceTree = "<group>"; };
+		A3E49E201BE8B93B008C8A5E /* calculator.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = calculator.html; path = ../hw_5/calculator.html; sourceTree = "<group>"; };
+		A3E49E211BE8B93B008C8A5E /* calculator.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = calculator.js; path = ../hw_5/calculator.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		A302C1A61BCD1C71004344B5 = {
 			isa = PBXGroup;
 			children = (
+				A3E49E1E1BE8B91C008C8A5E /* web_hw5 */,
 				A3C961991BD659F50099D17B /* web_hw3 */,
 				A302C1AD1BCD1CD6004344B5 /* web_hw1 */,
 				A302C1B01BCD1D02004344B5 /* web_hw2 */,
@@ -131,6 +135,16 @@
 				A3C961AA1BD65AC70099D17B /* signout.png */,
 			);
 			path = images;
+			sourceTree = "<group>";
+		};
+		A3E49E1E1BE8B91C008C8A5E /* web_hw5 */ = {
+			isa = PBXGroup;
+			children = (
+				A3E49E1F1BE8B93B008C8A5E /* calculator.css */,
+				A3E49E201BE8B93B008C8A5E /* calculator.html */,
+				A3E49E211BE8B93B008C8A5E /* calculator.js */,
+			);
+			name = web_hw5;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

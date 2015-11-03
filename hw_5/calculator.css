@@ -19,7 +19,7 @@
     width: 360px;
     background-color: black;
     border: none;
-    color: white;
+	color: #ffffff;
     text-align: right;
 }
 
@@ -30,7 +30,7 @@
 
 #result-view {
     height: 120px;
-    font-size: 34pt;
+    font-size: 44pt;
 }
 
 #input {
@@ -56,18 +56,18 @@ div.button {
     float: right;
 }
 
-    #operation .button {
-        background-color: #ff6a00;
-        color: white;
-    }
+#operation .button {
+    background-color: #ff6a00;
+    color: white;
+}
 
-    #operation .button:hover{
-        background-color: #f05b00;
-    }
+#operation .button:hover{
+    background-color: #f05b00;
+}
 
-    #operation .button:active{
-        background-color: #e14c00;
-    }
+#operation .button:active{
+    background-color: #e14c00;
+}
 
 #handle {
     width: 270px;
@@ -75,17 +75,17 @@ div.button {
     float: left;
 }
 
-    #handle .button {
-        background-color: #c0c0c0;
-    }
+#handle .button {
+    background-color: #c0c0c0;
+}
 
-    #handle .button:hover {
-        background-color: #b1b1b1;
-    }
+#handle .button:hover {
+    background-color: #b1b1b1;
+}
 
-    #handle .button:active {
-        background-color: #a2a2a2;
-    }
+#handle .button:active {
+    background-color: #a2a2a2;
+}
 
 #number {
     width: 270px;
@@ -93,14 +93,14 @@ div.button {
     float: left;
 }
 
-    #number .button {
-        background-color: #f0f0f0;
-    }
+#number .button {
+    background-color: #f0f0f0;
+}
 
-    #number .button:hover {
-        background-color: #e1e1e1;
-    }
+#number .button:hover {
+    background-color: #e1e1e1;
+}
 
-    #number .button:active {
-        background-color: #d2d2d2;
-    }
+#number .button:active {
+    background-color: #d2d2d2;
+}
