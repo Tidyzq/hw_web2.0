@@ -148,7 +148,7 @@ window.onload = function () {
             } else {
                 if (!rightBracket) {
                     expressionArr.push(resultView.value);
-                    clearResult();
+                    showResult = true;
                 }
                 expressionArr.push(operationMap[this.id]);
             }
