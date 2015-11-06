@@ -15,22 +15,24 @@
     height: 190px;
 }
 
-#output input {
+#output textarea {
+    vertical-align: central;
+    float: left;
+    resize: none;
     width: 360px;
     background-color: black;
     border: none;
+    border-radius: 0;
 	color: #ffffff;
     text-align: right;
 }
 
 #expression-view {
-    height: 70px;
-    font-size: 12pt;
+    height: 90px;
 }
 
 #result-view {
-    height: 120px;
-    font-size: 44pt;
+    height: 100px;
 }
 
 #input {
@@ -39,6 +41,11 @@
 }
 
 div.button {
+    /* disable selection */
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
     width: 88px;
     height: 88px;
     float: left;
@@ -66,7 +73,7 @@ div.button {
 }
 
 #operation .button:active{
-    background-color: #e14c00;
+    background-color: #d23d00;
 }
 
 #handle {
@@ -84,7 +91,7 @@ div.button {
 }
 
 #handle .button:active {
-    background-color: #a2a2a2;
+    background-color: #939393;
 }
 
 #number {
@@ -102,5 +109,5 @@ div.button {
 }
 
 #number .button:active {
-    background-color: #d2d2d2;
+    background-color: #c3c3c3;
 }

@@ -4,6 +4,7 @@ window.onload = function () {
     var expressionView = document.getElementById("expression-view");
     var expressionArr = [];
     var inputNumber = false; // whether the user just inputed number
+    var showSubResult = false; // whether the resultView is showing a sub-result
     var showResult = false; // whether the resultView is showing a result
     var leftBracket = false; // whether the user just inputed a left bracket
     var rightBracket = false; // whether the user just inputed a right bracket
@@ -29,18 +30,30 @@ window.onload = function () {
     };
 
     // disable selection when double clicked
-    document.onselectstart = function () { return false; }
+    // document.onselectstart = function () { return false; }
 
     // init calculator
     clearResult();
 
     function refreshExpression() {
         expressionView.value = expressionArr.join(" ");
+        // expressionView.style.fontSize = Math.min(16, 800 / expressionView.value.length) + "px";
+        expressionView.style.fontSize = "16px";
+    }
+
+    function refreshResult(str) {
+        resultView.value = str;
+        resultView.style.fontSize = Math.min(60, 600 / resultView.value.length) + "px";
+    }
+
+    function resultAdd(str) {
+        refreshResult(resultView.value + str);
     }
 
     // clear resultView
     function clearResult() {
-        resultView.value = "0";
+        refreshResult("0");
+        showSubResult = false;
         showResult = false;
     }
 
@@ -51,6 +64,7 @@ window.onload = function () {
         expressionView.value = "";
         brackets = 0;
         inputNumber = false;
+        showSubResult = false;
         showResult = false;
         leftBracket = false;
         rightBracket = false;
@@ -63,10 +77,8 @@ window.onload = function () {
             rightBracket = false;
         }
         // if the resultView is showing result, then clear the resultView
-        if (!showResult) {
-            if (resultView.value != "0") {
-                resultView.value += "0";
-            }
+        if (!showResult && !showSubResult && resultView.value != "0") {
+            resultAdd("0")
         } else {
             clearResult();
         }
@@ -83,40 +95,47 @@ window.onload = function () {
             }
             // if the number in resultView is 0, then replace it with 1, otherwise add 1 in the back
             // if just inputed right bracket, 
-            if (resultView.value != "0" && !showResult) {
-                resultView.value += numberMap[this.id];
+            if (resultView.value != "0" && !showResult && !showSubResult) {
+                resultAdd(numberMap[this.id]);
             } else {
-                resultView.value = numberMap[this.id];
+                refreshResult(numberMap[this.id]);
             }
             inputNumber = true;
+            showSubResult = false;
             showResult = false;
             leftBracket = false;
         }
     }
-   
+
     document.getElementById("left-bracket").onclick = function () {
         // if justed inputed number, then add a (
-        if (!inputNumber) {
-            expressionArr.push("(")
-            refreshExpression();
-            ++brackets;
-            leftBracket = true;
+        if (rightBracket) {
+            expressionArr.push("*");
+            rightBracket = false;
         }
+        expressionArr.push("(")
+        refreshExpression();
+        ++brackets;
+        leftBracket = true;
     };
 
     document.getElementById("right-bracket").onclick = function () {
-        if (brackets > 0 && (showResult || inputNumber)) {
-            expressionArr.push(resultView.value);
+        if (brackets > 0 && (showSubResult || showResult || inputNumber)) {
+            if (!rightBracket) {
+                expressionArr.push(resultView.value);
+            }
             expressionArr.push(")");
             refreshExpression();
-            clearResult();
             --brackets;
+            inputNumber = true;
+            showSubResult = true;
+            showResult = false;
             rightBracket = true;
         }
     }
 
-    document.getElementById("backspace").onclick = function () {
-        if (!showResult && resultView.value.length > 1) {
+    document.getElementById("backspace").onclick = function onBackSpace() {
+        if (!showSubResult && !showResult && resultView.value.length > 1) {
             resultView.value = resultView.value.substr(0, resultView.value.length - 1);
         } else {
             clearResult();
@@ -128,7 +147,7 @@ window.onload = function () {
             expressionArr.push("*");
             rightBracket = false;
         }
-        if (!showResult && resultView.value.indexOf(".", 0) == -1) {
+        if (!showSubResult && !showResult && resultView.value.indexOf(".", 0) == -1) {
             resultView.value += ".";
         }
     };
@@ -139,28 +158,27 @@ window.onload = function () {
 
     for (var key in operationMap) {
         document.getElementById(key).onclick = function () {
-            if (!inputNumber && !showResult && !leftBracket) {
-                if (expressionArr.length) {
-                    expressionArr.pop();
-                    expressionArr.push(operationMap[this.id]);
-                    refreshExpression();
-                }
-            } else {
+            if (inputNumber || showResult) {
                 if (!rightBracket) {
                     expressionArr.push(resultView.value);
-                    showResult = true;
                 }
                 expressionArr.push(operationMap[this.id]);
+                refreshExpression();
+                inputNumber = false;
+                showSubResult = true;
+                showResult = false;
+                leftBracket = false;
+                rightBracket = false;
+            } else if (!rightBracket && !leftBracket && expressionArr.length) {
+                expressionArr.pop();
+                expressionArr.push(operationMap[this.id]);
+                refreshExpression();
             }
-            refreshExpression();
-            inputNumber = false;
-            leftBracket = false;
-            rightBracket = false;
         }
     }
 
     document.getElementById("equal").onclick = function () {
-        if (!showResult && inputNumber) {
+        if (inputNumber || (!inputNumber && (showSubResult || showResult))) {
             if (!rightBracket) {
                 expressionArr.push(resultView.value);
             }
@@ -168,9 +186,10 @@ window.onload = function () {
                 expressionArr.push(")");
                 --brackets;
             }
+            // expressionView.value = expressionArr.join(" ");
             var result = eval(expressionArr.join(""));
             clear();
-            resultView.value = result;
+            refreshResult(result);
             showResult = true;
         }
     };
