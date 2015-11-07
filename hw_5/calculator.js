@@ -67,7 +67,8 @@ window.onload = function () {
                 break;
             case "-":
                 var preType = getExpressionType(preExpression, "");
-                if (preType == expressionType.none || preType == expressionType.operation || preType == expressionType.rightBracket) {
+                if (preType == expressionType.none || preType == expressionType.operation
+                    || preType == expressionType.rightBracket) {
                     return expressionType.negative;
                 } else {
                     return expressionType.operation;
@@ -136,6 +137,8 @@ window.onload = function () {
                             resultArr.push(add);
                             --brackets;
                             calSubResult();
+                            resultView.value = resultArr[resultArr.length - 1];
+                            showSubResult = true;
                         }
                     }
                 }
@@ -174,7 +177,8 @@ window.onload = function () {
 
     function calSubResult() {
         for (var i = 0; i < resultArr.length; ++i) {
-            if (getExpressionType(resultArr[i], i ? resultArr[i - 1] : "") == expressionType.negative && getExpressionType(resultArr[i + 1], "") == expressionType.number) {
+            if (getExpressionType(resultArr[i], i ? resultArr[i - 1] : "") == expressionType.negative
+                && getExpressionType(resultArr[i + 1], "") == expressionType.number) {
                 var number = -eval(resultArr[i + 1])
                 resultArr = resultArr.slice(0, i);
                 resultArr.push(number);
@@ -186,20 +190,22 @@ window.onload = function () {
             resultArr = resultArr.slice(0, i);
             resultArr.push(eval(eval(sub.join("")).toFixed(8)));
             calSubResult();
-        }
-        var flag = false;
-        for (var i = 0; i < resultArr.length; ++i) {
-            if (resultArr[i] == "*" || resultArr[i] == "/") {
-                if (getExpressionType(resultArr[i - 1], "") == expressionType.number && getExpressionType(resultArr[i + 1], "") == expressionType.number) {
-                    var sub = resultArr.slice(i - 1, resultArr.length);
-                    resultArr = resultArr.slice(0, i - 1);
-                    resultArr.push(eval(eval(sub.join("")).toFixed(8)));
-                    flag = true;
+        } else {
+            var flag = false;
+            for (var i = 0; i < resultArr.length; ++i) {
+                if (resultArr[i] == "*" || resultArr[i] == "/") {
+                    if (getExpressionType(resultArr[i - 1], "") == expressionType.number
+                        && getExpressionType(resultArr[i + 1], "") == expressionType.number) {
+                        var sub = resultArr.slice(i - 1, resultArr.length);
+                        resultArr = resultArr.slice(0, i - 1);
+                        resultArr.push(eval(eval(sub.join("")).toFixed(8)));
+                        flag = true;
+                    }
                 }
             }
+            if (flag) calSubResult();
+            console.log("resultArr:" + resultArr.join(""), 0);
         }
-        if (flag) calSubResult();
-        console.log("resultArr:" + resultArr.join(""), 0);
     }
 
     function addNumber() {
@@ -227,13 +233,14 @@ window.onload = function () {
         showResult = false;
     }
 
-    document.getElementById("zero").onclick = function () {
+    function clickZero() {
         if (!showResult && !showSubResult && resultView.value != "0") {
             resultAdd("0")
         } else {
             refreshResult("0");
         }
     };
+    document.getElementById("zero").onclick = clickZero;
 
     for (var key in numberMap) {
         document.getElementById(key).onclick = function () {
@@ -246,26 +253,29 @@ window.onload = function () {
         }
     }
 
-    document.getElementById("left-bracket").onclick = function () {
+    function clickLeftBracket() {
         addExpression("(");
     };
+    document.getElementById("left-bracket").onclick = clickLeftBracket;
 
-    document.getElementById("right-bracket").onclick = function () {
+    function clickRightBracket() {
         if (inputNumber) {
             addNumber();
         }
         addExpression(")");
     }
+    document.getElementById("right-bracket").onclick = clickRightBracket;
 
-    document.getElementById("backspace").onclick = function onBackSpace() {
+    function clickBackSpace() {
         if (!showSubResult && !showResult && resultView.value.length > 1) {
-            resultView.value = resultView.value.substr(0, resultView.value.length - 1);
+            refreshResult(resultView.value.substr(0, resultView.value.length - 1));
         } else {
             clearResult();
         }
     };
+    document.getElementById("backspace").onclick = clickBackSpace;
 
-    document.getElementById("point").onclick = function () {
+    function clickdot() {
         if (showSubResult || showResult) {
             clearResult();
         }
@@ -273,10 +283,12 @@ window.onload = function () {
             resultAdd(".");
         }
     };
+    document.getElementById("dot").onclick = clickdot;
 
-    document.getElementById("clear-entry").onclick = function () {
+    function clickClearEntry() {
         clear();
     };
+    document.getElementById("clear-entry").onclick = clickClearEntry;
 
     for (var key in operationMap) {
         document.getElementById(key).onclick = function () {
@@ -288,7 +300,7 @@ window.onload = function () {
         }
     }
 
-    document.getElementById("equal").onclick = function () {
+    function clickEqual() {
         if (inputNumber) {
             addNumber();
         }
@@ -312,4 +324,5 @@ window.onload = function () {
             }
         }
     };
+    document.getElementById("equal").onclick = clickEqual;
 }
