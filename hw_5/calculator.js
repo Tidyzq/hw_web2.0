@@ -38,16 +38,17 @@ window.onload = function () {
     function refreshExpression() {
         expressionView.value = expressionArr.join(" ");
         // expressionView.style.fontSize = Math.min(16, 800 / expressionView.value.length) + "px";
-        expressionView.style.fontSize = "16px";
     }
 
     function refreshResult(str) {
         resultView.value = str;
-        resultView.style.fontSize = Math.min(60, 600 / resultView.value.length) + "px";
+        resultView.style.fontSize = Math.min(60, 630 / resultView.value.length) + "px";
     }
 
     function resultAdd(str) {
-        refreshResult(resultView.value + str);
+        // if the number is over 39 digits then stop adding
+        if (resultView.value.length < 39)
+            refreshResult(resultView.value + str);
     }
 
     // clear resultView
@@ -55,6 +56,16 @@ window.onload = function () {
         refreshResult("0");
         showSubResult = false;
         showResult = false;
+    }
+
+    function addNumber() {
+        var str = resultView.value;
+        if (str.indexOf(".", 0) == str.length - 1) {
+            str = str.substr(0, str.length - 1);
+            refreshResult(str);
+        }
+        expressionArr.push(str);
+        showSubResult = true;
     }
 
     // clear all
@@ -94,7 +105,6 @@ window.onload = function () {
                 rightBracket = false;
             }
             // if the number in resultView is 0, then replace it with 1, otherwise add 1 in the back
-            // if just inputed right bracket, 
             if (resultView.value != "0" && !showResult && !showSubResult) {
                 resultAdd(numberMap[this.id]);
             } else {
@@ -122,7 +132,7 @@ window.onload = function () {
     document.getElementById("right-bracket").onclick = function () {
         if (brackets > 0 && (showSubResult || showResult || inputNumber)) {
             if (!rightBracket) {
-                expressionArr.push(resultView.value);
+                addNumber();
             }
             expressionArr.push(")");
             refreshExpression();
@@ -147,8 +157,12 @@ window.onload = function () {
             expressionArr.push("*");
             rightBracket = false;
         }
-        if (!showSubResult && !showResult && resultView.value.indexOf(".", 0) == -1) {
+        if (showSubResult || showResult) {
+            clearResult();
+        }
+        if (resultView.value.indexOf(".", 0) == -1) {
             resultView.value += ".";
+            inputNumber = true;
         }
     };
 
@@ -160,7 +174,7 @@ window.onload = function () {
         document.getElementById(key).onclick = function () {
             if (inputNumber || showResult) {
                 if (!rightBracket) {
-                    expressionArr.push(resultView.value);
+                    addNumber();
                 }
                 expressionArr.push(operationMap[this.id]);
                 refreshExpression();
@@ -178,19 +192,25 @@ window.onload = function () {
     }
 
     document.getElementById("equal").onclick = function () {
-        if (inputNumber || (!inputNumber && (showSubResult || showResult))) {
+        if (inputNumber) {
             if (!rightBracket) {
-                expressionArr.push(resultView.value);
+                addNumber();
             }
             while (brackets) {
                 expressionArr.push(")");
                 --brackets;
             }
-            // expressionView.value = expressionArr.join(" ");
-            var result = eval(expressionArr.join(""));
-            clear();
-            refreshResult(result);
-            showResult = true;
+            // sync check
+            try {
+                var result = eval(expressionArr.join(""));
+                clear();
+                refreshResult(result);
+                showResult = true;
+            }
+            catch (exception) {
+                alert(exception);
+                clear();
+            }
         }
     };
 }

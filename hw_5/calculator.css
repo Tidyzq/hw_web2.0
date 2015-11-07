@@ -28,10 +28,14 @@
 }
 
 #expression-view {
+    font-size: 16px;
+    line-height: 30px;
     height: 90px;
 }
 
 #result-view {
+    font-size: 60px;
+    line-height: 100px;
     height: 100px;
 }
 
