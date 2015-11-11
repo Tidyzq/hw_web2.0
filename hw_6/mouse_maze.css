@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Century Gothic', sans-serif;
+}
+
+#header h1, #description h2 {
+    font-weight: normal;
+    text-align: center;
+    line-height: 50px;
+}
+
+#maze_content {
+    position: relative;
+    width: 820px;
+    height: 580px;
+    margin: auto;
+    cursor: pointer;
+}
+
+div.wall {
+    border: 1px solid black;
+    -webkit-transition-duration: 0.4s;
+    background-color: #eeeeee;
+}
+
+div.wall:hover {
+    background-color: red;
+}
+
+#start, #end {
+    width: 45px;
+    height: 45px;
+    border: 1px solid black;
+    position: absolute;
+    font-size: 35px;
+    line-height: 45px;
+    text-align: center;
+}
+
+#start {
+    background-color: green;
+}
+
+#end {
+    background-color: blueviolet;
+}
+
+div.horizontal {
+    width: 40px;
+    height: 10px;
+    position: absolute;
+}
+
+div.vertical {
+    width: 10px;
+    height: 40px;
+    position: absolute;
+}
+
+div.example {
+    width: 100px;
+    height: 25px;
+    margin: auto;
+}
+
+#tutorial {
+    width: 800px;
+    margin: auto;
+}

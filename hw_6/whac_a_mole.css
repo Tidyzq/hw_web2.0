@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+#calc-content {
+    width: 360px;
+    height: 640px;
+    margin: auto;
+}
+
+#output {
+    width: 360px;
+    height: 190px;
+}
+
+#output textarea {
+    vertical-align: central;
+    float: left;
+    resize: none;
+    width: 360px;
+    background-color: black;
+    border: none;
+    border-radius: 0;
+	color: #ffffff;
+    text-align: right;
+}
+
+#expression-view {
+    font-size: 16px;
+    line-height: 30px;
+    height: 90px;
+}
+
+#result-view {
+    font-size: 60px;
+    line-height: 100px;
+    height: 100px;
+}
+
+#input {
+    width: 360px;
+    height: 450px;
+}
+
+div.button {
+    /* disable selection */
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    width: 88px;
+    height: 88px;
+    float: left;
+    text-align: center;
+    line-height: 90px;
+    font-size: 24pt;
+    border: 1px solid #808080;
+    cursor: pointer;
+}
+
+#operation {
+    position: relative;
+    width: 90px;
+    height: 450px;
+    float: right;
+}
+
+#operation .button {
+    background-color: #ff6a00;
+    color: white;
+}
+
+#operation .button:hover{
+    background-color: #f05b00;
+}
+
+#operation .button:active{
+    background-color: #d23d00;
+}
+
+#handle {
+    width: 270px;
+    height: 90px;
+    float: left;
+}
+
+#handle .button {
+    background-color: #c0c0c0;
+}
+
+#handle .button:hover {
+    background-color: #b1b1b1;
+}
+
+#handle .button:active {
+    background-color: #939393;
+}
+
+#number {
+    width: 270px;
+    height: 360px;
+    float: left;
+}
+
+#number .button {
+    background-color: #f0f0f0;
+}
+
+#number .button:hover {
+    background-color: #e1e1e1;
+}
+
+#number .button:active {
+    background-color: #c3c3c3;
+}

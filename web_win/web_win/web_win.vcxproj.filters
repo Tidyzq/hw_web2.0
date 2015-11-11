@@ -15,13 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_5\calculator.css">
+    <None Include="..\..\hw_6\mouse_maze.css">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_5\calculator.html">
+    <None Include="..\..\hw_6\mouse_maze.html">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_5\calculator.js">
+    <None Include="..\..\hw_6\mouse_maze.js">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\hw_6\whac_a_mole.css">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\hw_6\whac_a_mole.html">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\hw_6\whac_a_mole.js">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
