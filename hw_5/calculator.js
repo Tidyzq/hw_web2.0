@@ -211,8 +211,10 @@ window.onload = function () {
     function addNumber() {
         var str = resultView.value;
         var i = str.length - 1;
-        while (i > 0 && (str[i] == "." || str[i] == "0")) {
-            --i;
+        if (str.indexOf(".") != -1) {
+            while (i > 0 && (str[i] == "." || str[i] == "0")) {
+                --i;
+            }
         }
         str = str.substring(0, i + 1);
         addExpression(str);
