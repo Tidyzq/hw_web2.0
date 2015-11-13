@@ -1,8 +1,28 @@
-* {
+@keyframes blur {
+    0% {-webkit-filter: blur(0px);}
+    100% {-webkit-filter: blur(10px);}
+}
+
+@keyframes no_blur {
+    0% {-webkit-filter: blur(10px);}
+    100% {-webkit-filter: blur(0px);}
+}
+
+body {
     display: block;
     margin: 0;
     padding: 0;
     font-family: 'Century Gothic', sans-serif;
+}
+
+div.blur {
+    -webkit-animation: blur 0.2s;
+    -webkit-animation-fill-mode: forwards;
+}
+
+div.no_blur {
+    -webkit-animation: no_blur 0.2s;
+    -webkit-animation-fill-mode: forwards;
 }
 
 #header h1, #description h2 {
@@ -22,7 +42,7 @@ h2.normal {
 
 h2.alert {
     -webkit-transition-duration: 0.4s;
-    font-weight: blod;
+    font-weight: bold;
     color: crimson;
 }
 
@@ -98,4 +118,27 @@ div.vertical {
 #tutorial {
     width: 800px;
     margin: auto;
+}
+
+div.hover_message {
+    -webkit-user-select: none;
+    cursor: default;
+    display: table;
+    position: fixed;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    font-size: 100px;
+    font-weight: bold;
+    color: crimson;
+    top: 0;
+    left: 0;
+    text-align: center;
+    z-index: 1000;
+}
+
+div.hover_message p {
+    margin: 0;
+    display: table-cell;
+    vertical-align: middle;
 }

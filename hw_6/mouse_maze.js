@@ -63,8 +63,8 @@ generateMaze = function () {
         }
     }
     // start to generate the maze
-    vis[0][0] = true;
-    findPath(new point(0, 0));
+    vis[borderX - 1][0] = true;
+    findPath(new point(borderX - 1, 0));
     // translate walls to divs
     for (var i = 0; i < borderX; ++i) {
         var last = -1;
@@ -116,6 +116,8 @@ window.onload = function () {
     var message = document.getElementById("message");
     var checkPoint = document.getElementById("check_point");
     var maze = document.getElementById("maze_content");
+    var mainContent = document.getElementById("main_content");
+    var body = document.lastChild.lastChild;
     var gameBegin = false; // set to true for purpose
     var overCheckPoint = false;
     for (var i = 0; i < walls.length; ++i) {
@@ -140,6 +142,17 @@ window.onload = function () {
             if (overCheckPoint) {
                 message.className = "normal";
                 message.textContent = "Congratulations! You Win!!!!!!!";
+                mainContent.className = "blur";
+                setTimeout(function () {
+                    var hoverMessage = document.createElement("div");
+                    hoverMessage.className = "hover_message";
+                    hoverMessage.innerHTML = "<p>YOU WIN</p>";
+                    hoverMessage.onclick = function () {
+                        body.removeChild(hoverMessage);
+                        mainContent.className = "no_blur";
+                    }
+                    body.appendChild(hoverMessage);
+                }, 200);
                 overCheckPoint = false;
             } else {
                 message.className = "alert";
@@ -159,7 +172,7 @@ window.onload = function () {
         var bottom = maze.offsetTop + maze.offsetHeight;
         console.log(left, right, top, bottom);
         console.log(event.pageX, event.pageY);
-        if (event.pageX < left || event.pageX > right || event.pageY < top || event.pageY > bottom) {
+        if (event.pageX < left || event.pageX >= right || event.pageY < top || event.pageY >= bottom) {
             reset();
         }
     }

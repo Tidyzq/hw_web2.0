@@ -1,8 +1,61 @@
-* {
+@keyframes blur {
+    0% {-webkit-filter: blur(0px);}
+    100% {-webkit-filter: blur(10px);}
+}
+
+@keyframes no_blur {
+    0% {-webkit-filter: blur(10px);}
+    100% {-webkit-filter: blur(0px);}
+}
+
+@keyframes fade_in {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes fade_out {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+@keyframes race {
+    0% {background-color: gainsboro;}
+    30% {background-color: red;}
+    92% {background-color: maroon;}
+    94% {background-color: gainsboro;}
+    96% {background-color: maroon;}
+    98% {background-color: gainsboro;}
+    98% {background-color: maroon;}
+}
+
+body {
     display: block;
     margin: 0;
     padding: 0;
     font-family: 'Century Gothic', sans-serif;
+    -webkit-transition-duration: 0.5s;
+}
+
+.normal_mode {
+    background-color: white;
+}
+
+.color_mode {
+    background-color: slategray;
+}
+
+.high_speed_mode {
+    background-color: deeppink;
+}
+
+.blur {
+    -webkit-animation: blur 0.1s;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.no_blur {
+    -webkit-animation: no_blur 0.1s;
+    -webkit-animation-fill-mode: forwards;
 }
 
 #header h1, #description h2 {
@@ -12,18 +65,42 @@
 }
 
 #status {
+    width: 280px;
     text-align: center;
     margin: auto;
 }
 
-#moles_content {
-    position: relative;
-    margin: auto;
-    width: 810px;
-    height: 570px;
+#status div {
+    float: left;
+    margin: 5px;
+    height: 20px;
+    width: 130px;
 }
 
-div.mole, div.mole_active, div.mole_wrong {
+div.button {
+    -webkit-user-select: none;
+    background-color: gainsboro;
+    border-radius: 10px;
+    color: crimson;
+    cursor: pointer;
+}
+
+div.button:active {
+    background-color: darkgray;
+    color: darkred;
+}
+
+#moles_content {
+    clear: both;
+    cursor: default;
+    position: relative;
+    margin: auto;
+    width: 720px;
+    height: 540px;
+}
+
+div.mole, div.mole_active, div.color_mole, div.color_mole_active, div.high_speed_mole {
+    -webkit-transition-duration: 0.2s;
     margin: 1px 1px 1px 1px;
     border-radius: 2px;
     width: 28px;
@@ -31,17 +108,19 @@ div.mole, div.mole_active, div.mole_wrong {
     float: left;
 }
 
-div.mole {
-    -webkit-transition-duration: 0.1s;
+div.mole, div.color_mole, div.high_speed_mole {
     background-color: gainsboro;
 }
 
-div.mole:active {
+div.high_speed_mole {
+    -webkit-animation: race 3s;
+}
+
+div.mole:active, div.color_mole:active {
     background-color: crimson;
 }
 
 div.mole_active {
-    -webkit-transition-duration: 0.1s;
     background-color: dodgerblue;
 }
 
@@ -52,4 +131,28 @@ div.mole_active:active {
 #tutorial {
     width: 800px;
     margin: auto;
+}
+
+div.hover_message {
+    -webkit-user-select: none;
+    -webkit-animation-timing-function: linear;
+    cursor: default;
+    display: table;
+    position: fixed;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    font-size: 100px;
+    font-weight: bold;
+    color: crimson;
+    top: 0;
+    left: 0;
+    text-align: center;
+    z-index: 1000;
+}
+
+div.hover_message p {
+    margin: 0;
+    display: table-cell;
+    vertical-align: middle;
 }
