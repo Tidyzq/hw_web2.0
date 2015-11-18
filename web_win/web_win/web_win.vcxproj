@@ -11,12 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_6\mouse_maze.css" />
-    <None Include="..\..\hw_6\mouse_maze.html" />
-    <None Include="..\..\hw_6\mouse_maze.js" />
-    <None Include="..\..\hw_6\whac_a_mole.css" />
-    <None Include="..\..\hw_6\whac_a_mole.html" />
-    <None Include="..\..\hw_6\whac_a_mole.js" />
+    <None Include="..\..\hw_7\fifteen_puzzle.css" />
+    <None Include="..\..\hw_7\fifteen_puzzle.html" />
+    <None Include="..\..\hw_7\fifteen_puzzle.js" />
+    <None Include="..\..\hw_7\priority_queue.js" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{555A0EC6-81AF-4F38-B15F-72578A4AF4E7}</ProjectGuid>

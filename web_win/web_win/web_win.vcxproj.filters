@@ -15,22 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_6\mouse_maze.css">
+    <None Include="..\..\hw_7\fifteen_puzzle.css">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_6\mouse_maze.html">
+    <None Include="..\..\hw_7\fifteen_puzzle.html">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_6\mouse_maze.js">
+    <None Include="..\..\hw_7\fifteen_puzzle.js">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_6\whac_a_mole.css">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\hw_6\whac_a_mole.html">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\hw_6\whac_a_mole.js">
+    <None Include="..\..\hw_7\priority_queue.js">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

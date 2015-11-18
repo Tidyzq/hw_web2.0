@@ -10,15 +10,21 @@ div {
 }
 
 #puzzle_content {
+    position: relative;
     width: 200px;
     height: 200px;
 }
 
 .puzzle_block {
-    border: 1px solid black;
-    width: 48px;
-    height: 48px;
-    float: left;
+    background-image: url("hello_world.png");
+    -webkit-transition-property: left top;
+    -webkit-transition-duration: 0.3s;
+    position: absolute;
+    width: 50px;
+    height: 50px;
     line-height: 48px;
     text-align: center;
+    -webkit-user-select: none;
+    box-shadow: 3px 3px 3px black;
 }
+
