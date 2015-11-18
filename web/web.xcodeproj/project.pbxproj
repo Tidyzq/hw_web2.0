@@ -24,12 +24,15 @@
 		A302C1C11BCD1F86004344B5 /* rottenbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rottenbackground.png; path = ../hw_2/images/rottenbackground.png; sourceTree = "<group>"; };
 		A302C1C21BCD1F86004344B5 /* rottenbig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rottenbig.png; path = ../hw_2/images/rottenbig.png; sourceTree = "<group>"; };
 		A302C1C31BCD2054004344B5 /* movie.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = movie.css; path = ../hw_2/movie.css; sourceTree = "<group>"; };
-		A378C31A1BF37EB400BE96EA /* mouse_maze.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = mouse_maze.css; sourceTree = "<group>"; };
-		A378C31B1BF37EB400BE96EA /* mouse_maze.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = mouse_maze.html; sourceTree = "<group>"; };
-		A378C31C1BF37EB400BE96EA /* mouse_maze.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mouse_maze.js; sourceTree = "<group>"; };
-		A378C31D1BF37EB400BE96EA /* whac_a_mole.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = whac_a_mole.css; sourceTree = "<group>"; };
-		A378C31E1BF37EB400BE96EA /* whac_a_mole.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = whac_a_mole.html; sourceTree = "<group>"; };
-		A378C31F1BF37EB400BE96EA /* whac_a_mole.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = whac_a_mole.js; sourceTree = "<group>"; };
+		A3955B431BFB4565007669D8 /* fifteen_puzzle.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = fifteen_puzzle.css; path = ../hw_7/fifteen_puzzle.css; sourceTree = "<group>"; };
+		A3955B441BFB4565007669D8 /* fifteen_puzzle.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fifteen_puzzle.html; path = ../hw_7/fifteen_puzzle.html; sourceTree = "<group>"; };
+		A3955B451BFB4565007669D8 /* fifteen_puzzle.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = fifteen_puzzle.js; path = ../hw_7/fifteen_puzzle.js; sourceTree = "<group>"; };
+		A3955B461BFC489B007669D8 /* mouse_maze.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = mouse_maze.css; path = ../hw_6/mouse_maze.css; sourceTree = "<group>"; };
+		A3955B471BFC489B007669D8 /* mouse_maze.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = mouse_maze.html; path = ../hw_6/mouse_maze.html; sourceTree = "<group>"; };
+		A3955B481BFC489B007669D8 /* mouse_maze.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = mouse_maze.js; path = ../hw_6/mouse_maze.js; sourceTree = "<group>"; };
+		A3955B491BFC489B007669D8 /* whac_a_mole.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = whac_a_mole.css; path = ../hw_6/whac_a_mole.css; sourceTree = "<group>"; };
+		A3955B4A1BFC489B007669D8 /* whac_a_mole.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = whac_a_mole.html; path = ../hw_6/whac_a_mole.html; sourceTree = "<group>"; };
+		A3955B4B1BFC489B007669D8 /* whac_a_mole.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = whac_a_mole.js; path = ../hw_6/whac_a_mole.js; sourceTree = "<group>"; };
 		A3C9619C1BD65AC70099D17B /* atplus_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atplus_green.png; sourceTree = "<group>"; };
 		A3C9619D1BD65AC70099D17B /* atplus_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atplus_white.png; sourceTree = "<group>"; };
 		A3C9619E1BD65AC70099D17B /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment.png; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 		A302C1A61BCD1C71004344B5 = {
 			isa = PBXGroup;
 			children = (
+				A3955B3F1BFB4246007669D8 /* web_hw7 */,
 				A378C3191BF37EA300BE96EA /* web_hw6 */,
 				A3E49E1E1BE8B91C008C8A5E /* web_hw5 */,
 				A3C961991BD659F50099D17B /* web_hw3 */,
@@ -106,14 +110,24 @@
 		A378C3191BF37EA300BE96EA /* web_hw6 */ = {
 			isa = PBXGroup;
 			children = (
-				A378C31A1BF37EB400BE96EA /* mouse_maze.css */,
-				A378C31B1BF37EB400BE96EA /* mouse_maze.html */,
-				A378C31C1BF37EB400BE96EA /* mouse_maze.js */,
-				A378C31D1BF37EB400BE96EA /* whac_a_mole.css */,
-				A378C31E1BF37EB400BE96EA /* whac_a_mole.html */,
-				A378C31F1BF37EB400BE96EA /* whac_a_mole.js */,
+				A3955B461BFC489B007669D8 /* mouse_maze.css */,
+				A3955B471BFC489B007669D8 /* mouse_maze.html */,
+				A3955B481BFC489B007669D8 /* mouse_maze.js */,
+				A3955B491BFC489B007669D8 /* whac_a_mole.css */,
+				A3955B4A1BFC489B007669D8 /* whac_a_mole.html */,
+				A3955B4B1BFC489B007669D8 /* whac_a_mole.js */,
 			);
 			name = web_hw6;
+			sourceTree = "<group>";
+		};
+		A3955B3F1BFB4246007669D8 /* web_hw7 */ = {
+			isa = PBXGroup;
+			children = (
+				A3955B431BFB4565007669D8 /* fifteen_puzzle.css */,
+				A3955B441BFB4565007669D8 /* fifteen_puzzle.html */,
+				A3955B451BFB4565007669D8 /* fifteen_puzzle.js */,
+			);
+			name = web_hw7;
 			sourceTree = "<group>";
 		};
 		A3C961991BD659F50099D17B /* web_hw3 */ = {
