@@ -23,6 +23,7 @@ function PriorityQueue() {
     this.pop = function () {
         var rst = this.data[1];
         this.data[1] = this.data[this.data.length - 1];
+        delete this.data[this.data.length - 1];
         this.data.pop();
         var index = 1;
         while (1) {
