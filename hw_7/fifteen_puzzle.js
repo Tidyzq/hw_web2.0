@@ -1,6 +1,6 @@
 var puzzle = {
     matrix: new Array(),
-    randomTimes: 100,
+    randomTimes: 150,
     gameStart: false,
     ableToClick: true,
     gameTime: 0,
@@ -193,7 +193,7 @@ solvePuzzle = function () {
                 var curStatu = open.pop();
                 var cur = curStatu.entry;
                 if (contor(cur.matrix) == 0) { // 如果找到解法
-                    console.log(close.size, cur.depth);
+                    console.log("search times: " + close.size, "solution steps: " + cur.depth);
                     document.getElementById("main_content").className = "no_blur";
                     document.body.removeChild(document.getElementById("hover_message"));
                     // 根据寻路结果操作
@@ -204,7 +204,7 @@ solvePuzzle = function () {
                             j = cur.step[i];
                             setTimeout(function () {
                                 solveMove(i + 1);
-                            }, 40);
+                            }, 80);
                         } else {
                             puzzle.ableToClick = true;
                         }

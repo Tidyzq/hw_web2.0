@@ -1,8 +1,15 @@
 @keyframes rotate_icon {
-    0% {transform: rotate(0deg)}
-    50% {transform: rotate(180deg)}
-    100% {transform: rotate(360deg)}
+    0% {
+        transform: rotate(0deg);
+    }
 
+    50% {
+        transform: rotate(180deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 body {
@@ -55,7 +62,6 @@ div {
 }
 
 .puzzle_block {
-    background-image: url("hello_world.png");
     -webkit-transition-duration: 0.3s;
     position: absolute;
     width: 80px;
@@ -94,6 +100,7 @@ div {
     }
 
 #drop_zone {
+    -webkit-user-select: none;
     width: 310px;
     height: 50px;
     border-radius: 20px;
@@ -122,11 +129,11 @@ div {
     z-index: 1000;
 }
 
-#hover_message > div {
-    margin: 0;
-    display: table-cell;
-    vertical-align: middle;
-}
+    #hover_message > div {
+        margin: 0;
+        display: table-cell;
+        vertical-align: middle;
+    }
 
 .loading_icon {
     -webkit-animation: rotate_icon 2s linear infinite;
