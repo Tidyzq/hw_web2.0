@@ -15,17 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_7\fifteen_puzzle.css">
+    <None Include="..\..\hw_8\table_sorter.html">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_7\fifteen_puzzle.html">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\hw_7\fifteen_puzzle.js">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\hw_7\priority_queue.js">
-      <Filter>Source Files</Filter>
-    </None>
+    <None Include="..\..\hw_8\table_sorter.css" />
+    <None Include="..\..\hw_8\table_sorter.js" />
   </ItemGroup>
 </Project>
