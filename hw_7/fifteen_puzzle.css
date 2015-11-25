@@ -1,15 +1,6 @@
 @keyframes rotate_icon {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    50% {
-        transform: rotate(180deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
 }
 
 body {
@@ -21,14 +12,6 @@ body {
 
 div {
     display: block;
-}
-
-.blur {
-    -webkit-filter: blur(10px);
-}
-
-.no_blur {
-    -webkit-filter: blur(0px);
 }
 
 #header h1 {
@@ -43,13 +26,13 @@ div {
     margin: auto;
 }
 
-    #status_bar div, #button_bar .button {
-        float: left;
-        margin: 5px;
-        height: 20px;
-        width: 150px;
-        text-align: center;
-    }
+#status_bar div, #button_bar .button {
+    float: left;
+    margin: 5px;
+    height: 20px;
+    width: 150px;
+    text-align: center;
+}
 
 #puzzle_content {
     -webkit-user-select: none;
@@ -64,17 +47,49 @@ div {
 .puzzle_block {
     -webkit-transition-duration: 0.3s;
     position: absolute;
-    width: 80px;
-    height: 80px;
+    width: 25%;
+    height: 25%;
     line-height: 48px;
     text-align: center;
     -webkit-user-select: none;
 }
 
-    .puzzle_block:hover {
-        box-shadow: 0 0 8px black;
-        z-index: 1;
-    }
+.puzzle_block:hover {
+    box-shadow: 0 0 8px black;
+    z-index: 1;
+}
+
+.puzzle_row_0 {
+    top: 0%;
+}
+
+.puzzle_row_1 {
+    top: 25%;
+}
+
+.puzzle_row_2 {
+    top: 50%;
+}
+
+.puzzle_row_3 {
+    top: 75%;
+}
+
+.puzzle_col_0 {
+    left: 0%;
+}
+
+.puzzle_col_1 {
+    left: 25%;
+}
+
+.puzzle_col_2 {
+    left: 50%;
+}
+
+.puzzle_col_3 {
+    left: 75%;
+}
 
 #button_bar {
     margin: auto;
@@ -90,17 +105,16 @@ div {
     line-height: 20px;
 }
 
-    .button:hover {
-        background-color: darkgray;
-    }
+.button:hover {
+    background-color: darkgray;
+}
 
-    .button:active {
-        background-color: gray;
-        color: darkred;
-    }
+.button:active {
+    background-color: gray;
+    color: darkred;
+}
 
 #drop_zone {
-    -webkit-user-select: none;
     width: 310px;
     height: 50px;
     border-radius: 20px;
@@ -126,14 +140,18 @@ div {
     top: 0;
     left: 0;
     text-align: center;
-    z-index: 1000;
+    z-index: 100;
 }
 
-    #hover_message > div {
-        margin: 0;
-        display: table-cell;
-        vertical-align: middle;
-    }
+.blur {
+    -webkit-filter: blur(10px);
+}
+
+#hover_message #message {
+    margin: 0;
+    display: table-cell;
+    vertical-align: middle;
+}
 
 .loading_icon {
     -webkit-animation: rotate_icon 2s linear infinite;
