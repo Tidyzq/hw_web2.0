@@ -11,10 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_7\fifteen_puzzle.css" />
-    <None Include="..\..\hw_7\fifteen_puzzle.html" />
-    <None Include="..\..\hw_7\fifteen_puzzle.js" />
-    <None Include="..\..\hw_7\priority_queue.js" />
+    <None Include="..\..\hw_8\table_sorter.css" />
+    <None Include="..\..\hw_8\table_sorter.html" />
+    <None Include="..\..\hw_8\table_sorter.js" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{555A0EC6-81AF-4F38-B15F-72578A4AF4E7}</ProjectGuid>
