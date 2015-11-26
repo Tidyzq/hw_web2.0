@@ -54,7 +54,7 @@ div {
     -webkit-user-select: none;
 }
 
-.puzzle_block:hover {
+.puzzle_block_hover:hover {
     box-shadow: 0 0 8px black;
     z-index: 1;
 }

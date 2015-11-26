@@ -2,7 +2,7 @@ var puzzle = {
     matrix: new Array(),
     blocks: new Array(),
     randomTimes: 100,
-    randomDelay: 5,
+    randomDelay: 10,
     solveDelay: 50,
     gameStart: false,
     ableToClick: true,
@@ -46,11 +46,9 @@ var puzzle = {
 }
 
 function updatePosition(newPosition) {
-    $(this).removeClass("puzzle_row_" + Math.floor(this.position / 4));
-    $(this).removeClass("puzzle_col_" + this.position % 4);
+    $(this).removeClass("puzzle_row_" + Math.floor(this.position / 4)).removeClass("puzzle_col_" + this.position % 4);;
     this.position = newPosition;
-    $(this).addClass("puzzle_row_" + Math.floor(this.position / 4));
-    $(this).addClass("puzzle_col_" + this.position % 4);
+    $(this).addClass("puzzle_row_" + Math.floor(this.position / 4)).addClass("puzzle_col_" + this.position % 4);
 }
 
 function moveToPosition(newPosition) {
@@ -87,7 +85,7 @@ function handleOnClick(event) {
 
 function puzzleBlock() {
     var newBlock = document.createElement("canvas");
-    newBlock.className = "puzzle_block";
+    newBlock.className = "puzzle_block puzzle_block_hover";
     newBlock.position = 0;
     newBlock.updatePosition = updatePosition;
     newBlock.moveToPosition = moveToPosition;
@@ -106,6 +104,7 @@ function initPuzzle() {
         puzzle.blocks[i] = newBlock;
         $("#puzzle_content").append(newBlock);
     }
+    $("#0").removeClass("puzzle_block_hover");
 }
 
 function drawPuzzle(imageName) {
@@ -228,7 +227,7 @@ function solvePuzzle() {
         puzzle.ableToClick = false;
         showHoverMessage("<div class=\"loading_icon\"></div>Solving...");
         var sta = new statu(puzzle.matrix, new Array(), 0, puzzle.matrix.indexOf(0)); // ��ʼ״̬
-        AStar(sta); // A* Ѱ·
+        setTimeout(function () { AStar(sta); }); // A* Ѱ·
     }
 }
 
@@ -271,5 +270,5 @@ window.onload = function () {
     $("#drop_zone, #puzzle_content").bind({ "drop": handleFileSelect, "dragover": handleDragOver });
     initPuzzle();
     drawPuzzle("images/panda.jpg");
-    $("#hover_message").hide();
+    hideHoverMessage();
 }

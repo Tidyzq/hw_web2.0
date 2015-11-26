@@ -1,0 +1,55 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+table, th, td {
+	border-width: 1px;
+	border-color: #bdbfcc;
+    border-style: solid;
+    padding: 3px 6px 3px 6px;
+}
+
+table {
+    font-family: Arial;
+	border-collapse: collapse;
+}
+
+tbody > tr:hover {
+    background-color: yellow;
+}
+
+th {
+    -webkit-user-select: none;
+    cursor: pointer;
+    color: white;
+    background-color: #031a80;
+    text-align: left;
+}
+
+th.sorting_ascending, th.sorting_descending {
+    background-color: #a7aefc;
+}
+
+.arrow {
+    height: 16px;
+    width: 16px;
+    float: right;
+    display: inline-block;
+}
+
+th.sorting_ascending .arrow {
+    background-image: url("images/ascend.png")
+}
+
+th.sorting_descending .arrow {
+    background-image: url("images/descend.png")
+}
+
+.odd_row {
+	background-color: #dddddd;
+}
+
+.even_row {
+	background-color: white;
+}
+
