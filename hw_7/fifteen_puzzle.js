@@ -207,12 +207,12 @@ function AStar(sta) {
         }
         var neighbours = getNeighbour(cur.zeroIndex);
         for (var i in neighbours) {
-            var matrix = cur.matrix.slice(0); // 复制matrix
+            var matrix = _.cloneDeep(cur.matrix); // 复制matrix
             var temp = matrix[cur.zeroIndex]; matrix[cur.zeroIndex] = matrix[neighbours[i]]; matrix[neighbours[i]] = temp; // 交换位置
             var contorNumber = contor(matrix);
             if (!close.has(contorNumber)) {
                 close.add(contorNumber);
-                var steps = cur.steps.slice(0); // 复制steps
+                var steps = _.cloneDeep(cur.steps); // 复制steps
                 steps.push(neighbours[i]);
                 var nstatu = new statu(matrix, steps, cur.depth + 1, neighbours[i]);
                 open.insert(value(nstatu), nstatu);

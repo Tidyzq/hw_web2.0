@@ -34,7 +34,6 @@ th.sorting_ascending, th.sorting_descending {
     height: 16px;
     width: 16px;
     float: right;
-    display: inline-block;
 }
 
 th.sorting_ascending .arrow {
