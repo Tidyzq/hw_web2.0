@@ -6,16 +6,12 @@ table, th, td {
 	border-width: 1px;
 	border-color: #bdbfcc;
     border-style: solid;
-    padding: 3px 6px 3px 6px;
+    padding: 3px 20px 3px 6px;
 }
 
 table {
     font-family: Arial;
 	border-collapse: collapse;
-}
-
-tbody > tr:hover {
-    background-color: yellow;
 }
 
 th {
@@ -27,28 +23,23 @@ th {
 }
 
 th.sorting_ascending, th.sorting_descending {
+    background-repeat: no-repeat;
+	background-position: right;
     background-color: #a7aefc;
 }
 
-.arrow {
-    height: 16px;
-    width: 16px;
-    float: right;
-}
-
-th.sorting_ascending .arrow {
+th.sorting_ascending {
     background-image: url("images/ascend.png")
 }
 
-th.sorting_descending .arrow {
+th.sorting_descending {
     background-image: url("images/descend.png")
 }
 
-.odd_row {
+tbody tr:nth-child(even) {
 	background-color: #dddddd;
 }
 
-.even_row {
+tbody tr:nth-child(odd) {
 	background-color: white;
 }
-

@@ -3,7 +3,7 @@ var puzzle = {
     blocks: new Array(),
     randomTimes: 100,
     randomDelay: 10,
-    solveDelay: 50,
+    solveDelay: 30,
     gameStart: false,
     ableToClick: true,
     gameTime: 0,
