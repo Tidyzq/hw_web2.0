@@ -1,0 +1,15 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+label {
+    display: block;
+}
+
+.wrong {
+    background-color: red;
+}
+
+.right {
+    background-color: cyan;
+}

@@ -11,9 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_8\table_sorter.css" />
-    <None Include="..\..\hw_8\table_sorter.html" />
-    <None Include="..\..\hw_8\table_sorter.js" />
+    <None Include="..\..\hw_9\detail.html" />
+    <None Include="..\..\hw_9\launch.js" />
+    <None Include="..\..\hw_9\requestHandler.js" />
+    <None Include="..\..\hw_9\router.js" />
+    <None Include="..\..\hw_9\server.js" />
+    <None Include="..\..\hw_9\signin.html" />
+    <None Include="..\..\hw_9\signin.js" />
+    <None Include="..\..\hw_9\style.css" />
+    <None Include="..\..\hw_9\table_sorter.html" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{555A0EC6-81AF-4F38-B15F-72578A4AF4E7}</ProjectGuid>

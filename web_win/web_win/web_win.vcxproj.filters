@@ -15,10 +15,26 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_8\table_sorter.html">
+    <None Include="..\..\hw_9\detail.html">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_8\table_sorter.css" />
-    <None Include="..\..\hw_8\table_sorter.js" />
+    <None Include="..\..\hw_9\signin.html">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\hw_9\signin.js">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\hw_9\style.css">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\hw_9\table_sorter.html">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\hw_9\launch.js">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\hw_9\server.js" />
+    <None Include="..\..\hw_9\router.js" />
+    <None Include="..\..\hw_9\requestHandler.js" />
   </ItemGroup>
 </Project>
