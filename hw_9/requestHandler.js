@@ -26,11 +26,26 @@ function checkUser(user) {
     return true;
 }
 
-var userNameSet = new Set();
+var sets = {
+    name: new Set(),
+    id: new Set(),
+    telephone: new Set(),
+    email: new Set()
+}
+
 var userMap = {};
 
 var signinPage = "signin.html";
 var detailPage = "detail.html";
+
+function dataCheck(pathname, query, response, postData) {
+    response.writeHead(200, { 'Content-Type': 'text/plain' });
+    var data = querystring.parse(postData);
+    for (var i in data) {
+        if (sets[i].has(data[i])) response.write("'" + data[i] + " is already taken")
+    }
+    response.end();
+}
 
 function getFile(pathname, query, response, postData) {
     console.log("Getting file " + pathname);
@@ -54,36 +69,40 @@ function getFile(pathname, query, response, postData) {
     });
 }
 
-function postData(pathname, query, response, postData) {
+function signup(pathname, query, response, postData) {
     var user = querystring.parse(postData);
     delete user.submit;
+    var flag = true;
+    for (var i in user) {
+        if (sets[i].has(user[i])) flag = false;
+    }
     console.log("User info recived:", user);
-    if (checkUser(user) && !userNameSet.has(user.name)) {
-        userNameSet.add(user.name);
+    if (checkUser(user) && flag) {
+        sets.name.add(user.name);
         console.log("Adding user '" + user.name + "' succeed");
-        console.log("Current user:", userNameSet);
+        console.log("Current user:", sets.name);
         userMap[user.name] = user;
         showDetail(pathname, query, response, postData, user.name);
     } else {
         console.log("Adding user '" + user.name + "' failed");
-        signin(pathname, query, response, postData);
+        getFile(pathname + signinPage, query, response, postData);
     }
 }
 
 function signin(pathname, query, response, postData) {
-    console.log("Showing signin page");
-    var realPath = '.' + pathname + signinPage;
-    fs.readFile(realPath, "binary", function (err, file) {
-        response.writeHead(200, { 'Content-Type': MIME[path.extname(realPath)] });
-        response.write(file, 'binary');
-        response.end();
-    });
+    console.log("request for sign in");
+    var userName = querystring.parse(query).username;
+    if (userName) {
+        showDetail(pathname, query, response, postData, userName);
+    } else {
+        getFile(pathname + signinPage, query, response, postData);
+    }
 }
 
 function showDetail(pathname, query, response, postData, userName) {
     console.log("Showing detail for user '" + userName + "'");
-    if (userNameSet.has(userName)) {
-        var realPath = '.' + pathname + detailPage;
+    if (userName && sets.name.has(userName)) {
+        var realPath = './' + detailPage;
         fs.readFile(realPath, "utf8", function (err, file) {
             response.writeHead(200, { 'Content-Type': MIME[path.extname(realPath)] });
             var user = userMap[userName];
@@ -94,16 +113,16 @@ function showDetail(pathname, query, response, postData, userName) {
             response.end();
         });
     } else {
-        console.log("user '" + userName + "' donot exists");
-        signin(pathname, query, response, postData);
+        if (userName) console.log("user '" + userName + "' donot exists");
+        getFile('./' + signinPage, query, response, postData);
     }
 }
 
 var handle = {
-    'postData': postData,
-    'getFile': getFile,
-    'signin': signin,
-    'showDetail': showDetail
+    '/signup': signup,
+    '/': signin,
+    '/dataCheck': dataCheck,
+    'getFile': getFile
 };
 
 exports.handle = handle;

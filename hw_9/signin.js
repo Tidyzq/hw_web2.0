@@ -1,24 +1,108 @@
-var regexp = {
-    name: /^[a-z]\w{5,17}$/i,
-    id: /^[1-9]\d{7}$/,
-    telephone: /^[1-9]\d{10}$/,
-    email: /^[a-z0-9]([\-_\.]?[a-z0-9]+)*@([a-z0-9_\-]+\.)+[a-zA-Z]{2,4}$/i
+var checkCases = {
+    name: {
+        'should only contain alphabet, number and underline': /^\w*$/,
+        'should begin with alphabet': /^[a-z]/i,
+        'should have a length of 6~18 digits': /^\w{6,18}$/
+    },
+    id: {
+        'should only contain numbers': /^\d*$/,
+        'should begin with non-zero number': /^[1-9]/,
+        'should have a length of 8 numbers': /^\d{8}$/
+    },
+    telephone: {
+        'should only contain numbers': /^\d*$/,
+        'should begin with non-zero number': /^[1-9]/,
+        'should have a length of 11 numbers': /^\d{11}$/
+    },
+    email: {
+        "should only contain alphabet, number, '.', '_', '-' and '@'": /^(\w|\.|-|@)*$/i,
+        'should have exactly one @': /^(\w|\.|-)*@(\w|\.|-)*$/i,
+        "'@' should surround by alphabets and numbers": /\w@\w/,
+        'should begin with alphabet or number': /^[a-z0-9]/i,
+        'should end with alphabet': /[a-z]$/i,
+        "'-' or '.' should not appear continuously": /^[a-z0-9]([\-\.]?\w+)*@(\w+[\-\.]?)*[a-z]$/i,
+        'should have a valid server postfix': /\.[a-z]{2,4}$/i
+    }
+}
+
+var _timer = {};
+function delay_till_last(id, fn, wait) {
+    if (_timer[id]) {
+        window.clearTimeout(_timer[id]);
+        delete _timer[id];
+    }
+    return _timer[id] = window.setTimeout(function () {
+        fn();
+        delete _timer[id];
+    }, wait);
+}
+
+function inputCheck(input) {
+    for (var checkCase in checkCases[input.name]) {
+        if (!checkCases[input.name][checkCase].test(input.value)) return checkCase;
+    }
+    $.post('/dataCheck', input.name + '=' + input.value, function (data) {
+        if (data) showError(input, data);
+    })
+    return null;
+}
+
+function showError(input, message) {
+    var messageBar;
+    $(input).removeClass("pass").addClass('error');
+    $(input).parent().after(messageBar = $('<dd />', {
+        class: "error"
+    }).text(message).hide());
+    messageBar.animate({
+        left: 'toggle'
+    }, 400)
+}
+
+function hideError(input) {
+    $(input).removeClass('error');
+    $(input).parent().siblings('dd.error').animate({
+        left: 'toggle'
+    }, 200, function () {
+        $(this).remove();
+    });
 }
 
 function check(input) {
-    return regexp[input.name].test($(input).val());
+    delay_till_last(input.name, function () {
+        var info = inputCheck(input);
+        if (info) {
+            showError(input, info);
+        } else {
+            $(input).removeClass('error').addClass("pass");
+        }
+        checkAllValid();
+    }, 700);
+    hideError(input);
+}
+
+function checkAllValid() {
+    var flag = true;
+    $('.textfield').each(function () {
+        if (!$(this).hasClass('pass')) flag = false;
+    });
+    if (flag) {
+        $('#submit').removeAttr("disabled");
+    } else {
+        $('#submit').attr("disabled", "disabled");
+    }
 }
 
 window.onload = function () {
-    $('input[type="text"]').blur(function () {
-        $(this).removeClass("wrong right").addClass(check(this) ? "right" : "wrong");
+    $('.textfield').each(function () {
+        var that = this;
+        this.oninput = function () {
+            check(this);
+        };
     });
-    $('input[type="reset"]').click(function () {
-        $('input[type="text"]').removeClass("wrong right");
-    });
-    $('input[type="submit"]').click(function (event) {
-        $('input[type="text"]').each(function () {
-            if (!check(this)) event.preventDefault();
-        });
+    $('#reset').click(function () {
+        $('input.error').each(function () {
+            hideError(this);
+        })
+        $('.textfield').removeClass("error pass");
     });
 }

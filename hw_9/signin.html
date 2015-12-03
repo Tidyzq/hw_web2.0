@@ -8,13 +8,36 @@
 </head>
 <body>
 	<div id="main_content">
-		<form method="post">
-			<label>Name:<input type="text" name="name" /></label>
-			<label>Student ID:<input type="text" name="id" /></label>
-			<label>Telephone:<input type="text" name="telephone" /></label>
-			<label>E-mail:<input type="text" name="email" /></label>
-			<input type="reset" name="reset" />
-			<input type="submit" name="submit" />
+		<h1>Sign In</h1>
+		<form action="/signup" method="post">
+			<dl class="form">
+				<dd>
+					<input class="textfield" type="text" name="name" placeholder="Pick a username" />
+				</dd>
+			</dl>
+			<dl class="form">
+				<dd>
+					<input class="textfield" type="text" name="id" placeholder="Student ID" />
+				</dd>
+			</dl>
+			<dl class="form">
+				<dd>
+					<input class="textfield" type="text" name="telephone" placeholder="Telephone number" />
+				</dd>
+			</dl>
+			<dl class="form">
+				<dd>
+					<input class="textfield" type="text" name="email" placeholder="E-mail address" />
+				</dd>
+			</dl>
+			<dl class="form">
+				<dd>
+					<input id="reset" class="button" type="reset" name="reset" value="reset" />
+				</dd>
+				<dd>
+					<input id="submit" disabled="disabled" class="button" type="submit" name="submit" value="submit" />
+				</dd>
+			</dl>
 		</form>
 	</div>
 </body>

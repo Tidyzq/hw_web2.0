@@ -1,15 +1,98 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: paleturquoise;
+}
+
+#main_content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 20px;
+    width: 400px;
+    height: 500px;
+    background-color: lightskyblue;
+    border-radius: 30px;
 }
 
 label {
     display: block;
 }
 
-.wrong {
-    background-color: red;
+dl.form {
+    display: block;
+    margin: 10px auto 10px auto;
+    width: 80%;
+    height: 50px;
 }
 
-.right {
-    background-color: cyan;
+.textfield, dd.error {
+    position: relative;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    border-radius: 10px;
+    border-width: 3px;
+    border-style: solid;
+    padding: 3px;
+}
+
+.textfield {
+    -webkit-transition-duration: 0.4s;
+    z-index: 100;
+    border-color: white;
+    font-size: 25px;
+}
+
+input.error {
+    border-color: red;
+}
+
+input.pass {
+    border-color: forestgreen;
+}
+
+dd {
+    z-index: 100;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+dd.error {
+    z-index: 0;
+    top: -100%;
+    left: calc(100% - 21px);
+    border-color: red;
+    background-color: red;
+    text-align: center;
+    color: white;
+}
+
+.button {
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
+    height: 80%;
+    margin: 0;
+    border: 0;
+    border-radius: 10px;
+    padding: 0;
+    background-image: linear-gradient(#8add6d, #60b044);
+    font-size: 30px;
+    color: white;
+}
+
+.button:hover {
+    background-image: linear-gradient(#79dc56, #4faf2d);
+}
+
+.button:active {
+    background-image: linear-gradient(#68db3f, #41ae1b);
+}
+
+.button:disabled {
+    cursor: default;
+    background-image: linear-gradient(#c3f1b3, #9ecb8e);
 }
