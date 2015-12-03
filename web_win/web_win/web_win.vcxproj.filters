@@ -27,9 +27,6 @@
     <None Include="..\..\hw_9\style.css">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_9\table_sorter.html">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="..\..\hw_9\launch.js">
       <Filter>Source Files</Filter>
     </None>
