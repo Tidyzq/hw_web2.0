@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #336699;
+    background-color: lightskyblue;
 }
 
 #main_content {
@@ -56,12 +56,15 @@ span.head {
 div.error {
     display: inline-block;
     z-index: 0;
-    top: -100%;
-    left: calc(100% - 21px);
+    top: -51px;
+    left: 300px;
     border-color: red;
     background-color: red;
+    padding-left: 20px;
     text-align: center;
     color: white;
+    font-size: 19px;
+    line-height: 19px;
 }
 
 input.error {

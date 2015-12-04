@@ -69,11 +69,13 @@ function hideError(input) {
 
 function check(input) {
     delayTillLast(input.name, function () {
-        var info = inputCheck(input);
-        if (info) {
-            showError(input, info);
-        } else {
-            $(input).removeClass('error').addClass("pass");
+        if (input.value) {
+            var info = inputCheck(input);
+            if (info) {
+                showError(input, info);
+            } else {
+                $(input).removeClass('error').addClass("pass");
+            }
         }
         checkAllValid();
     }, 700);

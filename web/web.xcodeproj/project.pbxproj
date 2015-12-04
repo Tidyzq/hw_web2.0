@@ -33,6 +33,18 @@
 		A3955B491BFC489B007669D8 /* whac_a_mole.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = whac_a_mole.css; path = ../hw_6/whac_a_mole.css; sourceTree = "<group>"; };
 		A3955B4A1BFC489B007669D8 /* whac_a_mole.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = whac_a_mole.html; path = ../hw_6/whac_a_mole.html; sourceTree = "<group>"; };
 		A3955B4B1BFC489B007669D8 /* whac_a_mole.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = whac_a_mole.js; path = ../hw_6/whac_a_mole.js; sourceTree = "<group>"; };
+		A3A7235F1C115DC9008AC21B /* detail.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = detail.html; sourceTree = "<group>"; };
+		A3A723601C115DC9008AC21B /* jquery.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = jquery.js; sourceTree = "<group>"; };
+		A3A723611C115DC9008AC21B /* signin.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = signin.html; sourceTree = "<group>"; };
+		A3A723621C115DC9008AC21B /* signin.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = signin.js; sourceTree = "<group>"; };
+		A3A723631C115DC9008AC21B /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		A3A723641C115DC9008AC21B /* launch.bat */ = {isa = PBXFileReference; lastKnownFileType = text; name = launch.bat; path = ../hw_9/launch.bat; sourceTree = "<group>"; };
+		A3A723651C115DC9008AC21B /* launch.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = launch.js; path = ../hw_9/launch.js; sourceTree = "<group>"; };
+		A3A723661C115DC9008AC21B /* launch.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = launch.sh; path = ../hw_9/launch.sh; sourceTree = "<group>"; };
+		A3A723671C115DC9008AC21B /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.txt; path = ../hw_9/README.txt; sourceTree = "<group>"; };
+		A3A723681C115DC9008AC21B /* requestHandler.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = requestHandler.js; path = ../hw_9/requestHandler.js; sourceTree = "<group>"; };
+		A3A723691C115DC9008AC21B /* router.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = router.js; path = ../hw_9/router.js; sourceTree = "<group>"; };
+		A3A7236A1C115DC9008AC21B /* server.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = server.js; path = ../hw_9/server.js; sourceTree = "<group>"; };
 		A3C9619C1BD65AC70099D17B /* atplus_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atplus_green.png; sourceTree = "<group>"; };
 		A3C9619D1BD65AC70099D17B /* atplus_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atplus_white.png; sourceTree = "<group>"; };
 		A3C9619E1BD65AC70099D17B /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment.png; sourceTree = "<group>"; };
@@ -59,6 +71,7 @@
 		A302C1A61BCD1C71004344B5 = {
 			isa = PBXGroup;
 			children = (
+				A3A7235D1C115DB4008AC21B /* web_hw9 */,
 				A3955B3F1BFB4246007669D8 /* web_hw7 */,
 				A378C3191BF37EA300BE96EA /* web_hw6 */,
 				A3E49E1E1BE8B91C008C8A5E /* web_hw5 */,
@@ -128,6 +141,34 @@
 				A3955B451BFB4565007669D8 /* fifteen_puzzle.js */,
 			);
 			name = web_hw7;
+			sourceTree = "<group>";
+		};
+		A3A7235D1C115DB4008AC21B /* web_hw9 */ = {
+			isa = PBXGroup;
+			children = (
+				A3A7235E1C115DC9008AC21B /* assets */,
+				A3A723641C115DC9008AC21B /* launch.bat */,
+				A3A723651C115DC9008AC21B /* launch.js */,
+				A3A723661C115DC9008AC21B /* launch.sh */,
+				A3A723671C115DC9008AC21B /* README.txt */,
+				A3A723681C115DC9008AC21B /* requestHandler.js */,
+				A3A723691C115DC9008AC21B /* router.js */,
+				A3A7236A1C115DC9008AC21B /* server.js */,
+			);
+			name = web_hw9;
+			sourceTree = "<group>";
+		};
+		A3A7235E1C115DC9008AC21B /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				A3A7235F1C115DC9008AC21B /* detail.html */,
+				A3A723601C115DC9008AC21B /* jquery.js */,
+				A3A723611C115DC9008AC21B /* signin.html */,
+				A3A723621C115DC9008AC21B /* signin.js */,
+				A3A723631C115DC9008AC21B /* style.css */,
+			);
+			name = assets;
+			path = ../hw_9/assets;
 			sourceTree = "<group>";
 		};
 		A3C961991BD659F50099D17B /* web_hw3 */ = {
