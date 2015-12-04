@@ -25,15 +25,15 @@ var checkCases = {
     }
 }
 
-var _timer = {};
-function delay_till_last(id, fn, wait) {
-    if (_timer[id]) {
-        window.clearTimeout(_timer[id]);
-        delete _timer[id];
+var timer = {};
+function delayTillLast(id, fn, wait) {
+    if (timer[id]) {
+        window.clearTimeout(timer[id]);
+        delete timer[id];
     }
-    return _timer[id] = window.setTimeout(function () {
+    return timer[id] = window.setTimeout(function () {
         fn();
-        delete _timer[id];
+        delete timer[id];
     }, wait);
 }
 
@@ -50,7 +50,7 @@ function inputCheck(input) {
 function showError(input, message) {
     var messageBar;
     $(input).removeClass("pass").addClass('error');
-    $(input).parent().after(messageBar = $('<dd />', {
+    $(input).after(messageBar = $('<div />', {
         class: "error"
     }).text(message).hide());
     messageBar.animate({
@@ -60,7 +60,7 @@ function showError(input, message) {
 
 function hideError(input) {
     $(input).removeClass('error');
-    $(input).parent().siblings('dd.error').animate({
+    $(input).siblings('div.error').animate({
         left: 'toggle'
     }, 200, function () {
         $(this).remove();
@@ -68,7 +68,7 @@ function hideError(input) {
 }
 
 function check(input) {
-    delay_till_last(input.name, function () {
+    delayTillLast(input.name, function () {
         var info = inputCheck(input);
         if (info) {
             showError(input, info);

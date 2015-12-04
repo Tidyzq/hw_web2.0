@@ -35,21 +35,21 @@ var sets = {
 
 var userMap = {};
 
-var signinPage = "signin.html";
-var detailPage = "detail.html";
+var signinPage = "/signin.html";
+var detailPage = "/detail.html";
 
 function dataCheck(pathname, query, response, postData) {
     response.writeHead(200, { 'Content-Type': 'text/plain' });
     var data = querystring.parse(postData);
     for (var i in data) {
-        if (sets[i].has(data[i])) response.write("'" + data[i] + " is already taken")
+        if (sets[i].has(data[i])) response.write("'" + data[i] + "' is already taken")
     }
     response.end();
 }
 
 function getFile(pathname, query, response, postData) {
     console.log("Getting file " + pathname);
-    var realPath = '.' + pathname;
+    var realPath = "assets" + pathname;
     fs.exists(realPath, function (exists) {
         if (!exists) {
             response.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -78,14 +78,16 @@ function signup(pathname, query, response, postData) {
     }
     console.log("User info recived:", user);
     if (checkUser(user) && flag) {
-        sets.name.add(user.name);
         console.log("Adding user '" + user.name + "' succeed");
-        console.log("Current user:", sets.name);
+        for (var i in user) {
+            sets[i].add(user[i]);
+        }
         userMap[user.name] = user;
+        console.log("Current user:", sets.name);
         showDetail(pathname, query, response, postData, user.name);
     } else {
         console.log("Adding user '" + user.name + "' failed");
-        getFile(pathname + signinPage, query, response, postData);
+        getFile(signinPage, query, response, postData);
     }
 }
 
@@ -95,14 +97,14 @@ function signin(pathname, query, response, postData) {
     if (userName) {
         showDetail(pathname, query, response, postData, userName);
     } else {
-        getFile(pathname + signinPage, query, response, postData);
+        getFile(signinPage, query, response, postData);
     }
 }
 
 function showDetail(pathname, query, response, postData, userName) {
     console.log("Showing detail for user '" + userName + "'");
     if (userName && sets.name.has(userName)) {
-        var realPath = './' + detailPage;
+        var realPath = "assets" + detailPage;
         fs.readFile(realPath, "utf8", function (err, file) {
             response.writeHead(200, { 'Content-Type': MIME[path.extname(realPath)] });
             var user = userMap[userName];
@@ -114,7 +116,7 @@ function showDetail(pathname, query, response, postData, userName) {
         });
     } else {
         if (userName) console.log("user '" + userName + "' donot exists");
-        getFile('./' + signinPage, query, response, postData);
+        getFile(signinPage, query, response, postData);
     }
 }
 
