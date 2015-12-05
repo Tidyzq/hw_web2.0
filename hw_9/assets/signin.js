@@ -9,7 +9,7 @@ var checkCases = {
         'should begin with non-zero number': /^[1-9]/,
         'should have a length of 8 numbers': /^\d{8}$/
     },
-    telephone: {
+    tel: {
         'should only contain numbers': /^\d*$/,
         'should begin with non-zero number': /^[1-9]/,
         'should have a length of 11 numbers': /^\d{11}$/
@@ -39,13 +39,30 @@ function delayTillLast(id, fn, wait) {
 
 function inputCheck(input) {
     for (var checkCase in checkCases[input.name]) {
-        if (!checkCases[input.name][checkCase].test(input.value)) return checkCase;
+        if (!checkCases[input.name][checkCase].test(input.value)) {
+            showError(input, checkCase);
+            return;
+        }
     }
     $.post('/dataCheck', input.name + '=' + input.value, function (data) {
-        if (data) showError(input, data);
+        if (data) {
+            showError(input, data);
+        } else {
+            $(input).removeClass('error').addClass("pass");
+            checkAllValid();
+        }
     })
-    return null;
 }
+
+//function inputCheck(input) {
+//    for (var checkCase in checkCases[input.name]) {
+//        if (!checkCases[input.name][checkCase].test(input.value)) return checkCase;
+//    }
+//    $.post('/dataCheck', input.name + '=' + input.value, function (data) {
+//        if (data) showError(input, data);
+//    })
+//    return null;
+//}
 
 function showError(input, message) {
     var messageBar;
@@ -59,7 +76,7 @@ function showError(input, message) {
 }
 
 function hideError(input) {
-    $(input).removeClass('error');
+    $(input).removeClass('error pass');
     $(input).siblings('div.error').animate({
         left: 'toggle'
     }, 200, function () {
@@ -70,14 +87,8 @@ function hideError(input) {
 function check(input) {
     delayTillLast(input.name, function () {
         if (input.value) {
-            var info = inputCheck(input);
-            if (info) {
-                showError(input, info);
-            } else {
-                $(input).removeClass('error').addClass("pass");
-            }
+            inputCheck(input);
         }
-        checkAllValid();
     }, 700);
     hideError(input);
 }
@@ -102,9 +113,8 @@ window.onload = function () {
         };
     });
     $('#reset').click(function () {
-        $('input.error').each(function () {
+        $('.textfield').each(function () {
             hideError(this);
         })
-        $('.textfield').removeClass("error pass");
     });
 }
