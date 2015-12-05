@@ -1,38 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var querystring = require('querystring');
-
-var mysql = require('mysql');
-var conn = mysql.createConnection({
-    host: 'tidyzq.com',
-    user: 'hw_9',
-    password: '123456',
-    database: 'hw_web',
-    port: 3306
-});
-
-conn.connect();
-function DBShowUser() {
-    conn.query('SELECT * FROM user', function (err, rows, fields) {
-        console.log(rows);
-    });
-}
-
-function DBAddUser(user) {
-    conn.query('INSERT INTO user (name, id, tel, email) values("' + user.name + '", "' + user.id + '", "' + user.tel + '", "' + user.email + '")', function (err, res) {
-        if (err) {
-            console.log("Adding user failed");
-        } else {
-            console.log("Adding user succeed");
-        }
-    });
-}
-
-function DBQuery(item, value, fn) {
-    conn.query('SELECT * FROM user WHERE ' + item + '="' + value + '"', function (err, rows, fields) {
-        fn(rows);
-    });
-}
+var dataBase = require('./dataBase.js');
 
 var MIME = {
     '.html': 'text/html',
@@ -55,7 +24,7 @@ function dataCheck(pathname, query, response, postData) {
     response.writeHead(200, { 'Content-Type': 'text/plain' });
     var data = querystring.parse(postData);
     for (var i in data) {
-        DBQuery(i, data[i], function (rows) {
+        dataBase.query(i, data[i], function (rows) {
             if (rows[0]) {
                 console.log("'" + data[i] + "' is already taken");
                 response.end("'" + data[i] + "' is already taken");
@@ -63,10 +32,6 @@ function dataCheck(pathname, query, response, postData) {
                 response.end();
             }
         })
-        //if (sets[i].has(data[i])) {
-        //    console.log("'" + data[i] + "' is already taken");
-        //    response.write("'" + data[i] + "' is already taken");
-        //}
     }
 }
 
@@ -92,17 +57,6 @@ function getFile(pathname, query, response, postData) {
     });
 }
 
-//function checkUser(user) {
-//    for (var i in user) {
-//        if (!regexp[i].test(user[i]) || sets[i].has(user[i])) {
-//            console.log("User check failed at '" + i + "'");
-//            return false;
-//        }
-//    }
-//    console.log("User check passed");
-//    return true;
-//}
-
 function checkUser(user) { // 暂时没有想到如何异步检测于是先不提供判重
     for (var i in user) {
         if (!regexp[i].test(user[i])) {
@@ -119,9 +73,14 @@ function signup(pathname, query, response, postData) {
     console.log("User info recived:", user);
     if (checkUser(user)) {
         console.log("Adding user '" + user.name + "' succeed");
-        DBAddUser(user);
+        dataBase.addUser(user, function (err, res) {
+            if (err) console.log("Adding failed");
+            else console.log("Adding succeed");
+        });
         console.log("Current user:");
-        DBShowUser();
+        dataBase.showUser(function (rows) {
+            console.log(rows);
+        });
         showDetail(pathname, query, response, postData, user.name);
     } else {
         console.log("Adding user '" + user.name + "' failed");
@@ -142,7 +101,7 @@ function signin(pathname, query, response, postData) {
 function showDetail(pathname, query, response, postData, userName) {
     console.log("Showing detail for user '" + userName + "'");
     if (userName) {
-        DBQuery('name', userName, function (rows) {
+        dataBase.query('name', userName, function (rows) {
             if (rows[0]) {
                 var realPath = "assets" + detailPage, user = rows[0];
                 fs.readFile(realPath, "utf8", function (err, file) {
@@ -159,21 +118,6 @@ function showDetail(pathname, query, response, postData, userName) {
             }
         })
     }
-    //if (userName && sets.name.has(userName)) {
-    //    var realPath = "assets" + detailPage;
-    //    fs.readFile(realPath, "utf8", function (err, file) {
-    //        response.writeHead(200, { 'Content-Type': MIME[path.extname(realPath)] });
-    //        var user = userMap[userName];
-    //        for (var i in user) {
-    //            file = file.replace('{{' + i + '}}', user[i]);
-    //        }
-    //        response.write(file, 'utf8');
-    //        response.end();
-    //    });
-    //} else {
-    //    if (userName) console.log("user '" + userName + "' donot exists");
-    //    getFile(signinPage, query, response, postData);
-    //}
 }
 
 var handle = {

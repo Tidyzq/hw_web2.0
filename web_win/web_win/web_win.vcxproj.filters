@@ -33,5 +33,6 @@
     <None Include="..\..\hw_9\assets\style.css">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="..\..\hw_9\dataBase.js" />
   </ItemGroup>
 </Project>

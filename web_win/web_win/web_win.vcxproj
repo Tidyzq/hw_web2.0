@@ -15,6 +15,7 @@
     <None Include="..\..\hw_9\assets\signin.html" />
     <None Include="..\..\hw_9\assets\signin.js" />
     <None Include="..\..\hw_9\assets\style.css" />
+    <None Include="..\..\hw_9\dataBase.js" />
     <None Include="..\..\hw_9\launch.js" />
     <None Include="..\..\hw_9\requestHandler.js" />
     <None Include="..\..\hw_9\router.js" />
