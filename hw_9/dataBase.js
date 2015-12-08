@@ -22,7 +22,9 @@ function DBAddUser(user, fn) {
 }
 
 function DBCheckUser(user, fn) {
-
+    conn.query('SELECT * FROM user WHERE name="' + user.name + '" OR id="' + user.id + '" OR tel="' + user.tel + '" OR email="' + user.email + '"', function (err, rows, fields) {
+        fn(rows);
+    });
 }
 
 function DBQuery(item, value, fn) {
@@ -35,4 +37,5 @@ conn.connect();
 
 exports.showUser = DBShowUser;
 exports.addUser = DBAddUser;
+exports.checkUser = DBCheckUser;
 exports.query = DBQuery;

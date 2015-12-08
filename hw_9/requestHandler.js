@@ -57,35 +57,49 @@ function getFile(pathname, query, response, postData) {
     });
 }
 
-function checkUser(user) { // 暂时没有想到如何异步检测于是先不提供判重
+//function checkUser(user) { // 暂时没有想到如何异步检测于是先不提供判重
+//    for (var i in user) {
+//        if (!regexp[i].test(user[i])) {
+//            return false;
+//        }
+//    }
+//    console.log("User check passed");
+//    return true;
+//}
+
+function checkUser(user, callback) {
     for (var i in user) {
         if (!regexp[i].test(user[i])) {
-            return false;
+            callback(false);
+            return;
         }
     }
-    console.log("User check passed");
-    return true;
+    dataBase.checkUser(user, function (rows) {
+        callback(!rows[0]);
+    });
 }
 
 function signup(pathname, query, response, postData) {
     var user = querystring.parse(postData);
     delete user.submit;
     console.log("User info recived:", user);
-    if (checkUser(user)) {
-        console.log("Adding user '" + user.name + "' succeed");
-        dataBase.addUser(user, function (err, res) {
-            if (err) console.log("Adding failed");
-            else console.log("Adding succeed");
-        });
-        console.log("Current user:");
-        dataBase.showUser(function (rows) {
-            console.log(rows);
-        });
-        showDetail(pathname, query, response, postData, user.name);
-    } else {
-        console.log("Adding user '" + user.name + "' failed");
-        getFile(signinPage, query, response, postData);
-    }
+    checkUser(user, function (pass) {
+        if (pass) {
+            console.log("Adding user '" + user.name + "' succeed");
+            dataBase.addUser(user, function (err, res) {
+                if (err) console.log("Adding failed");
+                else console.log("Adding succeed");
+            });
+            console.log("Current user:");
+            dataBase.showUser(function (rows) {
+                console.log(rows);
+            });
+            showDetail(pathname, query, response, postData, user.name);
+        } else {
+            console.log("Adding user '" + user.name + "' failed");
+            getFile(signinPage, query, response, postData);
+        }
+    });
 }
 
 function signin(pathname, query, response, postData) {
