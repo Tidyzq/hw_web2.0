@@ -13,26 +13,58 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\S1">
+      <UniqueIdentifier>{430ef78f-69db-4c14-b011-e33051f05539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\S2">
+      <UniqueIdentifier>{d2f39ca9-f241-4d38-9181-69f12a2034e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\S3">
+      <UniqueIdentifier>{83006629-2502-4db4-a714-95b69599fb1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\S4">
+      <UniqueIdentifier>{fbba177e-44b4-4833-94c9-6efcbef26e0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\S5">
+      <UniqueIdentifier>{4e097296-6cab-4cec-833a-76f9b44a28b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_9\launch.js">
+    <None Include="..\..\hw_10\server.js">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_9\server.js" />
-    <None Include="..\..\hw_9\router.js" />
-    <None Include="..\..\hw_9\requestHandler.js" />
-    <None Include="..\..\hw_9\assets\detail.html">
+    <None Include="..\..\hw_10\S1\index.html">
+      <Filter>Source Files\S1</Filter>
+    </None>
+    <None Include="..\..\hw_10\index.css">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\hw_9\assets\signin.html">
-      <Filter>Source Files</Filter>
+    <None Include="..\..\hw_10\S1\index.js">
+      <Filter>Source Files\S1</Filter>
     </None>
-    <None Include="..\..\hw_9\assets\signin.js">
-      <Filter>Source Files</Filter>
+    <None Include="..\..\hw_10\S2\index.html">
+      <Filter>Source Files\S2</Filter>
     </None>
-    <None Include="..\..\hw_9\assets\style.css">
-      <Filter>Source Files</Filter>
+    <None Include="..\..\hw_10\S2\index.js">
+      <Filter>Source Files\S2</Filter>
     </None>
-    <None Include="..\..\hw_9\dataBase.js" />
+    <None Include="..\..\hw_10\S3\index.html">
+      <Filter>Source Files\S3</Filter>
+    </None>
+    <None Include="..\..\hw_10\S3\index.js">
+      <Filter>Source Files\S3</Filter>
+    </None>
+    <None Include="..\..\hw_10\S4\index.html">
+      <Filter>Source Files\S4</Filter>
+    </None>
+    <None Include="..\..\hw_10\S4\index.js">
+      <Filter>Source Files\S4</Filter>
+    </None>
+    <None Include="..\..\hw_10\S5\index.html">
+      <Filter>Source Files\S5</Filter>
+    </None>
+    <None Include="..\..\hw_10\S5\index.js">
+      <Filter>Source Files\S5</Filter>
+    </None>
   </ItemGroup>
 </Project>

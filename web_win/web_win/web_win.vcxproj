@@ -11,15 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\hw_9\assets\detail.html" />
-    <None Include="..\..\hw_9\assets\signin.html" />
-    <None Include="..\..\hw_9\assets\signin.js" />
-    <None Include="..\..\hw_9\assets\style.css" />
-    <None Include="..\..\hw_9\dataBase.js" />
-    <None Include="..\..\hw_9\launch.js" />
-    <None Include="..\..\hw_9\requestHandler.js" />
-    <None Include="..\..\hw_9\router.js" />
-    <None Include="..\..\hw_9\server.js" />
+    <None Include="..\..\hw_10\index.css" />
+    <None Include="..\..\hw_10\S1\index.html" />
+    <None Include="..\..\hw_10\S1\index.js" />
+    <None Include="..\..\hw_10\S2\index.html" />
+    <None Include="..\..\hw_10\S2\index.js" />
+    <None Include="..\..\hw_10\S3\index.html" />
+    <None Include="..\..\hw_10\S3\index.js" />
+    <None Include="..\..\hw_10\S4\index.html" />
+    <None Include="..\..\hw_10\S4\index.js" />
+    <None Include="..\..\hw_10\S5\index.html" />
+    <None Include="..\..\hw_10\S5\index.js" />
+    <None Include="..\..\hw_10\server.js" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{555A0EC6-81AF-4F38-B15F-72578A4AF4E7}</ProjectGuid>
