@@ -1,111 +1,42 @@
-function aHandler(curSum, callback) {
-    var button = $("#A");
+function buttonHandler(button, rate, curSum, succeedMessage, faildMessage, callback) {
     $(button).children(".number").text("...").show();
     $(button).siblings().addClass("disabled");
     $.get('/', function (data) {
         if (!$(button).children(".number:hidden").length && !$(button).hasClass("disabled")) {
             $(button).children(".number").text(data);
             $(button).siblings(":has(.number:hidden)").removeClass("disabled");
-            if (Math.random() < 0.8) {
+            if (Math.random() < rate) {
                 if (!$(".button:has(.number:hidden)").length) {
                     $("#info-bar").removeClass("disabled");
                 }
                 $(button).addClass("disabled");
-                callback(null, "这是一个天大的秘密", curSum + parseInt(data));
+                callback(null, succeedMessage, curSum + parseInt(data));
             } else {
                 $(button).children(".number").hide();
-                callback({ message: "这不是一个天大的秘密", curSum: curSum }, null, null);
+                callback({ message: faildMessage, curSum: curSum }, null, null);
             }
         }
     });
+}
+
+function aHandler(curSum, callback) {
+    buttonHandler($("#A"), 0.8, curSum, "这是一个天大的秘密", "这不是一个天大的秘密", callback);
 }
 
 function bHandler(curSum, callback) {
-    var button = $("#B");
-    $(button).children(".number").text("...").show();
-    $(button).siblings().addClass("disabled");
-    $.get('/', function (data) {
-        if (!$(button).children(".number:hidden").length && !$(button).hasClass("disabled")) {
-            $(button).children(".number").text(data);
-            $(button).siblings(":has(.number:hidden)").removeClass("disabled");
-            if (Math.random() < 0.8) {
-                if (!$(".button:has(.number:hidden)").length) {
-                    $("#info-bar").removeClass("disabled");
-                }
-                $(button).addClass("disabled");
-                callback(null, "我不知道", curSum + parseInt(data));
-            } else {
-                $(button).children(".number").hide();
-                callback({ message: "我知道", curSum: curSum }, null, null);
-            }
-        }
-    });
+    buttonHandler($("#B"), 0.8, curSum, "我不知道", "我知道", callback);
 }
 
 function cHandler(curSum, callback) {
-    var button = $("#C");
-    $(button).children(".number").text("...").show();
-    $(button).siblings().addClass("disabled");
-    $.get('/', function (data) {
-        if (!$(button).children(".number:hidden").length && !$(button).hasClass("disabled")) {
-            $(button).children(".number").text(data);
-            $(button).siblings(":has(.number:hidden)").removeClass("disabled");
-            if (Math.random() < 0.8) {
-                if (!$(".button:has(.number:hidden)").length) {
-                    $("#info-bar").removeClass("disabled");
-                }
-                $(button).addClass("disabled");
-                callback(null, "你不知道", curSum + parseInt(data));
-            } else {
-                $(button).children(".number").hide();
-                callback({ message: "你知道", curSum: curSum }, null, null);
-            }
-        }
-    });
+    buttonHandler($("#C"), 0.8, curSum, "你不知道", "你知道", callback);
 }
 
 function dHandler(curSum, callback) {
-    var button = $("#D");
-    $(button).children(".number").text("...").show();
-    $(button).siblings().addClass("disabled");
-    $.get('/', function (data) {
-        if (!$(button).children(".number:hidden").length && !$(button).hasClass("disabled")) {
-            $(button).children(".number").text(data);
-            $(button).siblings(":has(.number:hidden)").removeClass("disabled");
-            if (Math.random() < 0.8) {
-                if (!$(".button:has(.number:hidden)").length) {
-                    $("#info-bar").removeClass("disabled");
-                }
-                $(button).addClass("disabled");
-                callback(null, "他不知道", curSum + parseInt(data));
-            } else {
-                $(button).children(".number").hide();
-                callback({ message: "他知道", curSum: curSum }, null, null);
-            }
-        }
-    });
+    buttonHandler($("#D"), 0.8, curSum, "他不知道", "他知道", callback);
 }
 
 function eHandler(curSum, callback) {
-    var button = $("#E");
-    $(button).children(".number").text("...").show();
-    $(button).siblings().addClass("disabled");
-    $.get('/', function (data) {
-        if (!$(button).children(".number:hidden").length && !$(button).hasClass("disabled")) {
-            $(button).children(".number").text(data);
-            $(button).siblings(":has(.number:hidden)").removeClass("disabled");
-            if (Math.random() < 0.8) {
-                if (!$(".button:has(.number:hidden)").length) {
-                    $("#info-bar").removeClass("disabled");
-                }
-                $(button).addClass("disabled");
-                callback(null, "才怪", curSum + parseInt(data));
-            } else {
-                $(button).children(".number").hide();
-                callback({ message: "才不怪", curSum: curSum }, null, null);
-            }
-        }
-    });
+    buttonHandler($("#E"), 0.8, curSum, "才怪", "才不怪", callback);
 }
 
 function bubbleHandler(curSum, callBack) {
