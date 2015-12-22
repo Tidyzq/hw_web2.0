@@ -1,98 +1,122 @@
-function buttonHandler(button, rate, curSum, succeedMessage, faildMessage, callback) {
-    $(button).children(".number").text("...").show();
-    $(button).siblings().addClass("disabled");
-    $.get('/', function (data) {
-        if (!$(button).children(".number:hidden").length && !$(button).hasClass("disabled")) {
-            $(button).children(".number").text(data);
-            $(button).siblings(":has(.number:hidden)").removeClass("disabled");
-            if (Math.random() < rate) {
-                if (!$(".button:has(.number:hidden)").length) {
-                    $("#info-bar").removeClass("disabled");
-                }
+function btnClickHandler(event, callback) {
+    if (!$(this).hasClass("disabled") && $(this).children(".number:hidden").length) {
+        callback = arguments[1] ? arguments[1] : tryEnableInfobar;
+        $(this).children(".number").text("...").show();
+        $(this).siblings().addClass("disabled");
+        var button = this;
+        $.get('/' + this.id, function (data) {
+            if (!$(button).children(".number:hidden").length && !$(button).hasClass("disabled")) {
+                $(button).children(".number").text(data);
                 $(button).addClass("disabled");
-                callback(null, succeedMessage, curSum + parseInt(data));
-            } else {
-                $(button).children(".number").hide();
-                callback({ message: faildMessage, curSum: curSum }, null, null);
+                $(button).siblings(":has(.number:hidden)").removeClass("disabled");
+                callback.call(button);
             }
+        });
+    }
+}
+
+function btnHandler(button, rate, curSum, succeedMessage, faildMessage, callback) {
+    $(button).trigger('click', function () {
+        if (Math.random() < rate) {
+            tryEnableInfobar();
+            callback(null, succeedMessage, curSum + parseInt($(button).children(".number").text()));
+        } else {
+            $(button).removeClass("disabled");
+            $(button).children(".number").hide();
+            callback({ message: faildMessage, curSum: curSum }, null, null);
         }
     });
 }
 
 function aHandler(curSum, callback) {
-    buttonHandler($("#A"), 0.8, curSum, "这是一个天大的秘密", "这不是一个天大的秘密", callback);
+    btnHandler($("#A"), 0.8, curSum, "A:这是一个天大的秘密", "A:这不是一个天大的秘密", callback);
 }
 
 function bHandler(curSum, callback) {
-    buttonHandler($("#B"), 0.8, curSum, "我不知道", "我知道", callback);
+    btnHandler($("#B"), 0.8, curSum, "B:我不知道", "B:我知道", callback);
 }
 
 function cHandler(curSum, callback) {
-    buttonHandler($("#C"), 0.8, curSum, "你不知道", "你知道", callback);
+    btnHandler($("#C"), 0.8, curSum, "C:你不知道", "C:你知道", callback);
 }
 
 function dHandler(curSum, callback) {
-    buttonHandler($("#D"), 0.8, curSum, "他不知道", "他知道", callback);
+    btnHandler($("#D"), 0.8, curSum, "D:他不知道", "D:他知道", callback);
 }
 
 function eHandler(curSum, callback) {
-    buttonHandler($("#E"), 0.8, curSum, "才怪", "才不怪", callback);
+    btnHandler($("#E"), 0.8, curSum, "E:才怪", "E:才不怪", callback);
 }
 
-function bubbleHandler(curSum, callBack) {
-    $("#info").text("楼主异步调用战斗力感人，目测不超过" + curSum);
-    $("#info-bar").addClass("disabled");
-    callBack();
+function bubbleHandler(event, callback) {
+    if (!$(this).hasClass("disabled")) {
+        var number = 0;
+        $(".number").each(function () {
+            number += parseInt($(this).text());
+        });
+        $("#info").text(number);
+        $(this).addClass("disabled");
+        if ($.isFunction(callback)) callback.call(this);
+    }
+}
+
+function tryEnableInfobar() {
+    if (!$(".button:not(.disabled),.button:has(.number:hidden)").length) {
+        $("#info-bar").removeClass("disabled");
+    }
+}
+
+function getRandom(sourceOrder) {
+    var randomOrder = [];
+    while (sourceOrder.length) {
+        var select = Math.floor(Math.random() * sourceOrder.length);
+        randomOrder.push(sourceOrder[select]);
+        sourceOrder.splice(select, 1);
+    }
+    return randomOrder;
 }
 
 function showMessage(message) {
-    $("#info").text(message);
+    $("#hover_message").text(message);
 }
 
 window.onload = function () {
-    $(".icon").click(function () {
-        if (!$(this).hasClass("disabled")) {
-            $(this).addClass("disabled");
-            var handlers = [aHandler, bHandler, cHandler, dHandler, eHandler], callbacks = [];
-            var random_handlers = [], callbacks = [];
-            while (handlers.length) {
-                var select = Math.floor(Math.random() * handlers.length);
-                random_handlers.push(handlers[select]);
-                handlers.splice(select, 1);
-            }
-            random_handlers.forEach(function (element) {
-                $("#info").text($("#info").text() + element.toString()[9].toUpperCase());
-            });
-            for (var i = 0; i < random_handlers.length; ++i) {
-                (function (i) {
-                    callbacks[i] = function (curSum) {
-                        var handler = random_handlers[i];
-                        handler(curSum, function (err, message, curSum) {
-                            if (err) {
-                                console.log("failed at " + random_handlers[i].toString().match(/function\s+(\w+)/)[1]);
-                                showMessage(err.message);
-                                callbacks[i](err.curSum);
-                            } else {
-                                showMessage(message);
-                                callbacks[i + 1](curSum);
-                            }
-                        });
-                    }
-                })(i);
-            }
-            callbacks[random_handlers.length] = function (curSum) {
-                bubbleHandler(curSum, function () {
-                    console.log("succeed");
-                });
-            }
-            callbacks[0](0);
-        }
-    });
     $("#button").on("mouseenter", function () {
-        $(".icon").removeClass("disabled");
         $(".number").hide();
         $(".button").removeClass("disabled");
         $("#info").text("");
         $("#info-bar").addClass("disabled");
+        $("#hover_message").text("");
     });
+    $(".button").click(btnClickHandler);
+    $("#info-bar").click(bubbleHandler);
+    $(".apb").click(function () {
+        $("#button").trigger("mouseenter");
+        var handlers = getRandom([aHandler, bHandler, cHandler, dHandler, eHandler]), callbacks = [], order = '';
+        handlers.forEach(function (element) {
+            order += element.toString()[9].toUpperCase();
+        });
+        showMessage(order);
+        for (var i = 0; i < handlers.length; ++i) {
+            (function (i) {
+                callbacks[i] = function (curSum) {
+                    handlers[i](curSum, function (err, message, curSum) {
+                        if (err) {
+                            showMessage(err.message);
+                            callbacks[i](err.curSum);
+                        } else {
+                            showMessage(message);
+                            callbacks[i + 1](curSum);
+                        }
+                    })
+                }
+            })(i);
+        }
+        callbacks[handlers.length] = function () {
+            $("#info-bar").trigger('click', function () {
+                showMessage("大气泡：楼主异步调用战斗力感人，目测不超过" + $("#info").text());
+            });
+        };
+        callbacks[0](0);
+    })
 }

@@ -91,20 +91,30 @@ body {
 	top: calc(50% - 64px);
 	height: 128px;
 	width: 128px;
-	overflow: hidden;
+	overflow: visible;
+    cursor: pointer;
 }
 
 #info-bar.disabled {
     background: #7E7E7E;
+    cursor: default;
 }
 
-#info {
+#hover_message, #info {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
     font-size: 20px;
     font-weight: bold;
     color: #59C193;
+}
+
+#hover_message {
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 228px;
+    text-align:center;
 }
 
 #button:hover #info-bar {
@@ -134,6 +144,7 @@ body {
 
 .button.disabled {
     background-color: #7E7E7E;
+    cursor: default;
 }
 
 .number {
