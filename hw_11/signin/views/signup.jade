@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	#main_content
+		h1 Sign Up
+		form.signin(action='/signup', method='post')
+			.form
+				input.textfield(type='text', name='name', placeholder='Username')
+			.form
+				input.textfield(type='password', name='pwd', placeholder='Password')
+			.form
+				input.textfield(type='password', name='rpwd', placeholder='Repeat your password')
+			.form
+				input.textfield(type='text', name='id', placeholder='Student ID')
+			.form
+				input.textfield(type='text', name='tel', placeholder='Telphone number')
+			.form
+				input.textfield(type='text', name='email', placeholder='E-mail address')
+			.form
+				input#reset.button(type='reset', name='reset', value='reset')
+			.form
+				input#submit.button(disabled='disabled', type='submit', name='submit', value='sign up')
+	script(type='text/javascript' src='/javascripts/signin.js')
+	script(type='text/javascript' src='/javascripts/validator.js')
