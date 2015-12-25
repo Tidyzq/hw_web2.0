@@ -14,7 +14,7 @@ module.exports = function(db) {
 		if (req.session.username) {
 			res.redirect('/detail');
 		} else {
-			res.render('signin', { title: 'signin' });
+			res.render('signin', { title: 'signin'});
 		}
 	});
 
@@ -25,24 +25,24 @@ module.exports = function(db) {
 			res.redirect('/detail');
 		}).catch(function(error) {
 			debug(error);
-			res.render('signin', { title: 'signin', error: error});
+			res.render('signin', { title: 'signin', user: user, error: error});
 		})
 	});
 	
 	router.get('/signup', function(req, res, next) {
-		res.render('signup', { title: 'signup' });
+		res.render('signup', { title: 'signup', signedIn: !!req.session.username });
 	});
 
 	router.post('/signup', function(req, res, next) {
 		var user = req.body;
 		userController.signupUser(user).then(function() {
 			userController.showAllUsers();
-			debug('jumping to detail', user);
+			debug('jumping to detail');
 			req.session.username = user.name;
 			res.redirect('/detail');
 		}).catch(function(error) {
 			debug('signup failed');
-			res.render('signup', { title: 'signup'});
+			res.render('signup', { title: 'signup', signedIn: !!req.session.username });
 		});
 	});
 
@@ -61,9 +61,9 @@ module.exports = function(db) {
 	});
 
 	router.get('/detail', function(req, res, next) {
-		debug('detail');
+		debug('Shwing detail for user: ' + req.session.username);
 		userController.getUserByUserName(req.session.username).then(function(user) {
-			res.render('detail', { title : 'detail', user: user });
+			res.render('detail', { title : 'detail', user: user});
 		}).catch(function(error) {
 			debug(error);
 			res.redirect('/logout');

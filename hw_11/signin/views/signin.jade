@@ -4,11 +4,11 @@ block header
 	a.jump(href='/signup') Sign Up
 
 block content
-	#main_content
+	#main_content.signin
 		h1 Sign In
-		form.signin(action='/signin', method='post')
+		form(action='/signin', method='post')
 			.form
-				input.textfield(type='text', name='name', placeholder='Username')
+				input.textfield(type='text', name='name', placeholder='Username', value= user ? user.name : undifine)
 				if error && error.position == 'name'
 					.error #{error.message}
 			.form
@@ -16,5 +16,5 @@ block content
 				if error && error.position == 'pwd'
 					.error #{error.message}
 			.form
-				input#submit.button(type='submit', name='submit', value='sign in')
+				input#submit.button(type='submit', name='submit', value='Sign In')
 	script(type='text/javascript' src='/javascripts/signin.js')

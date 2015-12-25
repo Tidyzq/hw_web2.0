@@ -17,15 +17,18 @@ module.exports = function(db) {
 		signinUser: function(user) {
 			debug('Signing in for user ' + user.name);
 			return new Promise(function(resolve, reject) {
-				users.findOne({name: user.name}).then(function(foundUser) {
+				userController.getUserByUserName(user.name).then(function(foundUser) {
 					debug('foundUser: ', foundUser);
-					foundUser ? bcrypt.compare(user.pwd, foundUser.pwd).then(function() {
+					bcrypt.compare(user.pwd, foundUser.pwd).then(function() {
 						debug('signin user ' + user.name + ' succeed');
 						resolve(foundUser);
 					}).catch(function(error) {
 						debug('Incorrect password');
 						reject({message: "Incorrect password", position: 'pwd'});
-					}) : reject({message: "No such user exists", position: 'name'});
+					});
+				}).catch(function(error) {
+					debug(error);
+					reject({message: "No such user exists", position: 'name'});
 				})
 			})
 		},
@@ -34,9 +37,9 @@ module.exports = function(db) {
 			return checkUser(user).then(function() {
 				debug("passed userCheck");
 				return bcrypt.hash(user.pwd, 10).then(function(pwd) {
-					debug(user.pwd, pwd);
 					user.pwd = pwd;
 					if (user.rpwd) delete user.rpwd;
+					if (user.submit) delete user.submit;
 					return users.insert(user);
 				});
 			}).catch(function(error) {

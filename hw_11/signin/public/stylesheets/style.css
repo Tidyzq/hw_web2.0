@@ -56,9 +56,20 @@ body {
     margin: auto;
     padding: 20px;
     width: 400px;
-    height: 600px;
     background-color: #6699ff;
     border-radius: 30px;
+}
+
+#main_content.signin {
+    height: 300px;
+}
+
+#main_content.signup {
+    height: 600px;
+}
+
+#main_content.detail {
+    height: 400px;
 }
 
 h1 {
