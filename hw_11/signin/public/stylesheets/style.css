@@ -1,6 +1,50 @@
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
     background-color: lightskyblue;
+}
+
+#header {
+    margin: 0;
+    padding: 20px;
+    border: 0;
+    position: fixed;
+    height: 32px;
+    width: calc(100% - 40px);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+.jump {
+    -webkit-user-select: none;
+    display: inline-block;
+    margin: auto 10px auto 10px;
+    width: 64px;
+    height: 100%;
+    border-radius: 3px;
+    color: white;
+    text-shadow: rgba(0, 0, 0, 0.14902) 0px -1px 0px;
+    background-color: rgb(96, 176, 68);
+    background-image: linear-gradient(rgb(138, 221, 109), rgb(96, 176, 68));
+    border-color: rgb(92, 169, 65);
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 32px;
+    text-align: center;
+    float: right;
+}
+
+.jump:hover {
+    background-color: rgb(86, 158, 61);
+    background-image: linear-gradient(rgb(121, 216, 88), rgb(86, 158, 61));
+    border-color: rgb(74, 153, 62);
+}
+
+.jump:active {
+    text-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 0px;
+    background-color: rgb(86, 158, 61);
+    background-image: none;
+    border-color: rgb(65, 135, 55);
 }
 
 #main_content {
@@ -37,6 +81,7 @@ span.head {
 }
 
 .textfield, div.error {
+    outline-width: 0;
     position: relative;
     width: calc(100% - 12px);
     height: calc(100% - 12px);
@@ -51,6 +96,10 @@ span.head {
     z-index: 100;
     border-color: white;
     font-size: 25px;
+}
+
+.textfield:focus {
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075),0 0 12px rgba(255,255,255,0.75);
 }
 
 div.error {
@@ -71,8 +120,17 @@ input.error {
     border-color: red;
 }
 
+input.error:focus {
+    box-shadow: none;
+}
+
 input.pass {
     border-color: forestgreen;
+}
+
+input.pass:focus {
+    border-color: forestgreen;
+    box-shadow: inset 0 1px 2px rgba(34,139,34,0.075),0 0 12px rgba(34,139,34,0.75);
 }
 
 .button {
@@ -85,18 +143,26 @@ input.pass {
     border: 0;
     border-radius: 10px;
     padding: 0;
-    background-image: linear-gradient(#8add6d, #60b044);
+    text-shadow: rgba(0, 0, 0, 0.14902) 0px -1px 0px;
+    background-color: rgb(96, 176, 68);
+    background-image: linear-gradient(rgb(138, 221, 109), rgb(96, 176, 68));
+    border-color: rgb(92, 169, 65);
     font-size: 30px;
     text-align: center;
     color: white;
 }
 
 .button:hover {
-    background-image: linear-gradient(#79dc56, #4faf2d);
+    background-color: rgb(86, 158, 61);
+    background-image: linear-gradient(rgb(121, 216, 88), rgb(86, 158, 61));
+    border-color: rgb(74, 153, 62);
 }
 
 .button:active {
-    background-image: linear-gradient(#68db3f, #41ae1b);
+    text-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 0px;
+    background-color: rgb(86, 158, 61);
+    background-image: none;
+    border-color: rgb(65, 135, 55);
 }
 
 .button:disabled {

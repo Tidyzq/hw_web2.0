@@ -1,40 +1,79 @@
 var express = require('express');
 var router = express.Router();
-var validator = require('../public/javascripts/validator');
+var debug = require('debug')('signin:router');
 
-/* GET home page. */
-router.get('/signup', function(req, res, next) {
-	res.render('signup', { title: 'signup' });
-});
 
-router.post('/signup', function(req, res, next) {
-	var user = req.body;
-	console.log(user);
-	checkUser(user, function(success) {
-		if (success) {
+module.exports = function(db) {
+	var userController = require('../controllers/userController')(db);
+
+	router.get('/', function(req, res, next) {
+		res.redirect('/signin');
+	})
+
+	router.get('/signin', function(req, res, next) {
+		if (req.session.username) {
 			res.redirect('/detail');
 		} else {
-			res.end();
+			res.render('signin', { title: 'signin' });
 		}
-	})
-});
+	});
 
-router.get('/detail', function(req, res, next) {
-	res.render('detail', { title : 'detail', user: {} });
-});
+	router.post('/signin', function(req, res, next) {
+		var user = req.body;
+		userController.signinUser(user).then(function(user){
+			req.session.username = user.name;
+			res.redirect('/detail');
+		}).catch(function(error) {
+			debug(error);
+			res.render('signin', { title: 'signin', error: error});
+		})
+	});
+	
+	router.get('/signup', function(req, res, next) {
+		res.render('signup', { title: 'signup' });
+	});
 
-function checkUser(user, callback) {
-	console.log(validator);
-    for (var i in validator.finalCheck) {
-    	console.log('checking ' + i);
-        if (!validator.finalCheck[i](user[i])) {
-        	console.log('failed at ' + i);
-            callback(false);
-            return;
-        }
-    }
-    // check repeat here
-    callback(true);
+	router.post('/signup', function(req, res, next) {
+		var user = req.body;
+		userController.signupUser(user).then(function() {
+			userController.showAllUsers();
+			debug('jumping to detail', user);
+			req.session.username = user.name;
+			res.redirect('/detail');
+		}).catch(function(error) {
+			debug('signup failed');
+			res.render('signup', { title: 'signup'});
+		});
+	});
+
+	router.post('/dataCheck', function(req, res, next) {
+		var checkData = req.body;
+		debug('data check with data:', checkData);
+		userController.checkIfDataUnique(checkData).then(function() {
+			res.end();
+		}).catch(function() {
+			res.end('Has been token by others');
+		});
+	});
+
+	router.all('*', function(req, res, next) {
+		req.session.username ? next() : res.redirect('/signin');
+	});
+
+	router.get('/detail', function(req, res, next) {
+		debug('detail');
+		userController.getUserByUserName(req.session.username).then(function(user) {
+			res.render('detail', { title : 'detail', user: user });
+		}).catch(function(error) {
+			debug(error);
+			res.redirect('/logout');
+		});
+	});
+
+	router.get('/logout', function(req, res, next) {
+		delete req.session.username;
+		res.redirect('/signin');
+	});
+
+	return router;
 }
-
-module.exports = router;

@@ -1,5 +1,9 @@
 extends layout
 
+block header
+	a.jump(href='/logout') Log Out
+	a.jump(href='/signup') Sign Up
+
 block content
 	#main_content
 		h1 User Detail
@@ -8,13 +12,11 @@ block content
 			span #{user.name}
 		.detail
 			span.head ID:
-			span #{user.id}
+			span #{user.sid}
 		.detail
 			span.head Tel:
 			span #{user.tel}
 		.detail
 			span.head E-mail:
 			span #{user.email}
-		.detail
-			a(href='/signup')
-				.button back
+			
