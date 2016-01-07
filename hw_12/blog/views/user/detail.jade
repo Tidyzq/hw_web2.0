@@ -1,18 +1,12 @@
-extends layout
+extends ../header
 
 block content
-	#main_content.detail
+	#main_content.detail(ng-controller='detailCtrl')
 		h1 User Detail
 		.detail
 			span.head Name:
-			span {{user.name}}
-		.detail
-			span.head ID:
-			span {{user.sid}}
-		.detail
-			span.head Tel:
-			span {{user.tel}}
+			span {{showUser.name}}
 		.detail
 			span.head E-mail:
-			span {{user.email}}
-			
+			span {{showUser.email}}
+		{{show}}

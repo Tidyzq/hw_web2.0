@@ -3,5 +3,5 @@ html
 	head
 		script(type='text/javascript' src='/javascripts/angular.min.js')
 		script(type='text/javascript' src='/javascripts/app.js')
-	body(ng-app='blog', ng-init='content="http://localhost:8000/user/signin"')
-		div(ng-include='content')
+	body(ng-app='blog')
+		div(ng-include='htmlContent', ng-controller='mainCtrl')

@@ -1,6 +1,7 @@
 var validator = require('../public/javascripts/validator');
 var bcrypt = require('bcrypt-as-promised');
 var debug = require('debug')('blog:userController');
+var ObjectID = require('mongodb').ObjectID;
 
 module.exports = function(db) {
 
@@ -53,6 +54,7 @@ module.exports = function(db) {
 		getUserById: function(userId) {
 			debug('getUserById(' + userId + ')');
 			return new Promise(function(resolve, reject) {
+				userId = ObjectID(userId);
 				users.findOne({_id: userId}).then(function(foundUser) {
 					foundUser ? resolve(foundUser) : reject('No such user exists');
 				});
@@ -61,7 +63,7 @@ module.exports = function(db) {
 		getUserByUserName: function(username) {
 			debug('getUserByUserName(' + username + ')');
 			return new Promise(function(resolve, reject) {
-				users.findOne({name: username}).then(function(foundUser) {
+				return users.findOne({name: username}).then(function(foundUser) {
 					foundUser ? resolve(foundUser) : reject('No such user exists');
 				});
 			});

@@ -1,0 +1,10 @@
+doctype html
+html
+	head
+	body
+		#header
+			button#home(name='home', ng-click='jump("http://localhost:8000/home")') Home
+			button#signin(name='signin', ng-show='!user', ng-click='jump("http://localhost:8000/user/signin")') Sign In
+			button#signup(name='signup', ng-show='!user', ng-click='jump("http://localhost:8000/user/signup")') Sign Up
+			button#signout(name='signout', ng-show='!!user', ng-click='signOut()') Sign Out
+		block content

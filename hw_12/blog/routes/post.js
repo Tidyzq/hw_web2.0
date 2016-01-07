@@ -8,35 +8,45 @@ module.exports = function(db) {
 	var postController = require('../controllers/postController')(db);
 
 	router.get('/', function(req, res, next) {
-		debug('index/');
+		debug('/');
 		res.end();
 	});
 
 	router.get('/newPost', function(req, res, next) {
-		debug(req);
-		res.render('newPost');
+		debug('/newPost');
+		res.render('post/newPost');
 	});
 
 	router.get('/editPost', function(req, res, next) {
-		debug(req);
-		res.render('editPost');
+		debug('/editPost');
+		res.render('post/editPost');
 	});
 
 	router.get('/viewPost', function(req, res, next) {
-		debug(req);
-		res.render('viewPost');
+		debug('/viewPost');
+		res.render('post/viewPost');
 	});
 
 	router.get('/getPost', function(req, res, next) {
-		debug(req);
+		debug('/getPost');
 		var postId = req.query.postId;
 		postController.getPost(postId).then(function(post) {
 			res.json(post);
 		});
 	});
 
+	router.get('/getAllPosts', function(req, res, next) {
+		debug('/getAllPosts');
+		postController.getAllPosts().then(function(posts) {
+			debug(posts);
+			res.json(posts);
+		}).catch(function(error) {
+			debug('error', error);
+		});
+	});
+
 	router.get('/getPostsByRange', function(req, res, next) {
-		debug(req);
+		debug('/getPostsByRange');
 		var startIndex = req.query.startIndex, count = req.query.count;
 		postController.getPostByRange(startIndex, count).then(function(posts) {
 			res.json(posts);
@@ -48,10 +58,10 @@ module.exports = function(db) {
 	});
 
 	router.post('/newPost', function(req, res, next) {
-		debug(req);
+		debug('/newPost');
 		var post = req.body;
 		post.author = req.session.userId;
-		post.time = moment();
+		post.time = new Date();
 		postController.newPost(post).then(function() {
 			res.json({success: true});
 		}).catch(function(error) {
@@ -60,7 +70,7 @@ module.exports = function(db) {
 	});
 
 	router.post('/editPost', function(req, res, next) {
-		debug(req);
+		debug('/editPost');
 		var post = req.body;
 		post.author = req.session.userId;
 		post.time = moment();
@@ -72,7 +82,7 @@ module.exports = function(db) {
 	});
 
 	router.post('/deletePost', function(req, res, next) {
-		debug(req);
+		debug('/editPost');
 		var postId = req.body;
 		userId = req.session.userId;
 		postController.deletePost(postId, userId).then(function() {

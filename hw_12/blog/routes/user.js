@@ -37,9 +37,10 @@ module.exports = function(db) {
 		userId = req.query.userId;
 		userController.getUserById(userId).then(function(user) {
 			delete user.pwd;
+			debug(user);
 			res.json(user);
 		}).catch(function(error) {
-			res.json({});
+			res.json();
 		});
 	});
 
@@ -54,9 +55,9 @@ module.exports = function(db) {
 		debug('/signin');
 		var user = req.body;
 		userController.signinUser(user).then(function(user) {
-			debug(user._id, user.id); // to do
 			req.session.userId = user._id;
-			res.json({success: true});
+			delete user.pwd;
+			res.json({success: true, user: user});
 		}).catch(function(error) {
 			debug(error);
 			res.json({success: false, error: error});
@@ -67,10 +68,10 @@ module.exports = function(db) {
 		debug('/signup');
 		var user = req.body;
 		userController.signupUser(user).then(function(resultArr) {
-			debug(resultArr); // to do
-			req.session.userId = resultArr.insertedIds[1];
-			debug(req.session.userId);
-			res.json({success: true});
+			user._id = resultArr.insertedIds[1];
+			req.session.userId = user._id;
+			delete user.pwd;
+			res.json({success: true, user: user});
 		}).catch(function(error) {
 			debug('failed');
 			res.json({success: false, error: error});

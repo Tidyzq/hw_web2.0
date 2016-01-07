@@ -6,8 +6,13 @@ var debug = require('debug')('blog:router');
 module.exports = function(db) {
 
 	router.get('/', function(req, res, next) {
-		debug('index/');
+		debug('/');
 		res.render('index');
+	});
+
+	router.get('/home', function(req, res, next) {
+		debug('/home');
+		res.render('home');
 	});
 
 	return router;
