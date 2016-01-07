@@ -2,7 +2,6 @@ doctype html
 html
 	head
 		script(type='text/javascript' src='/javascripts/angular.min.js')
-	body(ng-app='myApp', ng-controller='myCtrl')
+		script(type='text/javascript' src='/javascripts/app.js')
+	body(ng-app='blog', ng-init='content="http://localhost:8000/user/signin"')
 		div(ng-include='content')
-		button(ng-click='load()') load
-		script(type='text/javascript' src='/javascripts/test.js')

@@ -1,0 +1,17 @@
+doctype html
+html
+	head
+	body
+		#content.signin(ng-controller='signinCtrl')
+			#header
+				button#signup(name='signup', ng-click='jump("http://localhost:8000/user/signup")') Sign Up
+			#main_content
+				h1 Sign In
+				form(name='signinForm')
+					.form
+						input.textfield(type='text', ng-model='name', placeholder='Username')
+					.form
+						input.textfield(type='password', ng-model='pwd', placeholder='Password')
+					.form
+						button#submit(name='submit', ng-click='submit()') Sign In
+					{{show}}

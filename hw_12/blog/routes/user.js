@@ -7,35 +7,35 @@ module.exports = function(db) {
 	var userController = require('../controllers/userController')(db);
 	/* GET users listing. */
 	router.get('/', function(req, res, next) {
-		debug(req);
+		debug('/');
 		res.redirect('/signin');
 	});
 
 	// gets
 	router.get('/signin', function(req, res, next) {
-		debug(req);
-		res.render('signin');
+		debug('/signin');
+		res.render('user/signin');
 	});
 
 	router.get('/signup', function(req, res, next) {
-		debug(req);
-		res.render('signup');
+		debug('/signup');
+		res.render('user/signup');
 	});
 
 	router.get('/detail', function(req, res, next) {
-		debug(req);
-		res.render('detail');
+		debug('/detail');
+		res.render('user/detail');
 	});
 
 	router.get('/edit', function(req, res, next) {
-		debug(req);
-		res.render('edit');
+		debug('/edit');
+		res.render('user/edit');
 	});
 
 	router.get('/getUser', function(req, res, next) {
-		debug(req);
-		username = req.query.username;
-		userController.getUserByUserName(username).then(function(user) {
+		debug('/getUser');
+		userId = req.query.userId;
+		userController.getUserById(userId).then(function(user) {
 			delete user.pwd;
 			res.json(user);
 		}).catch(function(error) {
@@ -44,14 +44,14 @@ module.exports = function(db) {
 	});
 
 	router.get('/signout', function(req, res, next) {
-		debug(req);
-		delete req.session.username;
+		debug('/signout');
+		delete req.session.userId;
 		res.json({success: true});
 	});
 
 	// posts
 	router.post('/signin', function(req, res, next) {
-		debug(req);
+		debug('/signin');
 		var user = req.body;
 		userController.signinUser(user).then(function(user) {
 			debug(user._id, user.id); // to do
@@ -64,25 +64,35 @@ module.exports = function(db) {
 	});
 
 	router.post('/signup', function(req, res, next) {
-		debug(req);
+		debug('/signup');
 		var user = req.body;
 		userController.signupUser(user).then(function(resultArr) {
-			req.debug(resultArr); // to do
-			req.session.username = user._id;
+			debug(resultArr); // to do
+			req.session.userId = resultArr.insertedIds[1];
+			debug(req.session.userId);
 			res.json({success: true});
 		}).catch(function(error) {
+			debug('failed');
 			res.json({success: false, error: error});
 		});
 	});
 
+	router.all('*', function(req, res, next) {
+		req.session.userId ? next() : res.json({success: false, error: "You haven't signin yet"});
+	});
+
 	router.post('/edit', function(req, res, next) {
-		debug(req);
+		debug('/edit');
 		var user = req.body;
-		userController.editUser(user._id, user).then(function() {
-			res.json({success: true});
-		}).catch(function(error) {
-			res.json({success: false, error: error});
-		})
+		if (user._id == req.session.userId) {
+			userController.editUser(user._id, user).then(function() {
+				res.json({success: true});
+			}).catch(function(error) {
+				res.json({success: false, error: error});
+			})
+		} else {
+			res.json({success: false, error: "Invalid editor"});
+		}
 	});
 
 	return router;

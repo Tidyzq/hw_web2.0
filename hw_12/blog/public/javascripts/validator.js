@@ -10,17 +10,6 @@ var checkCases = {
             return /^\w{6,18}$/.test(text);
         }
     },
-    sid: {
-        'should only contain numbers': function(text) {
-            return /^\d*$/.test(text);
-        },
-        'should begin with non-zero number': function(text) {
-            return /^\d*$/.test(text);
-        },
-        'should have a length of 8 numbers': function(text) {
-            return /^\d{8}$/.test(text);
-        }
-    },
     pwd: {
         'should only contain alphabet, number, underline and dash': function(text) {
             pwdRecord = text;
@@ -33,17 +22,6 @@ var checkCases = {
     rpwd: {
         'passwords should be the same' : function(text) {
             return text == pwdRecord;
-        }
-    },
-    tel: {
-        'should only contain numbers': function(text) {
-            return /^\d*$/.test(text);
-        },
-        'should begin with non-zero number': function(text) {
-            return /^[1-9]/.test(text);
-        },
-        'should have a length of 11 numbers': function(text) {
-            return /^\d{11}$/.test(text);
         }
     },
     email: {
@@ -77,8 +55,6 @@ var finalCheck = {
     name: function(text) { return /^[a-z]\w{5,17}$/i.test(text); },
     pwd : function(text) { pwdRecord = text; return /^[a-z0-9\-_]{6,11}$/i.test(text); },
     rpwd : function(text) { return text == pwdRecord;},
-    sid: function(text) { return /^[1-9]\d{7}$/.test(text); },
-    tel: function(text) { return /^[1-9]\d{10}$/.test(text); },
     email: function(text) { return /^[a-z0-9]([\-_\.]?[a-z0-9]+)*@([a-z0-9_\-]+\.)+[a-zA-Z]{2,4}$/i.test(text); }
 }
 

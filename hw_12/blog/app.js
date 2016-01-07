@@ -6,10 +6,17 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
+var debug = require('debug')('blog:app');
 
 module.exports = function(db) {
   var routes = require('./routes/index')(db);
+  debug('routes');
   var user = require('./routes/user')(db);
+  debug('user');
+  var post = require('./routes/post')(db);
+  debug('post');
+  var comment = require('./routes/comment')(db);
+  debug('comment');
 
   var app = express();
 
@@ -34,6 +41,8 @@ module.exports = function(db) {
 
   app.use('/', routes);
   app.use('/user', user);
+  app.use('/post', post);
+  app.use('/comment', comment);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

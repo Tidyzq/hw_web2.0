@@ -8,7 +8,7 @@ module.exports = function(db) {
 		time: 'time',
 		author: 'author',
 		content: 'content'
-	}
+	};
 
 	var commentController = {
 		// 添加post
@@ -18,15 +18,27 @@ module.exports = function(db) {
 				return comments.insert(commnet);
 			});
 		},
-		editComment: function(commentId, comment) {
-			debug('editComment(' + commentId + ', ' + comment + ')');
+		editComment: function(comment) {
+			debug('editComment(' + comment + ')');
 			return commentController.checkComment(comment).then(function() {
-				return comments.update({'_id': commentId}, comment);
+				return commentController.getComment(comment._id).then(function(foundComment) {
+					if (foundComment.author == comment.author) {
+						return comments.update({'_id': commentId}, comment);
+					} else {
+						return Promise.reject('Invalid editor');
+					}
+				});
 			});
 		},
-		deleteComment: function(commentId) {
-			debug('deleteComment(' + commentId + ')');
-			return comments.remove({'_id': commentId}, true);
+		deleteComment: function(commentId, userId) {
+			debug('deleteComment(' + commentId + ', ' + userId + ')');
+			return commentController.getComment(commentId).then(function(foundComment) {
+				if (foundComment.author == userId) {
+					return comments.remove({'_id': commentId}, true);
+				} else {
+					return Promise.reject('Invalid editor');
+				}
+			})
 		},
 		getComment: function(commentId) {
 			debug('getComment(' + commentId + ')');
@@ -39,7 +51,7 @@ module.exports = function(db) {
 		getCommentsByRange: function(postId, startIndex, count) {
 			debug('getCommentsByRange(' + postId + ', ' + startIndex + ', ' + count + ')');
 			return comments.find({'postId': postId}).sort({'time': 1}).skip(startIndex).limit(count).toArray();
-		}
+		},
 		checkComment: function(comment) {
 			debug('checkComment(' + comment + ')');
 			return new Promise(function(resolve, reject) {

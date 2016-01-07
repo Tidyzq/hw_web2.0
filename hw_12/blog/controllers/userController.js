@@ -6,12 +6,12 @@ module.exports = function(db) {
 
 	var users = db.collection('users');
 
-	debug('Clearing database');
-	users.remove({}).then(function() {
-		users.find().toArray().then(function(users) {
-			debug('current document in database: ', users);
-		});
-	});
+	function isEmpty(obj) {
+    	for (var name in obj) {
+    	    return false;
+    	}
+    	return true;
+	};
 
 	var userController = {
 		signinUser: function(user) {
@@ -32,12 +32,12 @@ module.exports = function(db) {
 		},
 		signupUser: function(user) {
 			debug('signupUser(' + user + ')');
-			return checkUser(user).then(function() {
+			return userController.checkUser(user).then(function() {
 				debug("passed userCheck");
 				return bcrypt.hash(user.pwd, 10).then(function(pwd) {
 					user.pwd = pwd;
 					if (user.rpwd) delete user.rpwd;
-					if (user.submit) delete user.submit;
+					debug("insert");
 					return users.insert(user);
 				});
 			});
@@ -48,6 +48,14 @@ module.exports = function(db) {
 				debug('current document in database: ', docs);
 			}).catch(function(error) {
 				debug("show users error:", error);
+			});
+		},
+		getUserById: function(userId) {
+			debug('getUserById(' + userId + ')');
+			return new Promise(function(resolve, reject) {
+				users.findOne({_id: userId}).then(function(foundUser) {
+					foundUser ? resolve(foundUser) : reject('No such user exists');
+				});
 			});
 		},
 		getUserByUserName: function(username) {
@@ -61,19 +69,21 @@ module.exports = function(db) {
 		checkUser: function(user) {
 			debug('checkUser(' + user + ')');
 			var error = {};
-			debug(!!error); // to do 
-			return new Promise(function(resolve, reject) {
-				for (var item in validator.finalCheck) {
-					if (!validator.finalCheck[item](user[item])) {
-						error[item] = "Invalid format";
-					}
+			for (var item in validator.finalCheck) {
+				if (!validator.finalCheck[item](user[item])) {
+					error[item] = "Invalid format";
 				}
-				users.findOne({name: user.name}).then(function(foundUser) {
-					if (foundUser) {
-						error[name] = "'" + user.name + "' has been taken";
-					}
-				});
-				error ? reject(error) : resolve();
+			}
+			debug('unique');
+			return users.findOne({name: user.name}).then(function(foundUser) {
+				if (foundUser) {
+					error['name'] = "'" + user.name + "' has been taken";
+				}
+				debug(error);
+				return Promise.resolve();
+			}).then(function() {
+				debug(error);
+				return isEmpty(error) ? Promise.resolve() : Promise.reject(error);
 			});
 		}
 	}

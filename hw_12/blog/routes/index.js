@@ -4,7 +4,6 @@ var debug = require('debug')('blog:router');
 
 
 module.exports = function(db) {
-	var userController = require('../controllers/userController')(db);
 
 	router.get('/', function(req, res, next) {
 		debug('index/');
