@@ -1,0 +1,8 @@
+doctype html
+html
+	head
+		script(type='text/javascript' src='/javascripts/angular.min.js')
+	body(ng-app='myApp', ng-controller='myCtrl')
+		div(ng-include='content')
+		button(ng-click='load()') load
+		script(type='text/javascript' src='/javascripts/test.js')

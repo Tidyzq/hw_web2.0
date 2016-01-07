@@ -1,0 +1,1 @@
+set DEBUG=blog.* & npm start
