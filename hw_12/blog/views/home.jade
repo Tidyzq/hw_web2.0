@@ -4,7 +4,8 @@ block content
 	#main_content.detail(ng-controller='homeCtrl')
 		h1 Home
 		.posts(ng-repeat='post in posts')
-			h2 {{post.title}}
-			p {{post.time}}
-			p {{post.author.name}}
+			.post(ng-click='viewPost(post)')
+				h2 {{post.title}}
+				p {{post.time}}
+				p(ng-click='viewUser(post.author)') {{post.author.name}}
 		button#newpost(name='newpost', ng-click='newPost()') New Post

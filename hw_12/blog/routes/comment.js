@@ -1,91 +1,85 @@
 var express = require('express');
 var router = express.Router();
 var debug = require('debug')('blog:router:comment');
-var moment = require('moment');
 
-
-module.exports = function(db) {
+module.exports = function (db) {
 	var commentController = require('../controllers/commentController')(db);
 
-	router.get('/', function(req, res, next) {
-		debug(req);
-		res.end();
-	});
-
-	router.get('/newComment', function(req, res, next) {
-		debug(req);
-		res.render('newComment');
-	});
-	
-	router.get('/editComment', function(req, res, next) {
-		debug(req);
-		res.render('editComment');
-	});
-
-	router.get('/viewComment', function(req, res, next) {
-		debug(req);
-		res.render('viewComment');
-	});
-
-	router.get('/getComment', function(req, res, next) {
-		debug(req);
+	router.get('/getComment', function (req, res, next) {
+		debug('/getComment');
 		var commentId = req.query.commentId;
-		commentController.getComment(commentId).then(function(comment) {
-			res.json(comment);
+		commentController.getComment(commentId).then(function (comment) {
+			res.json({success: true, comment: comment});
+		}).catch(function (error) {
+			res.json({success: false, error: error});
 		});
 	});
 	
-	router.get('/getCommentOfPost', function(req, res, next) {
-		debug(req);
+	router.get('/getCommentsOfPost', function (req, res, next) {
+		debug('/getCommentsOfPost');
 		var postId = req.query.postId;
-		commentController.getAllComments(postId).then(function(comments) {
-			res.json(comments);
+		commentController.getCommentsOfPost(postId).then(function (comments) {
+			res.json({success: true, comments: comments});
+		}).catch(function (error) {
+			res.json({success: false, error: error});
 		});
 	});
 
-	router.get('/getCommentsByRange', function(req, res, next) {
-		debug(req);
+	router.get('/getCommentCountOfPost', function (req, res, next) {
+		debug('/getCommentCountOfPost');
+		var postId = req.query.postId;
+		commentController.getCommentCountOfPost(postId).then(function (count) {
+			res.json({success: true, count: count});
+		}).catch(function (error) {
+			res.json({success: false, error: error});
+		});
+	})
+
+	router.get('/getCommentsOfPostByRange', function (req, res, next) {
+		debug('/getCommentsOfPostByRange');
 		var postId = req.query.postId, startIndex = req.query.startIndex, count = req.query.count;
-		commentController.getCommentByRange(postId, startIndex, count).then(function(comments) {
-			res.json(comments);
+		commentController.getCommentsOfPostByRange(postId, startIndex, count).then(function (comments) {
+			res.json({success: true, comments: comments});
+		}).catch(function (error) {
+			res.json({success: false, error: error});
 		});
 	});
 	
-	router.all('*', function(req, res, next) {
+	router.all('*', function (req, res, next) {
 		req.session.userId ? next() : res.json({success: false, error: "You haven't signin yet"});
 	});
 
-	router.post('/newComment', function(req, res, next) {
-		debug(req);
+	router.post('/newComment', function (req, res, next) {
+		debug('/newComment');
 		var comment = req.body;
 		comment.author = req.session.userId;
-		comment.time = moment();
-		commentController.newComment(comment).then(function() {
+		comment.time = new Date();
+		commentController.newComment(comment).then(function () {
 			res.json({success: true});
-		}).catch(function(error) {
+		}).catch(function (error) {
 			res.json({success: false, error: error});
 		});
 	});
 
-	router.post('/editComment', function(req, res, next) {
-		debug(req);
+	router.post('/editComment', function (req, res, next) {
+		debug('/editComment');
 		var comment = req.body;
 		comment.author = req.session.userId;
-		comment.time = moment();
-		commentController.editComment(comment).then(function() {
+		comment.time = new Date();
+		commentController.editComment(comment).then(function () {
 			res.json({success: true});
-		}).catch(function(error) {
+		}).catch(function (error) {
 			res.json({success: false, error: error});
 		});
 	});
 
-	router.post('/deleteComment', function(req, res, next) {
-		debug(req);
+	router.post('/deleteComment', function (req, res, next) {
+		debug('/deleteComment');
 		var commentId = req.body;
 		userId = req.session.userId;
-		commentController.deleteComment(commentId, userId).then(function() {
+		commentController.deleteComment(commentId, userId).then(function () {
 			res.json({success: true});
-		}).catch(function(error) {
+		}).catch(function (error) {
 			res.json({success: false, error: error});
 		})
 	});

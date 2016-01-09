@@ -34,7 +34,7 @@ module.exports = function(db) {
     store: new FileStore(),
     resave: false,
     saveUninitialized: false,
-    secret: 'web hw_11'
+    secret: 'web hw_12'
   }));
 
   app.use(express.static(path.join(__dirname, 'public')));

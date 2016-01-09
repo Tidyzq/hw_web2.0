@@ -2,6 +2,107 @@ doctype html
 html
 	head
 		script(type='text/javascript' src='/javascripts/angular.min.js')
+		script(type='text/javascript' src='/javascripts/moment.min.js')
 		script(type='text/javascript' src='/javascripts/app.js')
-	body(ng-app='blog')
-		div(ng-include='htmlContent', ng-controller='mainCtrl')
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body(ng-app='blog', ng-controller='mainCtrl')
+		#hover
+			#signin-form(ng-show='showSignInFormFlag')
+				h1 Sign In
+				form(name='signinForm')
+					.form
+						input.textfield(type='text', ng-model='signinUser.name', placeholder='Username')
+					.form
+						input.textfield(type='password', ng-model='signinUser.pwd', placeholder='Password')
+					.form
+						button#submit(ng-click='submitSignIn()') Sign In
+					.form
+						button#close(ng-click='hideSignInForm()') close
+					p {{error}}
+			#signup-form(ng-show='showSignUpFormFlag')
+				h1 Sign Up
+				form(name='signupForm')
+					.form
+						input.textfield(type='text', ng-model='signupUser.name', placeholder='Username')
+					.form
+						input.textfield(type='password', ng-model='signupUser.pwd', placeholder='Password')
+					.form
+						input.textfield(type='password', ng-model='signupUser.rpwd', placeholder='Repeat your password')
+					.form
+						input.textfield(type='text', ng-model='signupUser.email', placeholder='E-mail address')
+					.form
+						button#submit(ng-click='submitSignUp()') Sign Up
+					.form
+						button#close(ng-click='hideSignUpForm()') close
+					p {{show}}
+			#detail-form(ng-show='showUserDetailFlag')
+				h1 User Detail
+				.detail
+					span.head Name:
+					span {{showUser.name}}
+				.detail
+					span.head E-mail:
+					span {{showUser.email}}
+				.form
+					button#close(ng-click='hideUserDetail()') close
+		#header
+			button#signin(ng-show='!signedUser', ng-click='showSignInForm()') Sign In
+			button#signup(ng-show='!signedUser', ng-click='showSignUpForm()') Sign Up
+			button#detail(ng-show='!!signedUser', ng-click='showUserDetail(signedUser)') {{signedUser.name}}
+			button#signout(ng-show='!!signedUser', ng-click='signOut()') Sign Out
+		#main_content
+			h1 Home
+			.post_container(ng-repeat='post in posts')
+				.post
+					p.title(ng-click='showPostView(post)') {{post.title}}
+					pre.content {{post.content}}
+					p.buttom_info
+						span.time {{momentFromNow(post.time)}}
+						span.author(ng-click='showUserDetail(post.author)') {{post.author.name}}
+						span.reply(ng-click='toggleComment(post)') reply
+					.comment_container(ng-show='post.showCommentFlag')
+						.new_comment_form
+							.form
+								input.textfield(type='text', ng-model='post.newComment.content', placeholder='Comment Content')
+							.form
+								button#submit(ng-click='submitNewComment(post, post.newComment)') Submit
+						.comment(ng-repeat='comment in post.comments')
+							.show_comment(ng-show='!comment.showEditCommentFormFlag')
+								p.author_content
+									span.author {{comment.author.name}}
+									span.content {{comment.content}}
+								p.time {{momentFromNow(comment.time)}}
+								button#edit(ng-show='signedUser&&comment.author._id==signedUser._id', ng-click='showEditCommentForm(comment)') Edit
+							.edit_comment(ng-show='comment.showEditCommentFormFlag')
+								.form
+									input.textfield(type='text', ng-model='comment.editComment.content', placeholder='Comment Content')
+								.form
+									button#submit(ng-click='submitEditComment(comment)') Submit
+								.form
+									button#cancel(ng-click='hideEditComment(comment)') Cancel
+					p {{error}}
+					button#delete(ng-show='signedUser&&showPost.author._id==signedUser._id', ng-click='deletePost(showPost._id)') Delete
+					button#edit(ng-show='signedUser&&showPost.author._id==signedUser._id', ng-click='showEditPost(showPost)') Edit
+				#edit-post(ng-show='showEditPostFlag')
+					.form
+						input.textfield(type='text', ng-model='editPost.title', placeholder='Title')
+					.form
+						input.textfield(type='text', ng-model='editPost.content', placeholder='Post Content')
+					.form
+						button#submit(ng-click='submitEditPost()') Submit
+					.form
+						button#cancel(ng-click='hideEditPost()') Cancel
+				p {{error}}
+			#new-post-form(ng-show='showNewPostFormFlag')
+				.form
+					input.title(type='text', ng-model='newPost.title', placeholder='Title')
+				.form
+					textarea.content(type='text', ng-model='newPost.content', placeholder='Post Content')
+				.form
+					button#submit(ng-click='submitNewPost()') Submit
+				.form
+					button#close(ng-click='hideNewPostForm()') Cancel
+				p {{error}}
+			button#new-post-btn(ng-show='!showNewPostFormFlag&&signedUser', ng-click='showNewPostForm()') New Post
+		#footer
+			p Copyright Tidyzq, 2015-2016. All rights reserved.
