@@ -42,7 +42,7 @@ module.exports = function(db) {
 		deleteComment: function(commentId, userId) {
 			debug('deleteComment');
 			commentId = ObjectID(commentId);
-			return commentController.getComment(commentId).then(function(foundComment) {
+			return comments.findOne({'_id': commentId}).then(function(foundComment) {
 				if (foundComment.author == userId) {
 					return comments.remove({'_id': commentId}, true);
 				} else {
@@ -63,7 +63,12 @@ module.exports = function(db) {
 		getCommentsOfPostByRange: function(postId, startIndex, count) {
 			debug('getCommentsByRange');
 			postId = ObjectID(postId);
-			return comments.find({'postId': postId}).sort({'time': 1}).skip(startIndex).limit(count).toArray().then(commentController.replaceUser);
+			return comments.find({'postId': postId}).sort({'time': 1}).toArray().then(function (commentArr) {
+				var commentCount = commentArr.length;
+				return commentController.replaceUser(commentArr.slice(startIndex, startIndex + count)).then(function (commentArr) {
+					return Promise.resolve(commentArr, commentCount);
+				});
+			});
 		},
 		getCommentCountOfPost: function(postId) {
 			debug('getCommentCountOfPost');
@@ -97,7 +102,7 @@ module.exports = function(db) {
 				};
 				callBacks[0]();
 			});
-		}
+		},
 	};
 	return commentController;
 };

@@ -6,6 +6,7 @@ module.exports = function (db) {
 	var posts = db.collection('posts');
 	var postPropertyExample = "author,content,time,title";
 	var userController = require('../controllers/userController')(db);
+	var commentController = require('../controllers/commentController')(db);
 
 	var postController = {
 		// 添加post
@@ -46,12 +47,12 @@ module.exports = function (db) {
 		getPost: function (postId) {
 			debug('getPost');
 			postId = ObjectID(postId);
-			return posts.find({'_id': postId}).then(postController.replaceUser);
+			return posts.find({'_id': postId}).then(postController.replaceUser).then(postController.addCommentCount);
 		},
 		// 获取全部post
 		getAllPosts: function () {
 			debug('getAllPosts');
-			return posts.find().sort({'time':1}).toArray().then(postController.replaceUser);
+			return posts.find().sort({'time':1}).toArray().then(postController.replaceUser).then(postController.addCommentCount);
 		},
 		// 获取post数量
 		getPostCount: function () {
@@ -63,7 +64,12 @@ module.exports = function (db) {
 		// 获取对应范围的post
 		getPostsByRange: function (startIndex, count) {
 			debug('getPostsByRange');
-			return posts.find().sort({'time':1}).skip(startIndex).limit(count).toArray().then(postController.replaceUser);
+			return posts.find().sort({'time':1}).toArray().then(function (postArr) {
+				var postCount = postArr.length;
+				return postController.replaceUser(postArr.slice(startIndex, startIndex + count)).then(postController.addCommentCount).then(function (postArr) {
+					return Promise.resolve(postArr, postCount);
+				});
+			});
 		},
 		checkPost: function (post) {
 			debug('checkPost');
@@ -72,7 +78,7 @@ module.exports = function (db) {
 			});
 		},
 		replaceUser: function (postArr) {
-			debug('replaceUser')
+			debug('replaceUser');
 			return new Promise(function (resolve, reject) {
 				var callBacks = [];
 				for (var i = 0; i < postArr.length; ++i) {
@@ -80,6 +86,26 @@ module.exports = function (db) {
 						callBacks[i] = function () {
 							userController.getUserById(postArr[i].author).then(function (foundUser) {
 								postArr[i].author = foundUser;
+								callBacks[i + 1]();
+							});
+						};	
+					})(i);
+				}
+				callBacks[postArr.length] = function () {
+					resolve(postArr);
+				};
+				callBacks[0]();
+			});
+		},
+		addCommentCount: function (postArr) {
+			debug('addCommentCount');
+			return new Promise(function (resolve, reject) {
+				var callBacks = [];
+				for (var i = 0; i < postArr.length; ++i) {
+					(function (i) {
+						callBacks[i] = function () {
+							commentController.getCommentCountOfPost(postArr[i]._id).then(function (count) {
+								postArr[i].commentCount = count;
 								callBacks[i + 1]();
 							});
 						};	

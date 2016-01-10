@@ -1,8 +1,8 @@
 var app = angular.module('blog', []);
 
-app.controller('mainCtrl', function($scope, $http, $rootScope) {
+app.controller('mainCtrl', function ($scope, $http, $rootScope) {
 
-    $http.get('/user/checkSignIn').success(function(response) {
+    $http.get('/user/checkSignIn').success(function (response) {
         if (response.success) {
             $scope.signedUser = response.user;
         } else {
@@ -10,8 +10,16 @@ app.controller('mainCtrl', function($scope, $http, $rootScope) {
         }
     });
 
-    $scope.loadPosts = function() {    
-        $http.get('/post/getAllPosts').success(function(response) {
+    $scope.isSignedIn = function () {
+        return !!$scope.signedUser;
+    };
+
+    $scope.signedUserIsEqualWith = function(user) {
+        return $scope.isSignedIn() && $scope.signedUser._id == user._id;
+    }
+
+    $scope.loadPosts = function () {    
+        $http.get('/post/getAllPosts').success(function (response) {
             if (response.success) {
                 $scope.posts = response.posts;
             } else {
@@ -20,10 +28,11 @@ app.controller('mainCtrl', function($scope, $http, $rootScope) {
         })
     };
 
-    $scope.loadComments = function(post) {
-        $http.get('/comment/getCommentsOfPost?postId=' + post._id).success(function(response) {
+    $scope.loadComments = function (post) {
+        $http.get('/comment/getCommentsOfPost?postId=' + post._id).success(function (response) {
             if (response.success) {
                 post.comments = response.comments;
+                post.commentCount = post.comments.length;
             } else {
                 console.log(response.error);
             }
@@ -32,21 +41,21 @@ app.controller('mainCtrl', function($scope, $http, $rootScope) {
 
     $scope.loadPosts();
 
-    $scope.momentFromNow = function(date) {
+    $scope.momentFromNow = function (date) {
         return moment(date).fromNow();
     }
 
-    $scope.showSignInForm = function() {
+    $scope.showSignInForm = function () {
         $scope.signinUser = {};
         $scope.showSignInFormFlag = true;
     };
 
-    $scope.hideSignInForm = function() {
+    $scope.hideSignInForm = function () {
         $scope.showSignInFormFlag = false;
     };
 
-    $scope.submitSignIn = function() {
-        $http.post('/user/signIn', $scope.signinUser).success(function(response) {
+    $scope.submitSignIn = function () {
+        $http.post('/user/signIn', $scope.signinUser).success(function (response) {
             if (response.success) {
                 $scope.signedUser = response.user;
                 $scope.hideSignInForm();
@@ -56,17 +65,17 @@ app.controller('mainCtrl', function($scope, $http, $rootScope) {
         })
     };
 
-    $scope.showSignUpForm = function() {
+    $scope.showSignUpForm = function () {
         $scope.signupUser = {};
         $scope.showSignUpFormFlag = true;
     };
 
-    $scope.hideSignUpForm = function() {
+    $scope.hideSignUpForm = function () {
         $scope.showSignUpFormFlag = false;
     };
 
-    $scope.submitSignUp = function() {
-        $http.post('/user/signUp', $scope.signupUser).success(function(response) {
+    $scope.submitSignUp = function () {
+        $http.post('/user/signUp', $scope.signupUser).success(function (response) {
             if (response.success) {
                 $scope.signedUser = response.user;
                 $scope.hideSignUpForm();
@@ -76,34 +85,34 @@ app.controller('mainCtrl', function($scope, $http, $rootScope) {
         })
     };
 
-    $scope.showUserDetail = function(user) {
+    $scope.showUserDetail = function (user) {
         $scope.showUser = user;
         $scope.showUserDetailFlag = true;
     };
 
-    $scope.hideUserDetail = function() {
+    $scope.hideUserDetail = function () {
         $scope.showUserDetailFlag = false;
     };
 
-    $scope.signOut = function() {
-        $http.get('/user/signout').success(function(response) {
+    $scope.signOut = function () {
+        $http.get('/user/signout').success(function (response) {
             if (response.success) {
                 delete $scope.signedUser;
             }
         });
     };
 
-    $scope.showNewPostForm = function() {
+    $scope.showNewPostForm = function () {
         $scope.newPost = {};
         $scope.showNewPostFormFlag = true;
     };
 
-    $scope.hideNewPostForm = function() {
+    $scope.hideNewPostForm = function () {
         $scope.showNewPostFormFlag = false;
     };
 
-    $scope.submitNewPost = function() {
-        $http.post('/post/newPost', $scope.newPost).success(function(response) {
+    $scope.submitNewPost = function () {
+        $http.post('/post/newPost', $scope.newPost).success(function (response) {
             if (response.success) {
                 $scope.hideNewPostForm();
                 $scope.loadPosts();
@@ -113,15 +122,15 @@ app.controller('mainCtrl', function($scope, $http, $rootScope) {
         });
     };
 
-    $scope.toggleComment = function(post) {
+    $scope.toggleComment = function (post) {
         post.showCommentFlag = !post.showCommentFlag;
         if (post.showCommentFlag) {
             $scope.loadComments(post);
         }
     };
 
-    $scope.deletePost = function (postId) {
-        $http.post('/post/deletePost', {postId: postId}).success(function(response) {
+    $scope.submitDeletePost = function (postId) {
+        $http.post('/post/deletePost', {postId: postId}).success(function (response) {
             if (response.success) {
                 $scope.loadPosts();
             } else {
@@ -130,12 +139,12 @@ app.controller('mainCtrl', function($scope, $http, $rootScope) {
         })
     };
 
-    $scope.submitNewComment = function(post, comment) {
+    $scope.submitNewComment = function (post, comment) {
         commentToPost = {
             postId: post._id,
             content: comment.content
         };
-        $http.post('/comment/newComment', commentToPost).success(function(response) {
+        $http.post('/comment/newComment', commentToPost).success(function (response) {
             if (response.success) {
                 post.newComment = {};
                 $scope.loadComments(post);
@@ -145,47 +154,47 @@ app.controller('mainCtrl', function($scope, $http, $rootScope) {
         });
     };
 
-    $scope.showEditPost = function(post) {
-        $scope.editPost = post;
-        $scope.showEditPostFlag = true;
-        $scope.hideNewCommentForm();
+    $scope.showEditPostForm = function (post) {
+        post.showEditPostFormFlag = true;
+        post.editPost = post;
     };
 
-    $scope.hideEditPost = function() {
-        $scope.showEditPostFlag = false;
+    $scope.hideEditPostForm = function (post) {
+        post.showEditPostFormFlag = false;
     };
 
-    $scope.submitEditPost = function() {
-        var post = {
-            _id: $scope.editPost._id,
-            title: $scope.editPost.title,
-            content: $scope.editPost.content
+    $scope.submitEditPost = function (post) {
+        var postToPost = {
+            _id: post.editPost._id,
+            title: post.editPost.title,
+            content: post.editPost.content
         };
-        $http.post('/post/editPost', $scope.editPost).success(function(response) {
+        $http.post('/post/editPost', postToPost).success(function (response) {
             if (response.success) {
-                $scope.hideEditPost();
+                post = post.editPost;
+                $scope.hideEditPostForm(post);
             } else {
                 console.log(response.error);
             }
         });
     };
 
-    $scope.showEditCommentForm = function(comment) {
+    $scope.showEditCommentForm = function (comment) {
         comment.showEditCommentFormFlag = true;
         comment.editComment = comment;
-    }
+    };
 
-    $scope.hideEditComment = function(comment) {
+    $scope.hideEditComment = function (comment) {
         comment.showEditCommentFormFlag = false;
-    }
+    };
 
-    $scope.submitEditComment = function(comment) {
+    $scope.submitEditComment = function (comment) {
         var commentToPost = {
             _id: comment._id,
             postId: comment.editComment.postId,
             content: comment.editComment.content
         };
-        $http.post('/comment/editComment', commentToPost).success(function(response) {
+        $http.post('/comment/editComment', commentToPost).success(function (response) {
             if (response.success) {
                 comment = comment.editComment;
                 $scope.hideEditComment(comment);
@@ -193,6 +202,16 @@ app.controller('mainCtrl', function($scope, $http, $rootScope) {
                 console.log(response.error);
             }
         });
-    }
+    };
+
+    $scope.submitDeleteComment = function (commentId, post) {
+        $http.post('/comment/deleteComment', {'commentId': commentId}).success(function (response) {
+            if (response.success) {
+                $scope.loadComments(post);
+            } else {
+                console.log(response.error);
+            }
+        });
+    };
 
 });

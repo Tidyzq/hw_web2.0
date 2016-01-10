@@ -3,7 +3,9 @@ html
 	head
 		script(type='text/javascript' src='/javascripts/angular.min.js')
 		script(type='text/javascript' src='/javascripts/moment.min.js')
+		script(type='text/javascript' src='/javascripts/jquery-2.2.0.min.js')
 		script(type='text/javascript' src='/javascripts/app.js')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body(ng-app='blog', ng-controller='mainCtrl')
 		#hover
@@ -18,7 +20,6 @@ html
 						button#submit(ng-click='submitSignIn()') Sign In
 					.form
 						button#close(ng-click='hideSignInForm()') close
-					p {{error}}
 			#signup-form(ng-show='showSignUpFormFlag')
 				h1 Sign Up
 				form(name='signupForm')
@@ -31,10 +32,9 @@ html
 					.form
 						input.textfield(type='text', ng-model='signupUser.email', placeholder='E-mail address')
 					.form
-						button#submit(ng-click='submitSignUp()') Sign Up
+						button.submit(ng-click='submitSignUp()') Sign Up
 					.form
-						button#close(ng-click='hideSignUpForm()') close
-					p {{show}}
+						button.close(ng-click='hideSignUpForm()') close
 			#detail-form(ng-show='showUserDetailFlag')
 				h1 User Detail
 				.detail
@@ -44,65 +44,71 @@ html
 					span.head E-mail:
 					span {{showUser.email}}
 				.form
-					button#close(ng-click='hideUserDetail()') close
+					button.close(ng-click='hideUserDetail()') close
 		#header
-			button#signin(ng-show='!signedUser', ng-click='showSignInForm()') Sign In
-			button#signup(ng-show='!signedUser', ng-click='showSignUpForm()') Sign Up
-			button#detail(ng-show='!!signedUser', ng-click='showUserDetail(signedUser)') {{signedUser.name}}
-			button#signout(ng-show='!!signedUser', ng-click='signOut()') Sign Out
-		#main_content
-			h1 Home
-			.post_container(ng-repeat='post in posts')
-				.post
-					p.title(ng-click='showPostView(post)') {{post.title}}
-					pre.content {{post.content}}
-					p.buttom_info
-						span.time {{momentFromNow(post.time)}}
-						span.author(ng-click='showUserDetail(post.author)') {{post.author.name}}
-						span.reply(ng-click='toggleComment(post)') reply
-					.comment_container(ng-show='post.showCommentFlag')
-						.new_comment_form
-							.form
-								input.textfield(type='text', ng-model='post.newComment.content', placeholder='Comment Content')
-							.form
-								button#submit(ng-click='submitNewComment(post, post.newComment)') Submit
-						.comment(ng-repeat='comment in post.comments')
-							.show_comment(ng-show='!comment.showEditCommentFormFlag')
-								p.author_content
-									span.author {{comment.author.name}}
-									span.content {{comment.content}}
-								p.time {{momentFromNow(comment.time)}}
-								button#edit(ng-show='signedUser&&comment.author._id==signedUser._id', ng-click='showEditCommentForm(comment)') Edit
-							.edit_comment(ng-show='comment.showEditCommentFormFlag')
-								.form
-									input.textfield(type='text', ng-model='comment.editComment.content', placeholder='Comment Content')
-								.form
-									button#submit(ng-click='submitEditComment(comment)') Submit
-								.form
-									button#cancel(ng-click='hideEditComment(comment)') Cancel
-					p {{error}}
-					button#delete(ng-show='signedUser&&showPost.author._id==signedUser._id', ng-click='deletePost(showPost._id)') Delete
-					button#edit(ng-show='signedUser&&showPost.author._id==signedUser._id', ng-click='showEditPost(showPost)') Edit
-				#edit-post(ng-show='showEditPostFlag')
-					.form
-						input.textfield(type='text', ng-model='editPost.title', placeholder='Title')
-					.form
-						input.textfield(type='text', ng-model='editPost.content', placeholder='Post Content')
-					.form
-						button#submit(ng-click='submitEditPost()') Submit
-					.form
-						button#cancel(ng-click='hideEditPost()') Cancel
-				p {{error}}
+			button#signin.btn.btn-default(ng-show='!signedUser', ng-click='showSignInForm()')
+				span.glyphicon.glyphicon-log-in
+				span  Sign In
+			button#signup.btn.btn-primary(ng-show='!signedUser', ng-click='showSignUpForm()')
+				span.glyphicon.glyphicon-cloud-upload
+				span  Sign Up
+			button#detail.btn.btn-default(ng-show='!!signedUser', ng-click='showUserDetail(signedUser)')
+				span.glyphicon.glyphicon-user
+				span  {{signedUser.name}}
+			button#signout.btn.btn-warning(ng-show='!!signedUser', ng-click='signOut()')
+				span.glyphicon.glyphicon-log-out
+				span  Sign Out
+		#main-content.container
+			.post-container.row(ng-repeat='post in posts')
+				pre.post(id='post{{$index}}')
+					.show-post(ng-show='!post.showEditPostFormFlag')
+						h2.title.text-primary {{post.title}}
+							small.time     {{momentFromNow(post.time)}}
+						pre.content {{post.content}}
+						p.buttom-info
+							span.author.text-primary.btn(ng-click='showUserDetail(post.author)') {{post.author.name}}
+							span.reply.text-primary.btn(ng-click='toggleComment(post)') reply{{post.commentCount ? '(' + post.commentCount + ')' : undefine}}
+							span.edit.text-primary.btn(ng-show='signedUserIsEqualWith(post.author)', ng-click='showEditPostForm(post)') edit
+							span.delete.text-danger.btn(ng-show='signedUserIsEqualWith(post.author)', ng-click='submitDeletePost(post._id)') delete
+						.comment-container.container(ng-show='post.showCommentFlag')
+							.new-comment-form(ng-show='signedUser')
+								.form.input-group
+									input.form-control(type='text', ng-model='post.newComment.content', placeholder='Comment Content')
+									span.input-group-btn
+										button.submit.btn.btn-success(ng-click='submitNewComment(post, post.newComment)') Submit
+								hr
+							.comment(ng-repeat='comment in post.comments')
+								.show-comment(ng-show='!comment.showEditCommentFormFlag')
+									.author-content.btn-group
+										span.author.text-primary.btn {{comment.author.name}}: 
+										span.content {{comment.content}}
+									p.buttom-info
+										span.time.text-muted.btn-sm{{momentFromNow(comment.time)}}
+										span.edit.text-primary.btn.btn-sm(ng-show='signedUserIsEqualWith(comment.author)', ng-click='showEditCommentForm(comment)') edit
+										span.delete.text-danger.btn.btn-sm(ng-show='signedUserIsEqualWith(comment.author)', ng-click='submitDeleteComment(comment._id, post)') delete
+								.edit-comment(ng-show='comment.showEditCommentFormFlag')
+									.form.input-group
+										input.form-control(type='text', ng-model='comment.editComment.content', placeholder='Comment Content')
+										span.input-group-btn
+											button.btn.btn-success(ng-click='submitEditComment(comment)') Edit
+											button.btn.btn-warning(ng-click='hideEditComment(comment)') Cancel
+								hr
+					.edit-post.container(ng-show='post.showEditPostFormFlag')
+						.input-group.btn-block
+							input.form-control.btn-block(type='text', ng-model='post.editPost.title', placeholder='Title')
+							textarea.form-control.btn-block(type='text', ng-model='post.editPost.content', placeholder='Post Content')
+						.form.btn-block
+							button.btn.btn-success(ng-click='submitEditPost(post)') Submit
+							button.btn.btn-warning(ng-click='hideEditPostForm(post)') Cancel
 			#new-post-form(ng-show='showNewPostFormFlag')
 				.form
 					input.title(type='text', ng-model='newPost.title', placeholder='Title')
 				.form
 					textarea.content(type='text', ng-model='newPost.content', placeholder='Post Content')
 				.form
-					button#submit(ng-click='submitNewPost()') Submit
+					button.submit(ng-click='submitNewPost()') Submit
 				.form
-					button#close(ng-click='hideNewPostForm()') Cancel
-				p {{error}}
+					button.close(ng-click='hideNewPostForm()') Cancel
 			button#new-post-btn(ng-show='!showNewPostFormFlag&&signedUser', ng-click='showNewPostForm()') New Post
 		#footer
 			p Copyright Tidyzq, 2015-2016. All rights reserved.

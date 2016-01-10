@@ -25,21 +25,11 @@ module.exports = function (db) {
 		});
 	});
 
-	router.get('/getCommentCountOfPost', function (req, res, next) {
-		debug('/getCommentCountOfPost');
-		var postId = req.query.postId;
-		commentController.getCommentCountOfPost(postId).then(function (count) {
-			res.json({success: true, count: count});
-		}).catch(function (error) {
-			res.json({success: false, error: error});
-		});
-	})
-
 	router.get('/getCommentsOfPostByRange', function (req, res, next) {
 		debug('/getCommentsOfPostByRange');
 		var postId = req.query.postId, startIndex = req.query.startIndex, count = req.query.count;
-		commentController.getCommentsOfPostByRange(postId, startIndex, count).then(function (comments) {
-			res.json({success: true, comments: comments});
+		commentController.getCommentsOfPostByRange(postId, startIndex, count).then(function (comments, count) {
+			res.json({success: true, comments: comments, count: count});
 		}).catch(function (error) {
 			res.json({success: false, error: error});
 		});
@@ -75,7 +65,7 @@ module.exports = function (db) {
 
 	router.post('/deleteComment', function (req, res, next) {
 		debug('/deleteComment');
-		var commentId = req.body;
+		var commentId = req.body.commentId;
 		userId = req.session.userId;
 		commentController.deleteComment(commentId, userId).then(function () {
 			res.json({success: true});

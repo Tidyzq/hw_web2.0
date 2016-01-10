@@ -19,60 +19,18 @@ body {
     background: black;
 }
 
-#main_content {
+#main-content {
     top: 0;
     padding: 64px 0 0;
 }
 
-.post_container {
-    margin: 0 85px 0 85px;
+.comment .content {
+    position: relative;
+    top: 9px;
 }
 
-.post {
-    margin: 0 0 20px 0;
-    width: 100%;
-    font-size: 14px;
-    background: #fff;
-    padding: 15px 10px 15px 10px;
-    word-wrap: break-word;
-    border-radius: 3px;
-}
-
-.post .title {
-    float: left;
-    cursor: pointer;
-    color: #3b94d9;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1.2;
-}
-
-.post .title:hover {
-    color: #1c6399;
-}
-
-.post .content {
-    clear: both;
-    font-size: 16px;
-    font-weight: normal;
-    line-height: 1.65;
-}
-
-.post .buttom_info {
-    clear: both;
-}
-
-.post .time, .post .author {
-    margin-right: 15px;
-    color: #a2a2a2;
-}
-
-.post .author {
-    cursor: pointer;
-}
-
-.post .author:hover {
-    color: black;
+hr {
+    margin: 10px 0;
 }
 
 #footer {

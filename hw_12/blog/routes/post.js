@@ -6,14 +6,6 @@ var moment = require('moment');
 module.exports = function (db) {
 	var postController = require('../controllers/postController')(db);
 
-	router.get('/getPostCount', function (req, res, next) {
-		post.controller.getPostCount().then(function (count) {
-			res.json({success: true, count: count});
-		}).catch(function (error) {
-			res.json({success: false, error: error});
-		});
-	});
-
 	router.get('/getPost', function (req, res, next) {
 		debug('/getPost');
 		var postId = req.query.postId;
@@ -36,8 +28,8 @@ module.exports = function (db) {
 	router.get('/getPostsByRange', function (req, res, next) {
 		debug('/getPostsByRange');
 		var startIndex = req.query.startIndex, count = req.query.count;
-		postController.getPostByRange(startIndex, count).then(function (posts) {
-			res.json({success: true, posts: posts});
+		postController.getPostByRange(startIndex, count).then(function (posts, count) {
+			res.json({success: true, posts: posts, count: count});
 		}).catch(function (error) {
 			res.json({success: false, error: error});
 		});
