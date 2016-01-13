@@ -3,25 +3,55 @@
 }
 
 body {
+    position: absolute;
     margin: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: 100%;
     background: #36465d;
 }
 
-#hover {
-    position: fixed;
+.popover {
+    color: white;
+    background: #a94442;
+}
+
+.popover.bottom .arrow:after {
+    border-bottom-color: #a94442;
 }
 
 #header {
     position: fixed;
+    padding-right: 20px;
+    z-index: 100;
     top: 0;
     width: 100%;
     height: 64px;
-    background: black;
+    background: #36465d;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.13);
+}
+
+#header .btn-content {
+    float: right;
+    height: 100%;
+    padding: 15px 0;
+}
+
+.btn-content button {
+    margin-left: 10px;
+    background: #36465d;
+    border-color: rgba(255,255,255,.13);
+    color: white;
 }
 
 #main-content {
-    top: 0;
-    padding: 64px 0 0;
+    padding: 92px 0 92px;
+    text-align: center;
+}
+
+#main-content .post-container {
+    text-align: left;
 }
 
 .comment .content {
@@ -33,8 +63,44 @@ hr {
     margin: 10px 0;
 }
 
+textarea {
+    resize: none;
+}
+
+#post-page-nav {
+    display: inline-block;
+}
+
+#new-post-btn {
+    -webkit-transition-duration: 0.2s;
+    -webkit-transform: scale(1);
+    z-index: 100;
+    position: fixed;
+    right: 12px;
+    bottom: 69px;
+    width: 50px;
+    height: 50px;
+    background: url('/images/new-post-btn.PNG');
+    background-size: 50px 50px;
+}
+
+#new-post-btn:hover {
+    -webkit-transform: scale(1.5);
+}
+
 #footer {
+    position: absolute;
+    margin: 0;
+    bottom: 0;
     width: 100%;
     height: 64px;
-    background: black;
+    background: #36465d;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.13);
+}
+
+#footer p {
+    margin: 0;
+    color: white;
+    line-height: 64px;
+    text-align: center;
 }

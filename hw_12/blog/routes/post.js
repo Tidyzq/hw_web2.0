@@ -28,8 +28,8 @@ module.exports = function (db) {
 	router.get('/getPostsByRange', function (req, res, next) {
 		debug('/getPostsByRange');
 		var startIndex = req.query.startIndex, count = req.query.count;
-		postController.getPostByRange(startIndex, count).then(function (posts, count) {
-			res.json({success: true, posts: posts, count: count});
+		postController.getPostsByRange(startIndex, count).then(function (response) {
+			res.json({success: true, posts: response.posts, count: response.count});
 		}).catch(function (error) {
 			res.json({success: false, error: error});
 		});

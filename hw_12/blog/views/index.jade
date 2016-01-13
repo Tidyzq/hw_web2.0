@@ -4,111 +4,133 @@ html
 		script(type='text/javascript' src='/javascripts/angular.min.js')
 		script(type='text/javascript' src='/javascripts/moment.min.js')
 		script(type='text/javascript' src='/javascripts/jquery-2.2.0.min.js')
+		script(type='text/javascript' src='/bootstrap/js/bootstrap.min.js')
 		script(type='text/javascript' src='/javascripts/app.js')
+		script(type='text/javascript' src='/javascripts/validator.js')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body(ng-app='blog', ng-controller='mainCtrl')
 		#hover
-			#signin-form(ng-show='showSignInFormFlag')
-				h1 Sign In
-				form(name='signinForm')
-					.form
-						input.textfield(type='text', ng-model='signinUser.name', placeholder='Username')
-					.form
-						input.textfield(type='password', ng-model='signinUser.pwd', placeholder='Password')
-					.form
-						button#submit(ng-click='submitSignIn()') Sign In
-					.form
-						button#close(ng-click='hideSignInForm()') close
-			#signup-form(ng-show='showSignUpFormFlag')
-				h1 Sign Up
-				form(name='signupForm')
-					.form
-						input.textfield(type='text', ng-model='signupUser.name', placeholder='Username')
-					.form
-						input.textfield(type='password', ng-model='signupUser.pwd', placeholder='Password')
-					.form
-						input.textfield(type='password', ng-model='signupUser.rpwd', placeholder='Repeat your password')
-					.form
-						input.textfield(type='text', ng-model='signupUser.email', placeholder='E-mail address')
-					.form
-						button.submit(ng-click='submitSignUp()') Sign Up
-					.form
-						button.close(ng-click='hideSignUpForm()') close
-			#detail-form(ng-show='showUserDetailFlag')
-				h1 User Detail
-				.detail
-					span.head Name:
-					span {{showUser.name}}
-				.detail
-					span.head E-mail:
-					span {{showUser.email}}
-				.form
-					button.close(ng-click='hideUserDetail()') close
+			#signin-form.modal.fade(tabindex="-1", role="dialog", aria-hidden="true")
+				.modal-dialog
+					.modal-content
+						.modal-header
+							h3.modal-title Sign In
+						.modal-body
+							.form-group.form-group-lg.col-xs-12
+								input#signin-name.form-control(type='text', ng-model='signinUser.name', placeholder='Username')
+							.form-group.form-group-lg.col-xs-12
+								input#signin-pwd.form-control(type='password', ng-model='signinUser.pwd', placeholder='Password')
+						.modal-footer
+							button.btn.btn-success(ng-click='submitSignIn()', ng-disabled='!signinUser.name || signinUser.name=="" || !signinUser.pwd || signinUser.pwd==""') Sign In
+							button.btn.btn-warning(ng-click='hideSignInForm()') Close
+			#signup-form.modal.fade(tabindex="-1", role="dialog", aria-hidden="true")
+				.modal-dialog
+					.modal-content
+						.modal-header
+							h3.modal-title Sign Up
+						.modal-body
+							.form-group.form-group-lg.col-xs-12
+								input#signup-name.form-control(name='name', type='text', ng-model='signupUser.name', placeholder='Username')
+							.form-group.form-group-lg.col-xs-12
+								input#signup-pwd.form-control(name='pwd', type='password', ng-model='signupUser.pwd', placeholder='Password')
+							.form-group.form-group-lg.col-xs-12
+								input#signup-rpwd.form-control(name='rpwd', type='password', ng-model='signupUser.rpwd', placeholder='Repeat your password')
+							.form-group.form-group-lg.col-xs-12
+								input#signup-email.form-control(name='email', type='text', ng-model='signupUser.email', placeholder='E-mail address')
+						.modal-footer
+							button.btn.btn-success(ng-click='submitSignUp()', ng-disabled="!(signupForm.name.valid && signupForm.pwd.valid && signupForm.rpwd.valid && signupForm.email.valid)") Sign Up
+							button.btn.btn-warning(ng-click='hideSignUpForm()') Close
+			#detail-form.modal.fade(tabindex="-1", role="dialog", aria-hidden="true")
+				.modal-dialog
+					.modal-content
+						.modal-header
+							h3.modal-title User Detail
+						.modal-body
+							.detail
+								span.head Name:
+								span {{showUser.name}}
+							.detail
+								span.head E-mail:
+								span {{showUser.email}}
+						.modal-footer
+							button.btn.btn-warning(ng-click='hideUserDetail()') Close
+			#new-post-form.modal.fade(tabindex="-1", role="dialog", aria-hidden="true")
+				.modal-dialog
+					.modal-content
+						.modal-header
+							h3.modal-title New Post
+						.modal-body
+							.form-group.form-group-lg.col-xs-12
+								input.form-control(type='text', ng-model='newPost.title', placeholder='Title')
+								textarea.form-control(ng-model='newPost.content', placeholder='Post Content', rows='5')
+						.modal-footer
+							button.btn.btn-success(ng-click='submitNewPost()', ng-disabled='!newPost.title || !newPost.content || newPost.title=="" || newPost.content==""') Submit
+							button.btn.btn-warning(ng-click='hideNewPostForm()') Close
+			#new-post-btn.btn(ng-show='!showNewPostFormFlag&&signedUser', ng-click='showNewPostForm()')
 		#header
-			button#signin.btn.btn-default(ng-show='!signedUser', ng-click='showSignInForm()')
-				span.glyphicon.glyphicon-log-in
-				span  Sign In
-			button#signup.btn.btn-primary(ng-show='!signedUser', ng-click='showSignUpForm()')
-				span.glyphicon.glyphicon-cloud-upload
-				span  Sign Up
-			button#detail.btn.btn-default(ng-show='!!signedUser', ng-click='showUserDetail(signedUser)')
-				span.glyphicon.glyphicon-user
-				span  {{signedUser.name}}
-			button#signout.btn.btn-warning(ng-show='!!signedUser', ng-click='signOut()')
-				span.glyphicon.glyphicon-log-out
-				span  Sign Out
+			.btn-content
+				button#signin.btn.btn-primary(ng-show='!signedUser', ng-click='showSignInForm()')
+					span.glyphicon.glyphicon-log-in
+					span  Sign In
+				button#signup.btn.btn-primary(ng-show='!signedUser', ng-click='showSignUpForm()')
+					span.glyphicon.glyphicon-cloud-upload
+					span  Sign Up
+				button#detail.btn.btn-primary(ng-show='!!signedUser', ng-click='showUserDetail(signedUser)')
+					span.glyphicon.glyphicon-user
+					span  {{signedUser.name}}
+				button#signout.btn.btn-primary(ng-show='!!signedUser', ng-click='signOut()')
+					span.glyphicon.glyphicon-log-out
+					span  Sign Out
 		#main-content.container
-			.post-container.row(ng-repeat='post in posts')
-				pre.post(id='post{{$index}}')
-					.show-post(ng-show='!post.showEditPostFormFlag')
+			.post-container.row.collapse.in(id='post{{post.index}}', ng-init='post.index=$index', ng-repeat='post in posts')
+				.well.post
+					.show-post.collapse.in(id='post{{post.index}}-show-post')
 						h2.title.text-primary {{post.title}}
-							small.time     {{momentFromNow(post.time)}}
+							small.time {{momentFromNow(post.time)}}
 						pre.content {{post.content}}
 						p.buttom-info
 							span.author.text-primary.btn(ng-click='showUserDetail(post.author)') {{post.author.name}}
 							span.reply.text-primary.btn(ng-click='toggleComment(post)') reply{{post.commentCount ? '(' + post.commentCount + ')' : undefine}}
 							span.edit.text-primary.btn(ng-show='signedUserIsEqualWith(post.author)', ng-click='showEditPostForm(post)') edit
-							span.delete.text-danger.btn(ng-show='signedUserIsEqualWith(post.author)', ng-click='submitDeletePost(post._id)') delete
-						.comment-container.container(ng-show='post.showCommentFlag')
+							span.delete.text-danger.btn(ng-show='signedUserIsEqualWith(post.author)', ng-click='submitDeletePost(post)') delete
+						.comment-container.container.collapse(id='post{{post.index}}-comment-container')
 							.new-comment-form(ng-show='signedUser')
-								.form.input-group
+								.input-group
 									input.form-control(type='text', ng-model='post.newComment.content', placeholder='Comment Content')
 									span.input-group-btn
-										button.submit.btn.btn-success(ng-click='submitNewComment(post, post.newComment)') Submit
+										button.btn.btn-success(ng-click='submitNewComment(post, post.newComment)', ng-disabled='!post.newComment.content||post.newComment.content==""') Submit
 								hr
-							.comment(ng-repeat='comment in post.comments')
-								.show-comment(ng-show='!comment.showEditCommentFormFlag')
+							.comment.collapse.in(id='comment{{comment.index}}-{{comment.postIndex}}', ng-repeat='comment in post.comments', ng-init='comment.index=$index;comment.postIndex=post.index')
+								.show-comment.collapse.in(id='comment{{comment.index}}-{{comment.postIndex}}-show-comment')
 									.author-content.btn-group
 										span.author.text-primary.btn {{comment.author.name}}: 
 										span.content {{comment.content}}
 									p.buttom-info
-										span.time.text-muted.btn-sm{{momentFromNow(comment.time)}}
+										span.time.text-muted.btn-sm {{momentFromNow(comment.time)}}
 										span.edit.text-primary.btn.btn-sm(ng-show='signedUserIsEqualWith(comment.author)', ng-click='showEditCommentForm(comment)') edit
-										span.delete.text-danger.btn.btn-sm(ng-show='signedUserIsEqualWith(comment.author)', ng-click='submitDeleteComment(comment._id, post)') delete
-								.edit-comment(ng-show='comment.showEditCommentFormFlag')
+										span.delete.text-danger.btn.btn-sm(ng-show='signedUserIsEqualWith(comment.author)', ng-click='submitDeleteComment(comment, post)') delete
+								.edit-comment.collapse(id='comment{{comment.index}}-{{post.index}}-edit-comment')
 									.form.input-group
 										input.form-control(type='text', ng-model='comment.editComment.content', placeholder='Comment Content')
 										span.input-group-btn
-											button.btn.btn-success(ng-click='submitEditComment(comment)') Edit
+											button.btn.btn-success(ng-click='submitEditComment(comment)', ng-disabled='comment.editComment.content==""') Edit
 											button.btn.btn-warning(ng-click='hideEditComment(comment)') Cancel
 								hr
-					.edit-post.container(ng-show='post.showEditPostFormFlag')
-						.input-group.btn-block
-							input.form-control.btn-block(type='text', ng-model='post.editPost.title', placeholder='Title')
-							textarea.form-control.btn-block(type='text', ng-model='post.editPost.content', placeholder='Post Content')
-						.form.btn-block
-							button.btn.btn-success(ng-click='submitEditPost(post)') Submit
+					.edit-post.container.collapse(id='post{{post.index}}-edit-post')
+						.form-group.col-xs-12
+							input.form-control(type='text', ng-model='post.editPost.title', placeholder='Title')
+							textarea.form-control(ng-model='post.editPost.content', placeholder='Post Content', rows='5')
+							button.btn.btn-success(ng-click='submitEditPost(post)', ng-disabled='post.editPost.title=="" || post.editPost.content==""') Submit
 							button.btn.btn-warning(ng-click='hideEditPostForm(post)') Cancel
-			#new-post-form(ng-show='showNewPostFormFlag')
-				.form
-					input.title(type='text', ng-model='newPost.title', placeholder='Title')
-				.form
-					textarea.content(type='text', ng-model='newPost.content', placeholder='Post Content')
-				.form
-					button.submit(ng-click='submitNewPost()') Submit
-				.form
-					button.close(ng-click='hideNewPostForm()') Cancel
-			button#new-post-btn(ng-show='!showNewPostFormFlag&&signedUser', ng-click='showNewPostForm()') New Post
+			ul#post-page-nav.nav.nav-pills(ng-init='postCount=0')
+				li
+					a.btn(ng-click='changePostIndex(Math.max(1,postPageIndex-1))')
+						span.glyphicon.glyphicon-chevron-left
+				li(id='post-page-{{$index+1}}', class='{{$index+1==postPageIndex?"active":undefine}}', ng-repeat='i in getNumber(Math.ceil(postCount/numberOfPostsInPage)) track by $index') 
+					a.btn(ng-click='changePostIndex(Math.max(1, Math.min(Math.ceil(postCount/numberOfPostsInPage),$index+1)))') {{$index + 1}}
+				li
+					a.btn(ng-click='changePostIndex(Math.max(1, Math.min(Math.ceil(postCount/numberOfPostsInPage),postPageIndex+1)))')
+						span.glyphicon.glyphicon-chevron-right
 		#footer
 			p Copyright Tidyzq, 2015-2016. All rights reserved.

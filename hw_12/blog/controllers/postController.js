@@ -4,15 +4,21 @@ var ObjectID = require('mongodb').ObjectID;
 module.exports = function (db) {
 
 	var posts = db.collection('posts');
-	var postPropertyExample = "author,content,time,title";
 	var userController = require('../controllers/userController')(db);
 	var commentController = require('../controllers/commentController')(db);
+
+	function isEmpty(obj) {
+    	for (var name in obj) {
+    	    return false;
+    	}
+    	return true;
+	};
 
 	var postController = {
 		// 添加post
 		newPost: function (post) {
 			debug('newPost');
-			return postController.checkPost(post).then(function () {
+			return postController.checkPost(post).then(function (post) {
 				return posts.insert(post);
 			});
 		},
@@ -21,7 +27,7 @@ module.exports = function (db) {
 			debug('editPost');
 			var postId = ObjectID(post._id);
 			delete post._id;
-			return postController.checkPost(post).then(function () {
+			return postController.checkPost(post).then(function (post) {
 				return posts.findOne({'_id': postId}).then(function (foundPost) {
 					if (foundPost.author == post.author) {
 						return posts.update({'_id': postId}, {$set: {title: post.title, content: post.content}}); 
@@ -67,15 +73,21 @@ module.exports = function (db) {
 			return posts.find().sort({'time':1}).toArray().then(function (postArr) {
 				var postCount = postArr.length;
 				return postController.replaceUser(postArr.slice(startIndex, startIndex + count)).then(postController.addCommentCount).then(function (postArr) {
-					return Promise.resolve(postArr, postCount);
+					return Promise.resolve({posts: postArr, count: postCount});
 				});
 			});
 		},
 		checkPost: function (post) {
 			debug('checkPost');
-			return new Promise(function (resolve, reject) {
-				Object.getOwnPropertyNames(post).sort().toString() == postPropertyExample ? resolve() : reject("Invalid format");
-			});
+			var error = {};
+			if (!post.title) error.title = "shouldn't be empty";
+			if (!post.content) error.content = "shouldn't be empty";
+			return isEmpty(error) ? Promise.resolve({
+				title: post.title,
+				time: post.time,
+				content: post.content,
+				author: post.author
+			}) : Promise.reject(error);
 		},
 		replaceUser: function (postArr) {
 			debug('replaceUser');

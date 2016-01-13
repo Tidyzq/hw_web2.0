@@ -4,20 +4,21 @@ var ObjectID = require('mongodb').ObjectID;
 module.exports = function(db) {
 
 	var comments = db.collection('comments');
-	var commentExample = {
-		postId: 'postId',
-		time: 'time',
-		author: 'author',
-		content: 'content'
-	};
 	var userController = require('../controllers/userController')(db);
+
+	function isEmpty(obj) {
+    	for (var name in obj) {
+    	    return false;
+    	}
+    	return true;
+	};
 
 	var commentController = {
 		// 添加post
 		newComment: function(comment) {
 			debug('newComment');
 			comment.postId = ObjectID(comment.postId);
-			return commentController.checkComment(comment).then(function() {	
+			return commentController.checkComment(comment).then(function(comment) {	
 				return comments.insert(comment);
 			});
 		},
@@ -25,7 +26,7 @@ module.exports = function(db) {
 			debug('editComment');
 			var commentId = ObjectID(comment._id);
 			delete comment._id;
-			return commentController.checkComment(comment).then(function() {
+			return commentController.checkComment(comment).then(function(comment) {
 				return comments.findOne({'_id': commentId}).then(function(foundComment) {
 					if (foundComment) {
 						if (foundComment.author == comment.author) {
@@ -79,9 +80,14 @@ module.exports = function(db) {
 		},
 		checkComment: function(comment) {
 			debug('checkComment');
-			return new Promise(function(resolve, reject) {
-				Object.getOwnPropertyNames(comment).sort().toString() == Object.getOwnPropertyNames(commentExample).sort().toString() ? resolve() : reject('Invalid format');
-			});
+			var error = {};
+			if (!comment.content) error.content = "shouldn't be empty";
+			return isEmpty(error) ? Promise.resolve({
+				postId: comment.postId,
+				time: comment.time,
+				content: comment.content,
+				author: comment.author
+			}) : Promise.reject(error);
 		},
 		replaceUser: function(commentArr) {
 			debug('replaceUser')
