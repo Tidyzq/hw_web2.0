@@ -15,8 +15,8 @@ module.exports = function(db) {
 	};
 
 	var userController = {
-		signinUser: function(user) {
-			debug('signinUser');
+		signInUser: function(user) {
+			debug('signInUser');
 			return new Promise(function(resolve, reject) {
 				userController.getUserByUserName(user.name).then(function(foundUser) {
 					bcrypt.compare(user.pwd, foundUser.pwd).then(function() {
@@ -29,12 +29,11 @@ module.exports = function(db) {
 				})
 			})
 		},
-		signupUser: function(user) {
-			debug('signupUser');
-			return userController.checkUser(user).then(function() {
+		signUpUser: function(user) {
+			debug('signUpUser');
+			return userController.checkUser(user).then(function(user) {
 				return bcrypt.hash(user.pwd, 10).then(function(pwd) {
 					user.pwd = pwd;
-					if (user.rpwd) delete user.rpwd;
 					return users.insert(user).then(function(resultArr) {
 						user._id = resultArr.insertedIds[1];
 						return Promise.resolve(user);
@@ -42,11 +41,15 @@ module.exports = function(db) {
 				});
 			});
 		},
+		getAllUsers: function() {
+			debug('getAllUsers');
+			return users.find().toArray();
+		},
 		getUserById: function(userId) {
 			debug('getUserById');
 			return new Promise(function(resolve, reject) {
 				userId = ObjectID(userId);
-				users.findOne({_id: userId}, {name: true, email: true}).then(function(foundUser) {
+				users.findOne({_id: userId}, {name: true, email: true, isAdmin: true}).then(function(foundUser) {
 					foundUser ? resolve(foundUser) : reject('No such user exists');
 				});
 			});
@@ -73,7 +76,12 @@ module.exports = function(db) {
 				}
 				return Promise.resolve();
 			}).then(function() {
-				return isEmpty(error) ? Promise.resolve() : Promise.reject(error);
+				return isEmpty(error) ? Promise.resolve({
+					name: user.name,
+					pwd: user.pwd,
+					email: user.email,
+					isAdmin: user.isAdmin
+				}) : Promise.reject(error);
 			});
 		}
 	}

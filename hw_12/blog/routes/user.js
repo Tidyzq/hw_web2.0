@@ -15,9 +15,9 @@ module.exports = function (db) {
 				res.json({success: false, error: error});
 			});
 		} else {
-			res.json({success: false, error: "You haven't signin yet"});
+			res.json({success: false, error: "You haven't signIn yet"});
 		}
-	})
+	});
 
 	router.get('/getUser', function (req, res, next) {
 		debug('/getUser');
@@ -29,17 +29,17 @@ module.exports = function (db) {
 		});
 	});
 
-	router.get('/signout', function (req, res, next) {
-		debug('/signout');
+	router.get('/signOut', function (req, res, next) {
+		debug('/signOut');
 		delete req.session.userId;
 		res.json({success: true});
 	});
 
 	// posts
-	router.post('/signin', function (req, res, next) {
-		debug('/signin');
+	router.post('/signIn', function (req, res, next) {
+		debug('/signIn');
 		var user = req.body;
-		userController.signinUser(user).then(function (user) {
+		userController.signInUser(user).then(function (user) {
 			req.session.userId = user._id;
 			res.json({success: true, user: user});
 		}).catch(function (error) {
@@ -47,10 +47,11 @@ module.exports = function (db) {
 		})
 	});
 
-	router.post('/signup', function (req, res, next) {
-		debug('/signup');
+	router.post('/signUp', function (req, res, next) {
+		debug('/signUp');
 		var user = req.body;
-		userController.signupUser(user).then(function (user) {
+		user.isAdmin = false;
+		userController.signUpUser(user).then(function (user) {
 			req.session.userId = user._id;
 			res.json({success: true, user: user});
 		}).catch(function (error) {
@@ -59,7 +60,7 @@ module.exports = function (db) {
 	});
 
 	router.all('*', function (req, res, next) {
-		req.session.userId ? next() : res.json({success: false, error: "You haven't signin yet"});
+		req.session.userId ? next() : res.json({success: false, error: "You haven't signIn yet"});
 	});
 
 	router.post('/edit', function (req, res, next) {

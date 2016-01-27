@@ -9,14 +9,14 @@ var FileStore = require('session-file-store')(session);
 var debug = require('debug')('blog:app');
 
 module.exports = function(db) {
-  var routes = require('./routes/index')(db);
-  debug('routes');
-  var user = require('./routes/user')(db);
-  debug('user');
-  var post = require('./routes/post')(db);
-  debug('post');
-  var comment = require('./routes/comment')(db);
-  debug('comment');
+  try {
+    var routes = require('./routes/index')(db);
+    var user = require('./routes/user')(db);
+    var post = require('./routes/post')(db);
+    var comment = require('./routes/comment')(db);
+  } catch (error) {
+    debug(error);
+  }
 
   var app = express();
 
@@ -25,7 +25,7 @@ module.exports = function(db) {
   app.set('view engine', 'jade');
 
   // uncomment after placing your favicon in /public
-  //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+  // app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));

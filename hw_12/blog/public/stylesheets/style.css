@@ -23,7 +23,6 @@ body {
 
 #header {
     position: fixed;
-    padding-right: 20px;
     z-index: 100;
     top: 0;
     width: 100%;
@@ -32,17 +31,55 @@ body {
     box-shadow: 0 0 0 1px rgba(255,255,255,.13);
 }
 
-#header .btn-content {
-    float: right;
+#header > .container {
+    height: 100%;
+}
+
+.search .form-control {
+    -webkit-transition-duration: 0.2s;
+    background-color: white;
+    border-color: white;
+}
+
+.search .input-group-addon {
+    -webkit-transition-duration: 0.2s;
+    background-color: white;
+    border-color: white;
+}
+
+.search-unvisit .form-control {
+    background-color: #2f3d51;
+    border-color: #2f3d51;
+    color: #9098a3;
+}
+
+.search-unvisit .input-group-addon {
+    background-color: #2f3d51;
+    border-color: #2f3d51;
+}
+
+.search-unvisit .input-group-addon > .glyphicon {
+    color: #9098a3;
+}
+
+#header .search, #header .btn-content {
     height: 100%;
     padding: 15px 0;
 }
 
-.btn-content button {
+#header .btn-content {
+    float: right;
+}
+
+#header .btn-content button {
     margin-left: 10px;
     background: #36465d;
     border-color: rgba(255,255,255,.13);
     color: white;
+}
+
+#header .btn-content button:hover {
+    background: #2f3d51;
 }
 
 #main-content {
@@ -54,9 +91,34 @@ body {
     text-align: left;
 }
 
+.show-post > .title > .time {
+    margin-left: 10px;
+}
+
+.show-post .show-all {
+    cursor: pointer;
+}
+
 .comment .content {
     position: relative;
     top: 9px;
+}
+
+.new-comment-reply > .close {
+    float: none;
+    font-size: 14px;
+    margin-left: 4px;
+}
+
+.show-comment, .post-container {
+    position: relative;
+}
+
+.show-comment > .info-content > span {
+    border-width: 0;
+    display: block;
+    float: left;
+    padding: 7px 3px;
 }
 
 hr {
